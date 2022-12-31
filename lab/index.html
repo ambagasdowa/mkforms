@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path Editing</title>
+
+    <style type="text/css" media="screen">
+      .scroller {
+        width: 1125px;
+        height: 900px;
+        overflow: scroll;
+      }
+
+      .canvas {
+        border: 1px;
+        border-color: cyan;
+        background-image: url("/home/ambagasdowa/remote/home/ambagasdowa/files/source/book/matematicas/002/bachillerato/pages/10.jpg");
+        background-size: 1124px 1690px;
+        width: 1124px;
+        height: 1690px;
+      }
+      canvas {
+        background-color: transparent !important;
+      }
+    </style>
+
+    <script type="text/javascript" canvas="canvas">
+      // NOTE boring paper old sintax
+      hx = window.innerWidth;
+      hy = window.innerHeight;
+      var msg = "The Window Width is : " + hx + " and the Heigth is : " + hy;
+      console.log(msg);
+
+      can = document.querySelector("canvas");
+      hx = can.innerWidth;
+      hx = can.innerHeight;
+      var msg = "The Window Width is : " + hx + " and the Heigth is : " + hy;
+      console.log(msg);
+
+      console.log("The Div : ");
+      div_canvas = document.querySelector(".canvas").getBoundingClientRect();
+      console.log(div_canvas);
+      console.log("The Canvas :");
+      can_canvas = document.querySelector("canvas").getBoundingClientRect();
+      console.log(can_canvas);
+    </script>
+  </head>
+  <body style="background: black">
+    <div lid="elder" class="scroller">
+      <div class="canvas">
+        <canvas id="canvas" resize></canvas>
+      </div>
+    </div>
+  </body>
+</html>
