@@ -1,0 +1,17 @@
+.scroller {
+  border-color: seagreen;
+  border: 2px;
+  width: 1126px;
+  height: 900px;
+  overflow: scroll;
+}
+
+.canvas {
+  /* background-color: transparent !important; */
+  border: 1px solid seagreen;
+  opacity: 0.6;
+}
+canvas {
+  background-color: transparent !important;
+  border: 2px solid red;
+}

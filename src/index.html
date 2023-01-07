@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path Editing</title>
+
+    <link
+      rel="stylesheet"
+      href="css/index.css"
+      type="text/css"
+      media="screen"
+      title="no title"
+      charset="utf-8"
+    />
+    <script src="js/index.js" charset="utf-8"></script>
+  </head>
+  <body style="background: #002b36; color: darkgray">
+    <div id="elder" class="scroller">
+      <div class="canvas">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+
+    <div id="menu" class="menu">
+      <form>
+        <label for="text">Texto</label>
+        <input type="radio" id="text" name="inpsel" value="text" checked />
+
+        <label for="option">Opciones</label>
+        <input type="radio" id="option" name="inpsel" value="option" />
+
+        <label for="textarea">TextoLibre</label>
+        <input type="radio" id="textarea" name="inpsel" value="textarea" />
+
+        <label for="crossword">Crucigrama</label>
+        <input type="radio" id="crossword" name="inpsel" value="crossword" />
+
+        <input type="button" value="send" />
+      </form>
+    </div>
+  </body>
+</html>

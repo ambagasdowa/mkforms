@@ -1,0 +1,20 @@
+/** Inputs Codes **/
+
+input {
+  background-color: transparent !important;
+  position: absolute;
+  border: none !important;
+  color: teal !important;
+  /* font-size: 10px; */
+}
+input [type="radio"] {
+  background-color: #3b4252;
+}
+
+input > .saved {
+  color: magenta !important;
+}
+
+input > .edition {
+  color: teal !important;
+}
