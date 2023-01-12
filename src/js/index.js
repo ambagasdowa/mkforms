@@ -706,6 +706,33 @@ window.onload = function () {
     return response; // parses JSON response into native JavaScript objects
   }
 
+  async function getData(url) {
+    //  "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json";
+    const myHeaders = new Headers({
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    console.log(`THE REQUEST :`);
+    console.log(myHeaders);
+
+    const request = new Request(url, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "omit", // include, *same-origin, omit
+      headers: myHeaders,
+      // redirect: "follow", // manual, *follow, error
+      // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      //body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    const response = await fetch(request);
+    const bookResponse = await response.json();
+    console.log(bookResponse[0]);
+    buildDivBook(bookResponse[0]);
+  }
+
   // NOTE Needs time
 
   function drawCoords(ctx, x, y, color = "green") {
