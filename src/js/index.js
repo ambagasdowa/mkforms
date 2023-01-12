@@ -68,7 +68,8 @@ window.onload = function () {
   //CREATE BOX INPUTS
 
   var lineOffset = 4;
-  var anchrSize = 2;
+  //var anchrSize = 2;
+  var anchrSize = 4;
 
   var mousedown = false;
   var clickedArea = { box: -1, pos: "o" };
@@ -80,28 +81,18 @@ window.onload = function () {
   var boxes = [];
   var tmpBox = null;
 
-  var arcs = [];
-  var tmpArcs = null;
-
   let page = 1;
   let book = 3;
   input_type = "text";
+
   // NOTE Example for objects
   const param = "size";
   const config = {
     [param]: 12,
-    [`mobile${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 4,
+    [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   };
 
   console.log(config); // {size: 12, mobileSize: 4}
-
-  const send_post = {
-    page: `${page}`,
-    book: `${book}`,
-    inputs: boxes,
-  };
-
-  console.log(send_post);
 
   document.getElementById("canvas").onmousedown = function (e) {
     mousedown = true;
@@ -113,18 +104,43 @@ window.onload = function () {
     y1 = e.offsetY;
     x2 = e.offsetX;
     y2 = e.offsetY;
-  };
+
+    if (clickedArea.box != -1) {
+      var selBox = boxes[clickedArea.box];
+      // === === === === === === === === === === === === === === === === === === //
+      //            Check if we need delete it
+      // === === === === === === === === === === === === === === === === === === //
+      let delStroke = document.querySelector("#delStroke");
+      console.log(delStroke);
+      console.log(`IsDeleteOn : ${delStroke.checked}`);
+
+      let cpStroke = document.querySelector("#cpStroke");
+      console.log(cpStroke);
+      console.log(`IsCopyOn : ${cpStroke.checked}`);
+
+      if (delStroke.checked) {
+        boxes.splice(clickedArea.box, 1);
+        let reload = new reloadCanvas(boxes, context);
+      } else if (cpStroke.checked) {
+        xbox1 = selBox.x1 + config.copySize;
+        xboy1 = selBox.y1 + config.copySize;
+        xbox2 = selBox.x2 + config.copySize;
+        xboy2 = selBox.y2 + config.copySize;
+        boxes.push(newBox(xbox1, xboy1, xbox2, xboy2));
+        reloadCanvas(boxes, context);
+      } else {
+        //something else
+      }
+      //null
+    } //ClickedArea
+  }; // onmousedown
 
   document.getElementById("canvas").onmouseup = function (e) {
-    console.log(`mouse[UP] TRUE --> ${e.offsetX} ::: ${e.offsetY}`);
-    console.log(`mouse[UP] TRUE ClickedArea --> ${clickedArea}`);
-    console.log(clickedArea);
-    console.log(tmpBox);
-
     if (clickedArea.box == -1 && tmpBox != null) {
       boxes.push(tmpBox);
     } else if (clickedArea.box != -1) {
       var selectedBox = boxes[clickedArea.box];
+      //  } else {
       if (selectedBox.x1 > selectedBox.x2) {
         var previousX1 = selectedBox.x1;
         selectedBox.x1 = selectedBox.x2;
@@ -136,24 +152,12 @@ window.onload = function () {
         selectedBox.y2 = previousY1;
       }
     }
+
     clickedArea = { box: -1, pos: "o" };
     tmpBox = null;
     mousedown = false;
-    console.log(`BOXES that can be saved  :`);
-    console.log(boxes);
-
-    console.log(
-      `Where i'm => in page : ${send_post.page} and book : ${send_post.book}`
-    );
-
-    console.log(Object.keys(send_post.inputs));
-
-    Object.keys(send_post.inputs).forEach((key) => {
-      console.log(`Index INPUT : ${key}`);
-      Object.keys(send_post.inputs[key]).forEach((keys) => {
-        console.log(`KEYNAME: ${keys} DATA: ${send_post.inputs[key][keys]}`);
-      });
-    });
+    //  console.log(`BOXES that can be saved  :`);
+    //  console.log(boxes);
   };
 
   document.getElementById("canvas").onmouseout = function (e) {
@@ -177,6 +181,9 @@ window.onload = function () {
     tmpBox = null;
   };
 
+  // Delete circles
+  // https://stackoverflow.com/questions/32736999/remove-circle-drawn-in-html5-canvas-once-user-clicks-on-it
+
   document.getElementById("canvas").onmousemove = function (e) {
     //console.log(`mouse[MOVE] TRUE --> ${e.offsetX} ::: ${e.offsetY}`);
 
@@ -194,35 +201,43 @@ window.onload = function () {
       x1 = x2;
       y1 = y2;
 
+      // NOTE RESIZE ENGINE:
+      /*
+        -> +---+---+ 
+           |       |
+        -> +   +   +
+           |       |
+        -> +---+---+
+      */
       if (
-        clickedArea.pos == "i" ||
-        clickedArea.pos == "tl" ||
-        clickedArea.pos == "l" ||
-        clickedArea.pos == "bl"
+        clickedArea.pos == "i" || //inner | init ?
+        clickedArea.pos == "tl" || //top-left
+        clickedArea.pos == "l" || //left
+        clickedArea.pos == "bl" // bottom-left
       ) {
         boxes[clickedArea.box].x1 += xOffset;
       }
       if (
-        clickedArea.pos == "i" ||
-        clickedArea.pos == "tl" ||
-        clickedArea.pos == "t" ||
-        clickedArea.pos == "tr"
+        clickedArea.pos == "i" || //inner
+        clickedArea.pos == "tl" || //top-left
+        clickedArea.pos == "t" || //top
+        clickedArea.pos == "tr" // top-right
       ) {
         boxes[clickedArea.box].y1 += yOffset;
       }
       if (
-        clickedArea.pos == "i" ||
-        clickedArea.pos == "tr" ||
-        clickedArea.pos == "r" ||
-        clickedArea.pos == "br"
+        clickedArea.pos == "i" || //inner
+        clickedArea.pos == "tr" || //top-right
+        clickedArea.pos == "r" || //right
+        clickedArea.pos == "br" // bottom-right
       ) {
         boxes[clickedArea.box].x2 += xOffset;
       }
       if (
-        clickedArea.pos == "i" ||
-        clickedArea.pos == "bl" ||
-        clickedArea.pos == "b" ||
-        clickedArea.pos == "br"
+        clickedArea.pos == "i" || // inner
+        clickedArea.pos == "bl" || //botom-left
+        clickedArea.pos == "b" || //bottom
+        clickedArea.pos == "br" // bottom-right
       ) {
         boxes[clickedArea.box].y2 += yOffset;
       }
@@ -241,31 +256,26 @@ window.onload = function () {
 
     context.clearRect(0, 0, canvas_width, canvas_height); // NOTE him or her define this in the canvas element
     context.strokeStyle = "blue";
-
-    console.log(context.canvas);
+    // WARNING get url source and set if exists
+    //console.log(context.canvas);
     console.log(`set type of input -> ${input_type}`);
     // === === === === === === === === === === === === === === === //
     //   This can hold text,textare and crossword
     // === === === === === === === === === === === === === === === //
     context.beginPath();
-
     console.log(`What is selected in [::REDRAW::] ==> ${input_type}`);
 
-    // if (input_type == "text") {
+    //Call to WS and  SET the previus boxes
+    // or null
     for (var i = 0; i < boxes.length; i++) {
       drawBoxOn(boxes[i], context);
     }
     if (clickedArea.box == -1) {
       tmpBox = newBox(x1, y1, x2, y2);
-      //Draw circles :
-      //NOTE ok, know , step by step
-      context.arc(x1, y1, 10, 0, Math.PI * 2, true); // Outer circle
-
       if (tmpBox != null) {
         drawBoxOn(tmpBox, context);
       }
     }
-    // }
 
     // === === === === === === === === === === === === === === === //
   } // End of redraw
@@ -275,7 +285,7 @@ window.onload = function () {
       var box = boxes[i];
 
       console.log(`what we have in box?`);
-      console.log(box);
+      console.log(JSON.stringify(box));
 
       xCenter = box.x1 + (box.x2 - box.x1) / 2;
       yCenter = box.y1 + (box.y2 - box.y1) / 2;
@@ -325,83 +335,158 @@ window.onload = function () {
         y2: boxY2,
         lineWidth: 1,
         color: "DeepSkyBlue",
-        type: input_type,
+        inputType: input_type,
+        source_width: context.canvas.width,
+        source_height: context.canvas.height,
+        book: book,
+        page: page,
       };
     } else {
       return null;
     }
   }
 
-  // NOTE Added new funcitons
-  // function newArc(){
-
-  // }
-
   function drawBoxOn(box, context) {
     xCenter = box.x1 + (box.x2 - box.x1) / 2;
     yCenter = box.y1 + (box.y2 - box.y1) / 2;
+    ratio = (box.x2 - box.x1) / 2;
+
+    context.shadowColor = "DeepSkyBlue";
+    context.shadowBlur = 13;
 
     context.strokeStyle = box.color;
     context.fillStyle = box.color;
-
-    context.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
     context.lineWidth = box.lineWidth;
-    context.stroke();
 
-    context.fillRect(
-      box.x1 - anchrSize,
-      box.y1 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      box.x1 - anchrSize,
-      yCenter - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      box.x1 - anchrSize,
-      box.y2 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      xCenter - anchrSize,
-      box.y1 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      xCenter - anchrSize,
-      yCenter - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      xCenter - anchrSize,
-      box.y2 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      box.x2 - anchrSize,
-      box.y1 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      box.x2 - anchrSize,
-      yCenter - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
-    context.fillRect(
-      box.x2 - anchrSize,
-      box.y2 - anchrSize,
-      2 * anchrSize,
-      2 * anchrSize
-    );
+    console.log(`DEBUG::`);
+    console.log(`xCenter => ${xCenter} and yCenter ${yCenter}`);
+    console.log(`position in x => ${box.x1} and y ${box.y1}`);
+    console.log(`Color => ${box.color}`);
+    console.log(box);
+
+    if (
+      box.inputType == "text" ||
+      box.inputType == "textarea" ||
+      box.inputType == "crossword"
+    ) {
+      context.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+      //      context.closePath();
+      context.stroke();
+
+      // aesthetic resize decorator marks
+      // +------------+------------+
+      // |                         |
+      // +            +            +
+      // |                         |
+      // +------------+------------+
+
+      // top-left
+      context.fillRect(
+        box.x1 - anchrSize,
+        box.y1 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //top-center
+      context.fillRect(
+        box.x1 - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //top-right
+      context.fillRect(
+        box.x1 - anchrSize,
+        box.y2 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //middle-left
+      context.fillRect(
+        xCenter - anchrSize,
+        box.y1 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //middle-center
+      context.fillRect(
+        xCenter - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //middle-right
+      context.fillRect(
+        xCenter - anchrSize,
+        box.y2 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //bottom-left
+      context.fillRect(
+        box.x2 - anchrSize,
+        box.y1 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //bottom-center
+      context.fillRect(
+        box.x2 - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //bottom-right
+      context.fillRect(
+        box.x2 - anchrSize,
+        box.y2 - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+    } // input type as text
+
+    if (box.inputType == "option") {
+      context.beginPath();
+      //context.arc(xCenter, yCenter, ratio, 0, Math.PI * 2, true); // Outer circle
+      var arco = new circle(xCenter, yCenter, ratio);
+      context.stroke(arco);
+
+      //top
+      context.fillRect(
+        xCenter - anchrSize,
+        yCenter - ratio - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //left
+      context.fillRect(
+        xCenter - ratio - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //center
+      context.fillRect(
+        xCenter - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //right
+      context.fillRect(
+        xCenter + ratio - anchrSize,
+        yCenter - anchrSize,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+      //bottom
+      context.fillRect(
+        xCenter,
+        yCenter - 1.5 + ratio,
+        2 * anchrSize,
+        2 * anchrSize
+      );
+    }
   }
 
   // === === === === === === === === === === === === === === === === === === //
@@ -438,6 +523,151 @@ window.onload = function () {
           return input_type;
       }
     });
+  }
+
+  function handleEventOnDom(element, typeEvent) {
+    // |this| is a newly created object
+    this.name = `Initialize Dom ${typeEvent}`;
+    this.handleEvent = function (event) {
+      console.log(this.name); // 'Something Good', as this is bound to newly created object
+
+      // NOTE relative to the canvas UIX
+      if (typeEvent == "canvas") {
+        switch (event.type) {
+          case "click":
+            // reset canvas
+            boxes = null;
+            send_post = null;
+            boxes = [];
+            context.clearRect(0, 0, canvas_width, canvas_height);
+            context.strokeStyle = "blue";
+            break;
+          case "dblclick":
+            // some code here…
+
+            break;
+          case "change":
+            console.log(`change is on`);
+            break;
+        }
+      }
+      // if (typeEvent == "rm") {
+      //   console.log(`EVENT : ${event.type}`);
+
+      //   switch (event.type) {
+      //     // case "click":
+      //     //   // reset canvas
+      //     //   break;
+      //     case "dblclick":
+      //       break;
+      //     case "click":
+      //       // some code here…
+      //       console.log(`The Element ${element}`);
+      //       if (element.checked) {
+      //         var r = context.canvas.getBoundingClientRect(),
+      //           x = event.clientX - r.left,
+      //           y = event.clientY - r.top,
+      //           i;
+
+      //         for (i = boxes.length - 1; i >= 0; --i) {
+      //           console.log(i);
+      //           if (context.isPointInPath(boxes[i], x, y, "nonzero")) {
+      //             boxes.splice(i, 1);
+      //           }
+      //         }
+
+      //         context.clearRect(
+      //           0,
+      //           0,
+      //           context.canvas.width,
+      //           context.canvas.height
+      //         );
+      //         context.beginPath();
+
+      //         for (var i = 0; i < boxes.length; i++) {
+      //           drawBoxOn(boxes[i], context);
+      //         }
+      //         context.canvas.addEventListener("dblclick", this, false);
+      //       }
+      //       break;
+      //   }
+      // }
+      // NOTE Handle events for post json data
+      if (typeEvent == "postapi") {
+        console.log(boxes);
+
+        console.log(Object.keys(boxes));
+        console.log(JSON.stringify(boxes));
+
+        Object.keys(boxes).forEach((key) => {
+          console.log(`Index INPUT : ${key}`);
+          Object.keys(boxes[key]).forEach((keys) => {
+            console.log(`KEYNAME: ${keys} DATA: ${boxes[key][keys]}`);
+          });
+        });
+
+        alert(JSON.stringify(boxes));
+      }
+    };
+
+    // Note that the listeners in this case are |this|, not this.handleEvent
+    element.addEventListener("click", this, false);
+    element.addEventListener("dblclick", this, false);
+
+    // You can properly remove the listeners
+    //  element.removeEventListener('click', this, false);
+    //  element.removeEventListener('dblclick', this, false);
+  }
+
+  // const dbClick = document.querySelector("canvas");
+  // console.log(`dbClick : ${dbClick}`);
+  // let setFigure = new handleEventOnDom(dbClick, "canvas");
+
+  const cleaner = document.querySelector("#cleanCanvas");
+  console.log(`Clean : ${cleaner}`);
+  let clean = new handleEventOnDom(cleaner, "canvas");
+
+  const send = document.querySelector("#save_page");
+  console.log(`Send : ${send}`);
+  let send_data = new handleEventOnDom(send, "postapi");
+
+  function clickHandler(e) {
+    var r = context.canvas.getBoundingClientRect(),
+      x = e.clientX - r.left,
+      y = e.clientY - r.top,
+      i;
+    console.log(`ClickHan R => `);
+    // console.log(clickedArea);
+    console.log(r);
+
+    console.log(context.getContextAttributes());
+    for (i = boxes.length - 1; i >= 0; --i) {
+      console.log(i);
+      if (context.isPointInPath(boxes[i], x, y, "nonzero")) {
+        boxes.splice(i, 1);
+      }
+    }
+
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.beginPath();
+
+    for (var i = 0; i < boxes.length; i++) {
+      drawBoxOn(boxes[i], context);
+    }
+  }
+
+  function reloadCanvas(boxes, context) {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.beginPath();
+    for (var i = 0; i < boxes.length; i++) {
+      drawBoxOn(boxes[i], context);
+    }
+  }
+
+  function circle(x, y, radius) {
+    var c = new Path2D();
+    c.arc(x, y, radius, 0, Math.PI * 2);
+    return c;
   }
 
   // NOTE Needs time

@@ -28,6 +28,8 @@
 
         <label for="option">Opciones</label>
         <input type="radio" id="option" name="inpsel" value="option" />
+        <input type="text" id="option" name="inpsel" value="option" />
+        <input type="button" id="option" name="inpsel" value="option" />
 
         <label for="textarea">TextoLibre</label>
         <input type="radio" id="textarea" name="inpsel" value="textarea" />
@@ -35,7 +37,22 @@
         <label for="crossword">Crucigrama</label>
         <input type="radio" id="crossword" name="inpsel" value="crossword" />
 
-        <input type="button" value="send" />
+        <label for="delStroke">Delete Stroke</label>
+        <input type="radio" value="delStr" name="uix" id="delStroke" />
+
+        <label for="cpStroke">Duplicate Stroke</label>
+        <input type="radio" value="cpStr" name="uix" id="cpStroke" />
+
+        <label for="mvStroke">Move Stroke</label>
+        <input type="radio" value="mvStr" name="uix" id="mvStroke" />
+
+        <input
+          type="button"
+          id="cleanCanvas"
+          name="cleanCanvas"
+          value="clean"
+        />
+        <input type="button" id="save_page" value="send" />
       </form>
     </div>
   </body>
