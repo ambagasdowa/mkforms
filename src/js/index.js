@@ -81,8 +81,8 @@ window.onload = function () {
   var boxes = [];
   var tmpBox = null;
 
-  let page = 1;
-  let book = 3;
+  let page = 3;
+  let book = 1;
   input_type = "text";
 
   // NOTE Example for objects
@@ -338,7 +338,8 @@ window.onload = function () {
         inputType: input_type,
         source_width: context.canvas.width,
         source_height: context.canvas.height,
-        book: book,
+        bms_books_id: book,
+        bms_bookpages_id: page,
         page: page,
       };
     } else {
@@ -594,17 +595,24 @@ window.onload = function () {
       // }
       // NOTE Handle events for post json data
       if (typeEvent == "postapi") {
-        console.log(boxes);
+        let url = `https://baizabal.xyz:8000/srcpositions/${book}/${page}`;
+        let data = JSON.parse(JSON.stringify(boxes));
 
-        console.log(Object.keys(boxes));
-        console.log(JSON.stringify(boxes));
+        console.log(`SEND POST : `);
+        console.log(url);
+        console.log(data);
 
-        Object.keys(boxes).forEach((key) => {
-          console.log(`Index INPUT : ${key}`);
-          Object.keys(boxes[key]).forEach((keys) => {
-            console.log(`KEYNAME: ${keys} DATA: ${boxes[key][keys]}`);
-          });
-        });
+        let response_json = postData(url, data);
+
+        console.log(`RESPONSE : `);
+        console.log(response_json);
+
+        // Object.keys(boxes).forEach((key) => {
+        //   console.log(`Index INPUT : ${key}`);
+        //   Object.keys(boxes[key]).forEach((keys) => {
+        //     console.log(`KEYNAME: ${keys} DATA: ${boxes[key][keys]}`);
+        //   });
+        // });
 
         alert(JSON.stringify(boxes));
       }
@@ -668,6 +676,34 @@ window.onload = function () {
     var c = new Path2D();
     c.arc(x, y, radius, 0, Math.PI * 2);
     return c;
+  }
+
+  /**
+   *
+   * @param {*} ctx
+   * @param {*} x
+   * @param {*} y
+   * @param {*} color
+   */
+
+  // Example POST method implementation:
+  async function postData(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      // mode: "no-cors", // no-cors, *cors, same-origin
+      cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+      // credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        // Accept: "application/json",
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response; // parses JSON response into native JavaScript objects
   }
 
   // NOTE Needs time
