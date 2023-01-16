@@ -23,29 +23,37 @@
 
     <div id="menu" class="menu">
       <form>
-        <label for="text">Texto</label>
-        <input type="radio" id="text" name="inpsel" value="text" checked />
+        <div class="button">
+          <label class="btn btn-default" for="text">Texto</label>
+          <input type="radio" id="text" name="inpsel" value="text" checked />
+        </div>
 
-        <label for="option">Opciones</label>
-        <input type="radio" id="option" name="inpsel" value="option" />
+        <div class="button">
+          <label class="btn btn-default" for="option">Opciones</label>
+          <input type="radio" id="option" name="inpsel" value="option" />
+        </div>
         <input type="text" id="option" name="inpsel" value="option" />
         <input type="button" id="option" name="inpsel" value="option" />
-
-        <label for="textarea">TextoLibre</label>
-        <input type="radio" id="textarea" name="inpsel" value="textarea" />
-
-        <label for="crossword">Crucigrama</label>
-        <input type="radio" id="crossword" name="inpsel" value="crossword" />
-
-        <label for="delStroke">Delete Stroke</label>
-        <input type="radio" value="delStr" name="uix" id="delStroke" />
-
-        <label for="cpStroke">Duplicate Stroke</label>
-        <input type="radio" value="cpStr" name="uix" id="cpStroke" />
-
-        <label for="mvStroke">Move Stroke</label>
-        <input type="radio" value="mvStr" name="uix" id="mvStroke" />
-
+        <div class="button">
+          <label class="btn btn-default" for="textarea">TextoLibre</label>
+          <input type="radio" id="textarea" name="inpsel" value="textarea" />
+        </div>
+        <div class="button">
+          <label class="btn btn-default" for="crossword">Crucigrama</label>
+          <input type="radio" id="crossword" name="inpsel" value="crossword" />
+        </div>
+        <div class="button">
+          <label class="btn btn-default" for="delStroke">Delete</label>
+          <input type="radio" value="delStr" name="uix" id="delStroke" />
+        </div>
+        <div class="button">
+          <label class="btn btn-default" for="cpStroke">Duplicate</label>
+          <input type="radio" value="cpStr" name="uix" id="cpStroke" />
+        </div>
+        <div class="button">
+          <label class="btn btn-default" for="mvStroke">Move</label>
+          <input type="radio" value="mvStr" name="uix" id="mvStroke" checked />
+        </div>
         <input
           type="button"
           id="cleanCanvas"

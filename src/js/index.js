@@ -97,6 +97,7 @@ window.onload = function () {
   console.log(config); // {size: 12, mobileSize: 4}
 
   console.log(`bok_id -> ${book} and page_idd -> ${page}`);
+
   get_url = `https://baizabal.xyz:8000/srcpos/${book}/${page}`;
   const xboxes = getData(get_url);
   xboxes.then((data) => ((boxes = data), redraw()));
