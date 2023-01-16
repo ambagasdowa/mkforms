@@ -68,8 +68,8 @@ window.onload = function () {
   //CREATE BOX INPUTS
 
   var lineOffset = 4;
-  //var anchrSize = 2;
-  var anchrSize = 4;
+  var anchrSize = 2;
+  // var anchrSize = 4;
 
   var mousedown = false;
   var clickedArea = { box: -1, pos: "o" };
@@ -90,6 +90,8 @@ window.onload = function () {
   const config = {
     [param]: 12,
     [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
+    default_width: 1024,
+    default_heigth: 1600,
   };
 
   console.log(config); // {size: 12, mobileSize: 4}
@@ -99,10 +101,6 @@ window.onload = function () {
   const xboxes = getData(get_url);
   xboxes.then((data) => ((boxes = data), redraw()));
 
-  // console.log(`XBOXES :`);
-  // console.log(boxes);
-  // redraw();
-  // reloadCanvas(boxes, context);
   //NOTE get boxes
 
   document.getElementById("canvas").onmousedown = function (e) {
