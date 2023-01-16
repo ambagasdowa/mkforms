@@ -19,7 +19,7 @@ window.onload = function () {
   console.log(`loading img`);
   page_book = document.querySelector(".canvas");
   url_img =
-    "https://baizabal.xyz/assets/Panamericano/files//source/book/matematicas/002/bachillerato/pages/16.jpg";
+    "https://baizabal.xyz/assets/Panamericano/files/source/book/matematicas/002/bachillerato/pages/16.jpg";
   const book_attr = document.createAttribute("style");
 
   ////size of the img
@@ -81,8 +81,8 @@ window.onload = function () {
   var boxes = [];
   var tmpBox = null;
 
-  let page = 3;
   let book = 1;
+  let page = 3;
   input_type = "text";
 
   // NOTE Example for objects
@@ -93,6 +93,17 @@ window.onload = function () {
   };
 
   console.log(config); // {size: 12, mobileSize: 4}
+
+  console.log(`bok_id -> ${book} and page_idd -> ${page}`);
+  get_url = `https://baizabal.xyz:8000/srcpos/${book}/${page}`;
+  const xboxes = getData(get_url);
+  xboxes.then((data) => ((boxes = data), redraw()));
+
+  // console.log(`XBOXES :`);
+  // console.log(boxes);
+  // redraw();
+  // reloadCanvas(boxes, context);
+  //NOTE get boxes
 
   document.getElementById("canvas").onmousedown = function (e) {
     mousedown = true;
@@ -728,9 +739,15 @@ window.onload = function () {
       //body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
     const response = await fetch(request);
+    console.log(`RESPONSE FOR XBOXES:`);
+    console.log(response);
     const bookResponse = await response.json();
-    console.log(bookResponse[0]);
-    buildDivBook(bookResponse[0]);
+    console.log(bookResponse);
+    //boxes = bookResponse;
+    // bookResponse.forEach((xbox) => {
+    //   boxes.push(xbox);
+    // });
+    return bookResponse;
   }
 
   // NOTE Needs time
