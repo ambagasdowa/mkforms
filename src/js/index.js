@@ -9,8 +9,8 @@ window.onload = function () {
   //          Construct for set the backgorund img and canvas
   // === === === === === === === === === === === === === === === === === === //
   // NOTE set 60% of the screen and 15% for the admin menu SET as Image div backgorund
-  let percent_width = 100;
-  let percent_height = 145;
+  let percent_width = 95;
+  let percent_height = 250;
 
   var canvas_width = (window.innerWidth * percent_width) / 100;
   var canvas_height = (window.innerHeight * percent_height) / 100;
@@ -22,14 +22,35 @@ window.onload = function () {
     "https://baizabal.xyz/assets/Panamericano/files/source/book/matematicas/002/bachillerato/pages/16.jpg";
   const book_attr = document.createAttribute("style");
 
+  // .img-element: {url(images/bg.jpg) no-repeat center center fixed;
+  //   -webkit-background-size: cover;
+  //   -moz-background-size: cover;
+  //   -o-background-size: cover;
+  //   background-size: cover;
+  // }
+
+  ////size of the img
+  // book_attr.value = `background-image: url(" ${url_img}");`;
+  // book_attr.value += `background-size: contain;`;
+  // book_attr.value += `background-repeat: no-repeat;`;
+  // // size of the div
+  // book_attr.value += `width: ${canvas_width}px;`;
+  // book_attr.value += `height: ${canvas_height}px;`;
+
   ////size of the img
   book_attr.value = `background-image: url(" ${url_img}");`;
-  //book_attr.value += `background-size: ${canvas_width}px ${canvas_height}px;`;
   book_attr.value += `background-size: contain;`;
   book_attr.value += `background-repeat: no-repeat;`;
   // size of the div
+  // book_attr.value += `width: ${canvas_width}px;`;
+  // book_attr.value += `height: ${canvas_height}px;`;
+
+  book_attr.value += `max-width :100%;`;
+  book_attr.value += `max-height: 100%;`;
   book_attr.value += `width: ${canvas_width}px;`;
   book_attr.value += `height: ${canvas_height}px;`;
+
+  // size of the div
 
   page_book.setAttributeNode(book_attr);
 
@@ -562,47 +583,6 @@ window.onload = function () {
             break;
         }
       }
-      // if (typeEvent == "rm") {
-      //   console.log(`EVENT : ${event.type}`);
-
-      //   switch (event.type) {
-      //     // case "click":
-      //     //   // reset canvas
-      //     //   break;
-      //     case "dblclick":
-      //       break;
-      //     case "click":
-      //       // some code here…
-      //       console.log(`The Element ${element}`);
-      //       if (element.checked) {
-      //         var r = context.canvas.getBoundingClientRect(),
-      //           x = event.clientX - r.left,
-      //           y = event.clientY - r.top,
-      //           i;
-
-      //         for (i = boxes.length - 1; i >= 0; --i) {
-      //           console.log(i);
-      //           if (context.isPointInPath(boxes[i], x, y, "nonzero")) {
-      //             boxes.splice(i, 1);
-      //           }
-      //         }
-
-      //         context.clearRect(
-      //           0,
-      //           0,
-      //           context.canvas.width,
-      //           context.canvas.height
-      //         );
-      //         context.beginPath();
-
-      //         for (var i = 0; i < boxes.length; i++) {
-      //           drawBoxOn(boxes[i], context);
-      //         }
-      //         context.canvas.addEventListener("dblclick", this, false);
-      //       }
-      //       break;
-      //   }
-      // }
       // NOTE Handle events for post json data
       if (typeEvent == "postapi") {
         let url = `https://baizabal.xyz:8000/srcpositions/${book}/${page}`;
