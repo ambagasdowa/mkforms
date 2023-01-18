@@ -111,8 +111,8 @@ window.onload = function () {
   const config = {
     [param]: 12,
     [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
-    default_width: 1024,
-    default_heigth: 1600,
+    default_width: 1275,
+    default_heigth: 1650,
   };
 
   console.log(config); // {size: 12, mobileSize: 4}
@@ -369,6 +369,8 @@ window.onload = function () {
         inputType: input_type,
         source_width: context.canvas.width,
         source_height: context.canvas.height,
+        default_width: config.default_width,
+        default_height: config.default_height,
         bms_books_id: book,
         bms_bookpages_id: page,
         page: page,
