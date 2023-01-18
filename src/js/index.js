@@ -112,7 +112,7 @@ window.onload = function () {
     [param]: 12,
     [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
     default_width: 1275,
-    default_heigth: 1650,
+    default_height: 1650,
   };
 
   console.log(config); // {size: 12, mobileSize: 4}
