@@ -280,11 +280,6 @@ window.onload = function () {
     // canvas.width = canvas.width;
     var context = document.getElementById("canvas").getContext("2d");
 
-    //    console.log(context.getContextAttributes());
-    console.log(
-      `Calling to redraw() size is : ${canvas_width} and ${canvas_height}`
-    );
-
     context.clearRect(0, 0, canvas_width, canvas_height); // NOTE him or her define this in the canvas element
     context.strokeStyle = "blue";
     // WARNING get url source and set if exists
@@ -393,6 +388,32 @@ window.onload = function () {
     context.lineWidth = box.lineWidth;
 
     console.log(`DEBUG::`);
+
+    //update rect coordinates
+    // rect.top = rect.top * ratio_h;
+    // rect.left = rect.left * ratio_w;
+    // rect.height = rect.height * ratio_h;
+    // rect.width = rect.width * ratio_w;
+
+    console.log(
+      `Whe need to recalculate the size and positions so defaults : ${
+        config.default_width
+      } X ${config.default_height}
+        Calling to redraw() size of canvas is : ${context.canvas.width} and ${
+        context.canvas.height
+      }
+        and the saved sizes are : ${box.x1} X ${box.y1} for sizes ${
+        box.source_width
+      } X ${box.source_height}
+        so the new sizes must be for defaults = ${
+          (box.x1 / context.canvas.width) * config.default_width
+        } and ${(box.y1 / context.canvas.height) * config.default_height}
+        and sizes for defaults = ${
+          (box.x1 / box.source_width) * context.canvas.width
+        } and ${(box.y1 / box.source_height) * context.canvas.height}
+      `
+    );
+
     console.log(`xCenter => ${xCenter} and yCenter ${yCenter}`);
     console.log(`position in x => ${box.x1} and y ${box.y1}`);
     console.log(`Color => ${box.color}`);
@@ -669,6 +690,24 @@ window.onload = function () {
     c.arc(x, y, radius, 0, Math.PI * 2);
     return c;
   }
+
+  //recalCanvasStrokes(){
+  //  //make canvas same as image, which may have changed size and position
+  //  canvas.height = image.height;
+  //  canvas.width = image.width;
+  //  canvas.style.top = image.offsetTop + "px";;
+  //  canvas.style.left = image.offsetLeft + "px";
+
+  //  //compute ratio comparing the NEW canvas rect with the OLD (current)
+  //  var ratio_w = canvas.width / current_canvas_rect.width;
+  //  var ratio_h = canvas.height / current_canvas_rect.height;
+
+  //  //update rect coordinates
+  //  rect.top = rect.top * ratio_h;
+  //  rect.left = rect.left * ratio_w;
+  //  rect.height = rect.height * ratio_h;
+  //  rect.width = rect.width * ratio_w;
+  //}
 
   /**
    *
