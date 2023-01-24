@@ -20,7 +20,7 @@ $(window).on("load", function () {
       //innerFrame.setAttribute("type", "text/html");
       ////innerFrame.setAttribute("data", `${template}`);
       innerFrame.width = "1200px";
-      innerFrame.height = "900px";
+      innerFrame.height = "880px";
       console.log(innerFrame);
       //innerFrame.src = template;
 
