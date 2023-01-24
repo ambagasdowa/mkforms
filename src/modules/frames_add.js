@@ -17,7 +17,7 @@ $(window).on("load", function () {
       const innerFrame = document.querySelector(".frm");
       innerFrame.src = `./${modalId}.html`;
       ////add attributes
-      //innerFrame.setAttribute("type", "text/html");
+      innerFrame.setAttribute("type", "text/html");
       ////innerFrame.setAttribute("data", `${template}`);
       innerFrame.width = "1200px";
       innerFrame.height = "880px";

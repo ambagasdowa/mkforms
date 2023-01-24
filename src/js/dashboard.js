@@ -14,7 +14,7 @@ const config = {
   // app: "ediq",
   app: "baizabal.xyz",
   templates: {
-    Libros: "fusion",
+    Libros: "list",
     Uploads: "upload",
     Editor: "editor",
   },
