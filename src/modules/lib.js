@@ -26,6 +26,21 @@ function waitForElm(selector) {
 }
 export { waitForElm };
 
+function setStyles(documents) {
+  Object.keys(documents).forEach((key) => {
+    console.log(`Index INPUT : ${key} with value : ${documents[key]}`);
+    // NOTE This is constant for all books
+    /* create the link element */
+    const linkElement = document.createElement("link");
+    // add attributes
+    linkElement.setAttribute("rel", "stylesheet");
+    linkElement.setAttribute("href", documents[key]);
+    // Attach to the document head
+    document.getElementsByTagName("head")[0].appendChild(linkElement);
+  });
+}
+export { setStyles };
+
 function getAllUrlParams(url, framework) {
   // we'll store the parameters here
   var obj = {};
@@ -188,24 +203,8 @@ function book_request(myRequest) {
   console.log(`Inside book_request ?`);
   //NOTE fetch the url api and set the request ...
   // ...
-
   console.log(`Fetch the Request url : ${myRequest}`);
-
-  fetch(myRequest, {
-    //    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    //    mode: "no-cors", // no-cors, *cors, same-origin
-    // cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
-    // credentials: "same-origin", // include, *same-origin, omit
-    // headers: {
-    //   "Content-Type": "application/json",
-    //   // 'Content-Type': 'application/x-www-form-urlencoded',
-    // },
-    // redirect: "follow", // manual, *follow, error
-    // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //body: JSON.stringify(data), // body data type must match "Content-Type" header
-    //    body: console.log(data), // body data type must match "Content-Type" header
-    //body: JSON.parse(data), // body data type must match "Content-Type" header
-  })
+  fetch(myRequest, {})
     .then((response) => {
       // NOTE uncomment when go trought ws api
       // console.log(response.headers.get("content-type"));
@@ -214,21 +213,10 @@ function book_request(myRequest) {
         throw new TypeError("Oops, we haven't got JSON!");
         //console.log("Oops, we haven't got JSON!");
       }
-      //      console.log(`Investigate the response : `);
-      // console.log(response.json());
-      // console.log(response.text());
       return response.json();
     })
     .then((data) => {
       /* process your data further */
-      console.log(`check data : `);
-      console.log(data);
-      console.log(typeof data);
-
-      // let json_data = JSON.stringify(data[0]);
-      // // console.log(json_data)
-      // console.log(JSON.parse(json_data)['book_inputs'].length)
-      // buildDivBook(JSON.parse(json_data));
       buildDivBook(data[0]);
     })
     .catch((error) => console.error(error));
@@ -242,7 +230,7 @@ export { book_request };
 // NOTE request json data
 //=== === === === === === === === === === === === === === === === === === === === === === //
 
-async function book_request_x(url) {
+async function book_request_url(url, get) {
   //  "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json";
   const myHeaders = new Headers({
     "Content-Type": "application/json",
@@ -254,22 +242,18 @@ async function book_request_x(url) {
   console.log(myHeaders);
 
   const request = new Request(url, {
-    //    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "omit", // include, *same-origin, omit
+    method: get.method,
+    mode: get.mode,
+    cache: get.cache,
+    credentials: get.credentials,
     headers: myHeaders,
-    // redirect: "follow", // manual, *follow, error
-    // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
   const response = await fetch(request);
-
   const bookResponse = await response.json();
-
+  // console.log(bookResponse[0]);
   buildDivBook(bookResponse[0]);
 }
-export { book_request_x };
+export { book_request_url };
 
 function cpages(obj) {
   const pages = Object.keys(obj).length;

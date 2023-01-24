@@ -80,7 +80,7 @@
 
       .modal-dialog {
         position: relative;
-        max-width: 80vw;
+        max-width: 95vw;
         max-height: 95vh;
         border-radius: 5px;
         background: var(--white);
@@ -195,10 +195,8 @@
         document.getElementById(modalId).classList.add(isVisible);
 
         document.querySelector(".modal-content").innerHTML =
-          '<object type="text/html" data="./fusion.html?book_id=2"  width="1180" height="770" ></object><div class="para"> \
-            <p>Instructions : </p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta maiores nostrum dolorum consectetur, deserunt recusandae esse modi. Voluptas, doloremque. Dicta quibusdam quia corrupti iusto delectus, deleniti cum necessitatibus laboriosam illum. \
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\
+          '<object type="text/html" data="./fusion.html?book_id=3&user_id=1702"  width="1180" height="770" ></object><div class="para"> \
+            <p>Instructions : </p> <p> <a href="./fusion.html?book_id=1&user_id=1702" target="_blank">Book 1</a> </p> <p> <a href="./index.html" target="_blank">Admin</a> </p> \
           </div>';
       });
     }

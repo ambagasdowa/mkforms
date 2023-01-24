@@ -413,10 +413,10 @@ window.onload = function () {
         } and ${(box.y1 / box.source_height) * context.canvas.height}
       `
     );
-
-    console.log(`xCenter => ${xCenter} and yCenter ${yCenter}`);
-    console.log(`position in x => ${box.x1} and y ${box.y1}`);
-    console.log(`Color => ${box.color}`);
+    console.log(recalCanvasStrokes(box, context));
+    // console.log(`xCenter => ${xCenter} and yCenter ${yCenter}`);
+    // console.log(`position in x => ${box.x1} and y ${box.y1}`);
+    // console.log(`Color => ${box.color}`);
     console.log(box);
 
     if (
@@ -691,23 +691,30 @@ window.onload = function () {
     return c;
   }
 
-  //recalCanvasStrokes(){
-  //  //make canvas same as image, which may have changed size and position
-  //  canvas.height = image.height;
-  //  canvas.width = image.width;
-  //  canvas.style.top = image.offsetTop + "px";;
-  //  canvas.style.left = image.offsetLeft + "px";
+  function recalCanvasStrokes(box, context) {
+    //make canvas same as image, which may have changed size and position
 
-  //  //compute ratio comparing the NEW canvas rect with the OLD (current)
-  //  var ratio_w = canvas.width / current_canvas_rect.width;
-  //  var ratio_h = canvas.height / current_canvas_rect.height;
+    console.log(box);
+    console.log(context);
 
-  //  //update rect coordinates
-  //  rect.top = rect.top * ratio_h;
-  //  rect.left = rect.left * ratio_w;
-  //  rect.height = rect.height * ratio_h;
-  //  rect.width = rect.width * ratio_w;
-  //}
+    //compute ratio comparing the NEW canvas rect with the OLD (current)
+    var ratio_w = box.source_width / context.canvas.width;
+    var ratio_h = box.source_height / context.canvas.height;
+    //update rect coordinates
+    xtop = box.x1 * ratio_h;
+    xleft = box.y1 * ratio_w;
+    xwidth = box.x2 * ratio_w;
+    xheight = box.y2 * ratio_h;
+
+    console.log(
+      `New sizez positions : ${xtop} X ${xleft} -> ${xwidth} : ${xheight}`
+    );
+    //NOTE set new positions
+    // box.x1 = xtop;
+    // box.y1 = xleft;
+    // box.x2 = xwidth;
+    // box.y2 = xheight;
+  }
 
   /**
    *

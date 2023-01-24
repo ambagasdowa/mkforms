@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path Editing</title>
+
+    <link
+      rel="stylesheet"
+      href="css/index.css"
+      type="text/css"
+      media="screen"
+      title="no title"
+      charset="utf-8"
+    />
+    <script src="js/index.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="elder" class="scroller">
+      <div class="canvas">
+        <canvas id="canvas">Your browser doesn't support canvas</canvas>
+      </div>
+    </div>
+
+    <div id="menu" class="menu">
+      <form>
+        <ul class="control_panel">
+          <li>
+            <label class="btn btn-default" for="text">Texto</label>
+            <input
+              type="radio"
+              id="text"
+              name="inpsel"
+              value="text"
+              checked="checked"
+            />
+          </li>
+
+          <li>
+            <label class="btn btn-default" for="option">Opciones</label>
+            <input type="radio" id="option" name="inpsel" value="option" />
+          </li>
+          <li>
+            <label class="btn btn-default" for="textarea">TextoLibre</label>
+            <input type="radio" id="textarea" name="inpsel" value="textarea" />
+          </li>
+          <li>
+            <label class="btn btn-default" for="crossword">Crucigrama</label>
+            <input
+              type="radio"
+              id="crossword"
+              name="inpsel"
+              value="crossword"
+            />
+          </li>
+          <li>
+            <label class="btn btn-default" for="delStroke">Delete</label>
+            <input type="radio" value="delStr" name="uix" id="delStroke" />
+          </li>
+          <li>
+            <label class="btn btn-default" for="cpStroke">Duplicate</label>
+            <input type="radio" value="cpStr" name="uix" id="cpStroke" />
+          </li>
+
+          <li>
+            <label class="btn btn-default" for="mvStroke">Move</label>
+            <input
+              type="radio"
+              value="mvStr"
+              name="uix"
+              id="mvStroke"
+              checked="checked"
+            />
+          </li>
+        </ul>
+
+        <input
+          type="button"
+          id="cleanCanvas"
+          name="cleanCanvas"
+          value="clean"
+        />
+        <input type="text" id="option" name="inpsel" value="option" />
+        <input type="button" id="option" name="inpsel" value="option" />
+
+        <input type="button" id="save_page" value="send" />
+      </form>
+    </div>
+  </body>
+</html>

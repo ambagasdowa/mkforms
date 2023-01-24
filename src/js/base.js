@@ -1,42 +1,51 @@
 // TODO send this in his own file or in a init file
-// NOTE This is constant for all books
-/* create the link element */
-const linkElement = document.createElement("link");
-/* add attributes */
-linkElement.setAttribute("rel", "stylesheet");
-linkElement.setAttribute("href", "/src/bms/src/css/layers.css");
-/* attach to the document head */
-console.log(`loading stylesheet layout ,layers ...`);
-document.getElementsByTagName("head")[0].appendChild(linkElement);
-
-const layers = document.createElement("link");
-layers.setAttribute("rel", "stylesheet");
-layers.setAttribute("href", "/src/bms/src/css/uix.css");
-document.getElementsByTagName("head")[0].appendChild(layers);
-
+// NOTE Example for objects
+const param = "size";
+const config = {
+  [param]: 12,
+  [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
+  default_width: 1275,
+  default_height: 1650,
+  css_files: { layers: "./css/layers.css", uix: "./css/uix.css" },
+  srv_json: "baizabal.xyz",
+  port_json: "8000",
+  protocol_json: "https://",
+  get_method: "items",
+  // app: "ediq",
+  app: "baizabal.xyz",
+  get: {
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "no-cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "omit", // include, *same-origin, omit
+    //redirect: "follow", // manual, *follow, error
+    //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  },
+};
+// TODO build the provisional slider mechanism
+//import * as slideModule from "./lib.min.js";
+import * as slideModule from "../modules/lib.js";
+let greet_scaler = slideModule.greet("Slider.js");
+console.log(greet_scaler); // Initialize module -> Slider.js
+console.log(slideModule.message); // Init all libs and modules ...
+//import { setStyles } from "./lib.js";
+slideModule.setStyles(config.css_files);
 // NOTE Load the jquerys
-//import $ from "./extend.js";
-import { getAllUrlParams } from "./lib.js";
+import $ from "../modules/extend.js";
+//import { getAllUrlParams } from "./lib.js";
 
 $(function () {
   console.log(`loading jquery as module ES6`);
 });
 
-// TODO build the provisional slider mechanism
-//import * as slideModule from "./lib.min.js";
-import * as slideModule from "./lib.js";
-let greet_scaler = slideModule.greet("Slider.js");
-console.log(greet_scaler); // Initialize module -> Slider.js
-console.log(slideModule.message); // Init all libs and modules ...
-
 // NOTE set the ws json query
 
-const bookinit = {
-  1: "https://ediq.mx/public/guias/guia_demo_uv_040321_2/pages/1.jpg",
-  221: "json/source.json",
-  3: "/src/bms/src/json/source.json",
-  228: "/src/bms/src/json/source.json",
-};
+// const bookinit = {
+//   1: "https://ediq.mx/public/guias/guia_demo_uv_040321_2/pages/1.jpg",
+//   221: "json/source.json",
+//   3: "/src/bms/src/json/source.json",
+//   228: "/src/bms/src/json/source.json",
+// };
 
 // NOTE fetch -> url/content/content/id
 // db sources fasciculos
@@ -53,36 +62,46 @@ const bookinit = {
 
 //let book_id = getAllUrlParams(url, true).id;
 // let book_id = getAllUrlParams(window.location.href, false).id; //normal url scheme [?, &]
-let book_id = getAllUrlParams(window.location.href, true).id;
-
-console.log(`Book ID -> ${book_id}`);
-
 // NOTE where to search in db --> db_ediq2021.system_users.{user_id}
-
-let div = document.getElementById("dom-target");
-let myData = div.textContent;
-
-console.log(`user-id --> ${myData}`);
-let userid = JSON.parse(myData);
-console.log(userid);
-console.log(userid.user_id);
-
+// if system is ediq
+if (config.app == "ediq") {
+  console.log(`We are in ediq`);
+  var book_id = slideModule.getAllUrlParams(window.location.href, true).id;
+  console.log(`Book ID -> ${book_id}`);
+  let div = document.getElementById("dom-target");
+  let myData = div.textContent;
+  console.log(`user-id --> ${myData}`);
+  let userid = JSON.parse(myData);
+  var user_id = userid.user_id;
+  console.log(userid);
+  console.log(userid.user_id);
+} else {
+  console.log(`We are Independent`);
+  let bookid = slideModule.getAllUrlParams(window.location.href, false);
+  console.log(`PropertyKeys => ${Object.keys(bookid)}`);
+  console.log(`PropertyValues => ${Object.values(bookid)}`);
+  var book_id = bookid.book_id;
+  var user_id = bookid.user_id;
+}
+console.log(`prop : ${book_id} and ${user_id}`);
 //let srv_json = window.location.hostname;
-let srv_json = "baizabal.xyz";
-//let srv_json = "10.14.17.105";
-//let srv_json = "localhost";
-let port_json = "8000";
-let protocol_json = "https://";
+//let srv_json = "baizabal.xyz";
+////let srv_json = "10.14.17.105";
+////let srv_json = "localhost";
+//let port_json = "8000";
+//let protocol_json = "https://";
 
-let book_url = `${protocol_json}${srv_json}:${port_json}/items/${book_id}/${userid.user_id}`;
+let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.get_method}/${book_id}/${user_id}`;
+
 console.log(`the url is --> ${book_url}`);
 //initializing the first page
 
 //// NOTE better for local input files
-//slideModule.book_request_url(book_url);
+slideModule.book_request_url(book_url, config.get);
 //NOTE better for url input files
-slideModule.book_request(book_url);
+//slideModule.book_request(book_url);
 
+// console.log(`after load the book ask for the page ${cur_page}`);
 const elm = await slideModule.waitForElm(".pages_last");
 
 //
