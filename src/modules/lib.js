@@ -263,6 +263,8 @@ export { cpages };
 
 function buildDivBook(object = {}) {
   console.log(`Running BuildDivBook`);
+  console.log(object);
+  console.log(typeof object);
   const obj = object[0];
   const book_section = document.querySelector(".book");
   const num_pages = cpages(obj.book_pages);
