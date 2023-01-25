@@ -264,8 +264,8 @@ export { cpages };
 function buildDivBook(object = {}) {
   console.log(`Running BuildDivBook`);
   console.log(object);
-  console.log(typeof object);
-  const obj = object[0];
+  const obj = JSON.parse(JSON.stringify(object[0]));
+  console.log(obj);
   const book_section = document.querySelector(".book");
   const num_pages = cpages(obj.book_pages);
   //const num_pages = obj.pages;
@@ -274,7 +274,7 @@ function buildDivBook(object = {}) {
   //NOTE First load div#pages_$x->div#controls_$x->form.form_$x
   for (let index = 1; index <= num_pages; index++) {
     const element = obj.book_pages[index];
-    console.log(`element => ${element}`);
+    //console.log(`element => ${element}`);
 
     //NOTE start buiding of div an attach the img background
     const page_book = document.createElement("div");
@@ -314,9 +314,9 @@ export { buildDivBook };
 
 // NOTE WORK in progress  create inner page logic
 function setForms(obj, index, div) {
-  console.log(`Initializing setForms() process for index ${index}`);
+  //  console.log(`Initializing setForms() process for index ${index}`);
   const inputs = obj.book_inputs[index];
-  console.log(inputs);
+  //console.log(inputs);
   //NOTE build form
 
   //create a form
@@ -324,11 +324,11 @@ function setForms(obj, index, div) {
 
   for (const input of inputs) {
     let input_x = document.createElement("input");
-    console.log(input);
+    //  console.log(input);
     for (const key in input) {
       if (Object.hasOwnProperty.call(input, key)) {
         input_x[key] = input[key];
-        console.log(`${key} : ${input[key]}`);
+        //      console.log(`${key} : ${input[key]}`);
       }
     }
     formx.appendChild(input_x);
