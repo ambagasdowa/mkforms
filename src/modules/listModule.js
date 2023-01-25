@@ -94,7 +94,9 @@ function modal(config_list = {}) {
 
       // IF etc...
       let selector = this.dataset.frame;
-      let frameSrc = `./${config_list.frame_source.selector.src}.html?${config_list.frame_source.selector.params.param1}=${this.dataset.openModal}&${config_list.frame_source.selector.params.param2}=${config_list.frame_source.selector.testValues.User}`;
+      let confSel = config_list.frame_source[selector];
+
+      let frameSrc = `./${confSel.src}.html?${confSel.params.param1}=${this.dataset.openModal}&${confSel.params.param2}=${confSel.testValues.User}`;
       // return framesrc
       openFrame.src = frameSrc;
 
