@@ -261,7 +261,9 @@ function cpages(obj) {
 }
 export { cpages };
 
-function buildDivBook(obj) {
+function buildDivBook(object = {}) {
+  console.log(`Running BuildDivBook`);
+  const obj = object[0];
   const book_section = document.querySelector(".book");
   const num_pages = cpages(obj.book_pages);
   //const num_pages = obj.pages;
@@ -306,6 +308,7 @@ function buildDivBook(obj) {
 
   console.log(`Finished buildin div->pages`);
 }
+export { buildDivBook };
 
 // NOTE WORK in progress  create inner page logic
 function setForms(obj, index, div) {

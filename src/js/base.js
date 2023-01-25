@@ -15,15 +15,20 @@ const config = {
   app: "baizabal.xyz",
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "no-cors", // no-cors, *cors, same-origin
+    mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "omit", // include, *same-origin, omit
     //redirect: "follow", // manual, *follow, error
     //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   },
+  headersGet: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    // 'Content-Type': 'application/x-www-form-urlencoded',
+  },
 };
 // TODO build the provisional slider mechanism
-//import * as slideModule from "./lib.min.js";
+import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
@@ -97,11 +102,13 @@ console.log(`the url is --> ${book_url}`);
 //initializing the first page
 
 //// NOTE better for local input files
-slideModule.book_request_url(book_url, config.get);
+//slideModule.book_request_url(book_url, config.get);
 //NOTE better for url input files
 //slideModule.book_request(book_url);
 
-// console.log(`after load the book ask for the page ${cur_page}`);
+const response = connect.getData(book_url, config);
+response.then((data) => slideModule.buildDivBook(data));
+
 const elm = await slideModule.waitForElm(".pages_last");
 
 //
