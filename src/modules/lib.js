@@ -250,7 +250,7 @@ async function book_request_url(url, get) {
   });
   const response = await fetch(request);
   const bookResponse = await response.json();
-  // console.log(bookResponse[0]);
+  console.log(bookResponse);
   buildDivBook(bookResponse[0]);
 }
 export { book_request_url };
