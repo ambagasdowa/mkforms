@@ -3,13 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://unpkg.com/frappe-datatable/dist/frappe-datatable.min.css"
-      rel="stylesheet"
-    />
-    <!-- <script src="https://unpkg.com/frappe-datatable/dist/frappe-datatable.min.js"></script> -->
-    <script src="https://unpkg.com/frappe-datatable@latest"></script>
+    <!-- include styles -->
+
+    <script defer src="./js/list.js" charset="utf-8" type="module"></script>
     <title>List</title>
   </head>
-  <body></body>
+  <body>
+    <div class="modal" id="modal_frame" data-animation="slideInOutLeft">
+      <div class="modal-dialog">
+        <header class="modal-header">
+          <!-- Guia de Admision a la Universidad Veracruzana -->
+          <button class="close-modal" aria-label="close modal" data-close-modal>
+            x
+          </button>
+        </header>
+        <section class="modal-content">
+          <iframe class="frame" frameborder="0"></iframe>
+        </section>
+        <footer class="modal-footer">Book One</footer>
+      </div>
+    </div>
+  </body>
 </html>

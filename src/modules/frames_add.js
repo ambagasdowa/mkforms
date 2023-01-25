@@ -4,9 +4,6 @@ $(window).on("load", function () {
   // ...
   console.log(`Initilizing Frames.js`);
   const openEls = document.querySelectorAll("[data-open]");
-  const closeEls = document.querySelectorAll("[data-close]");
-  const isVisible = "is-visible";
-
   console.log(openEls);
 
   for (const el of openEls) {
@@ -28,24 +25,24 @@ $(window).on("load", function () {
     });
   }
 
-  for (const el of closeEls) {
-    el.addEventListener("click", function () {
-      this.parentElement.parentElement.parentElement.classList.remove(
-        isVisible
-      );
-    });
-  }
+  // for (const el of closeEls) {
+  //   el.addEventListener("click", function () {
+  //     this.parentElement.parentElement.parentElement.classList.remove(
+  //       isVisible
+  //     );
+  //   });
+  // }
 
-  document.addEventListener("click", (e) => {
-    if (e.target == document.querySelector(".modal.is-visible")) {
-      document.querySelector(".modal.is-visible [data-close]").click();
-    }
-  });
+  // document.addEventListener("click", (e) => {
+  //   if (e.target == document.querySelector(".modal.is-visible")) {
+  //     document.querySelector(".modal.is-visible [data-close]").click();
+  //   }
+  // });
 
-  document.addEventListener("keyup", (e) => {
-    // if we press the ESC
-    if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
-      document.querySelector(".modal.is-visible [data-close]").click();
-    }
-  });
+  // document.addEventListener("keyup", (e) => {
+  //   // if we press the ESC
+  //   if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
+  //     document.querySelector(".modal.is-visible [data-close]").click();
+  //   }
+  // });
 });

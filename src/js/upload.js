@@ -68,11 +68,6 @@ const handleSubmit = (event) => {
     formData.append("files", file);
   }
 
-  // fetch("http://localhost:8080/files", {
-  //     method: "post",
-  //     body: formData,
-  // }).catch((error) => ("Something went wrong!", error));
-
   console.log(config_upload);
 
   let url_upload = `${config_upload.protocol_json}${config_upload.srv_json}:${config_upload.port_json}/${config_upload.method[2]}`;

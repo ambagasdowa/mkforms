@@ -48,12 +48,5 @@ function drawIn(templates) {
 
     console.log(nav_menu);
   });
-
-  // Object.keys(templates).forEach((keys) => {
-  //   console.log(`Get and Append : ${keys} with value : ${templates[keys]}`);
-  //   //  for (; i < templates.length; i++) {
-  //   //    console.log(templates);
-  //   get("./" + templates[keys] + ".html", append);
-  // });
 }
 export { drawIn };
