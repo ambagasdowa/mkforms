@@ -26,7 +26,24 @@ async function getData(url = "", config = {}) {
     headers: myHeaders,
   });
   const response = await fetch(request);
+
   return await response.json();
 }
 
-export { initial, postFileData, getData };
+async function getDataX(url = "", config = {}) {
+  let get = config.get;
+
+  const myHeaders = new Headers(config.headersGet);
+  const request = new Request(url, {
+    method: get.method,
+    mode: get.mode,
+    cache: get.cache,
+    credentials: get.credentials,
+    headers: myHeaders,
+  });
+
+  const response = await fetch(request);
+  return await response.json();
+}
+
+export { initial, postFileData, getData, getDataX };

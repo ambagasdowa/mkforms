@@ -106,8 +106,8 @@ console.log(`the url is --> ${book_url}`);
 //NOTE better for url input files
 //slideModule.book_request(book_url);
 
-const response = connect.getData(book_url, config);
-response.then((data) => slideModule.buildDivBook(data));
+const response = connect.getDataX(book_url, config);
+response.then((data) => (console.log(data), slideModule.buildDivBook(data)));
 
 const elm = await slideModule.waitForElm(".pages_last");
 
