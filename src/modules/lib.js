@@ -263,6 +263,7 @@ export { cpages };
 
 function buildDivBook(object = {}) {
   console.log(`Running BuildDivBook`);
+  console.log(typeof object);
   console.log(object);
   const obj = JSON.parse(JSON.stringify(object[0]));
   console.log(obj);
