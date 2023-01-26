@@ -30,21 +30,4 @@ async function getData(url = "", config = {}) {
   return await response.json();
 }
 
-async function getDataX(url = "", config = {}) {
-  let get = config.get;
-
-  const myHeaders = new Headers(config.headersGet);
-  const request = new Request(url, {
-    method: get.method,
-    mode: get.mode,
-    cache: get.cache,
-    credentials: get.credentials,
-    headers: myHeaders,
-  });
-
-  const response = await fetch(request);
-  const resp_json = await response.json();
-  return resp_json;
-}
-
-export { initial, postFileData, getData, getDataX };
+export { initial, postFileData, getData };
