@@ -43,7 +43,8 @@ async function getDataX(url = "", config = {}) {
   });
 
   const response = await fetch(request);
-  return await response.json();
+  const resp_json = await response.json();
+  return resp_json;
 }
 
 export { initial, postFileData, getData, getDataX };
