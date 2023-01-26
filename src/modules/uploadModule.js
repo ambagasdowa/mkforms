@@ -14,7 +14,7 @@ async function postFileData(url = "", config = {}, data = {}) {
   return response.json();
 } //postFileData
 
-async function getData(url = "", config = {}) {
+async function getData(url = "", config = {}, txt = false) {
   let get = config.get;
 
   const myHeaders = new Headers(config.headersGet);
@@ -26,24 +26,11 @@ async function getData(url = "", config = {}) {
     headers: myHeaders,
   });
   const response = await fetch(request);
-
-  return await response.json();
+  if (txt == true) {
+    return await response.text();
+  } else {
+    return await response.json();
+  }
 }
 
-async function getDataX(url = "", config = {}) {
-  let get = config.get;
-
-  const myHeaders = new Headers(config.headersGet);
-  const request = new Request(url, {
-    method: get.method,
-    mode: get.mode,
-    cache: get.cache,
-    credentials: get.credentials,
-    headers: myHeaders,
-  });
-  const response = await fetch(request);
-
-  return await response.text();
-}
-
-export { initial, postFileData, getData, getDataX };
+export { initial, postFileData, getData };
