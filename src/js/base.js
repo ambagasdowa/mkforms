@@ -95,10 +95,10 @@ console.log(`prop : ${book_id} and ${user_id}`);
 ////let srv_json = "localhost";
 //let port_json = "8000";
 //let protocol_json = "https://";
-console.log(window.location.hostname);
-if (window.location.hostname == config.srv_json) {
-  config.srv_json = "127.0.0.1";
-}
+// console.log(window.location.hostname);
+// if (window.location.hostname == config.srv_json) {
+//   config.srv_json = "127.0.0.1";
+// }
 
 let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.get_method}/${book_id}/${user_id}`;
 
