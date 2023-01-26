@@ -125,9 +125,11 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          console.log("Base:71 Current view: ", $(this).turn("view"));
+          console.log("Current page: ", $(this).turn("view"));
           console.log(
-            `pages ? : ${slideModule.cpages(document.querySelector(".book"))}`
+            `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
+              "view"
+            )}`
           );
         },
       },
