@@ -108,11 +108,11 @@ console.log(`the url is --> ${book_url}`);
 
 console.log(window.location.hostname);
 
-const response = connect.getData(book_url, config);
+const response = connect.getDataX(book_url, config);
 response.then((data) => {
   console.log(`response of getData`);
   console.log(data);
-  slideModule.buildDivBook(data);
+  slideModule.buildDivBook(JSON.parse(data));
 });
 
 const elm = await slideModule.waitForElm(".pages_last");
