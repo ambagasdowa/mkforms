@@ -177,83 +177,32 @@ let currentIndex = 1;
 //const myRequest = "json/source.json";
 
 // Example POST method implementation:
-async function postData(url = "", data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "same-origin", // no-cors, *cors, same-origin
-    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
+// async function postData(url = "", data = {}) {
+//   // Default options are marked with *
+//   const response = await fetch(url, {
+//     method: "GET", // *GET, POST, PUT, DELETE, etc.
+//     mode: "same-origin", // no-cors, *cors, same-origin
+//     cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+//     credentials: "same-origin", // include, *same-origin, omit
+//     headers: {
+//       "Content-Type": "application/json",
+//       // 'Content-Type': 'application/x-www-form-urlencoded',
+//     },
+//     redirect: "follow", // manual, *follow, error
+//     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//     body: JSON.stringify(data), // body data type must match "Content-Type" header
+//   });
+//   return response.json(); // parses JSON response into native JavaScript objects
+// }
 
 //  postData(myRequest, { answer: 42 }).then((data) => {
 //    console.log(data); // JSON data parsed by `data.json()` call
 //  });
 
-function book_request(myRequest) {
-  console.log(`Inside book_request ?`);
-  //NOTE fetch the url api and set the request ...
-  // ...
-  console.log(`Fetch the Request url : ${myRequest}`);
-  fetch(myRequest, {})
-    .then((response) => {
-      // NOTE uncomment when go trought ws api
-      // console.log(response.headers.get("content-type"));
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new TypeError("Oops, we haven't got JSON!");
-        //console.log("Oops, we haven't got JSON!");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      /* process your data further */
-      buildDivBook(data[0]);
-    })
-    .catch((error) => console.error(error));
-  //
-} // END fetching
-
-export { book_request };
-
 // NOTE first set global vars
 //=== === === === === === === === === === === === === === === === === === === === === === //
 // NOTE request json data
 //=== === === === === === === === === === === === === === === === === === === === === === //
-
-async function book_request_url(url, get) {
-  //  "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json";
-  const myHeaders = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    // 'Content-Type': 'application/x-www-form-urlencoded',
-  });
-
-  console.log(`THE REQUEST :`);
-  console.log(myHeaders);
-
-  const request = new Request(url, {
-    method: get.method,
-    mode: get.mode,
-    cache: get.cache,
-    credentials: get.credentials,
-    headers: myHeaders,
-  });
-  const response = await fetch(request);
-  const bookResponse = await response.json();
-  console.log(bookResponse);
-  buildDivBook(bookResponse[0]);
-}
-export { book_request_url };
 
 function cpages(obj) {
   const pages = Object.keys(obj).length;
@@ -263,12 +212,13 @@ export { cpages };
 
 function buildDivBook(object = {}) {
   console.log(`Running BuildDivBook`);
-  console.log(typeof object[0]);
-  console.log(object.length);
-  console.log(object[0].length);
-  // const obj = JSON.parse(JSON.stringify(object[0]));
-  // console.log(obj);
-  const obj = object[0];
+  let obj;
+
+  if (object.length != 1) {
+    obj = object;
+  } else {
+    obj = object[0];
+  }
   const book_section = document.querySelector(".book");
   const num_pages = cpages(obj.book_pages);
   //const num_pages = obj.pages;

@@ -105,15 +105,9 @@ let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 console.log(`the url is --> ${book_url}`);
 //initializing the first page
 
-//// NOTE better for local input files
-//slideModule.book_request_url(book_url, config.get);
-//NOTE better for url input files
-//slideModule.book_request(book_url);
-
 const response = connect.getData(book_url, config, true);
 response.then((data) => {
   console.log(`response of getData`);
-  console.log(data);
   slideModule.buildDivBook(JSON.parse(data));
 });
 
