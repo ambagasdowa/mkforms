@@ -4,21 +4,28 @@
     <meta charset="UTF-8" />
     <title>Path Editing</title>
 
-    <link
-      rel="stylesheet"
-      href="css/index.css"
-      type="text/css"
-      media="screen"
-      title="no title"
-      charset="utf-8"
-    />
-    <script src="js/index.js" charset="utf-8"></script>
+    <!-- <link -->
+    <!--   rel="stylesheet" -->
+    <!--   href="css/index.css" -->
+    <!--   type="text/css" -->
+    <!--   media="screen" -->
+    <!--   title="no title" -->
+    <!--   charset="utf-8" -->
+    <!-- /> -->
+    <!-- <script src="js/index.js" charset="utf-8"></script> -->
+    <script defer src="./js/editor.js" charset="utf-8" type="module"></script>
   </head>
   <body>
     <div id="elder" class="scroller">
       <div class="canvas">
-        <canvas id="canvas">Your browser doesn't support canvas</canvas>
+        <!-- <canvas id="canvas">Your browser doesn't support canvas</canvas> -->
       </div>
+    </div>
+
+    <div id="controls">
+      <label for="page-number">Page:</label>
+      <input type="text" size="3" id="page-number" /> of
+      <span id="number-pages"></span>
     </div>
 
     <div id="menu" class="menu">

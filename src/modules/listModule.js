@@ -1,9 +1,4 @@
 import * as requestData from "./uploadModule.js";
-//import * as Modal from "./jsmodal-1.0d.js";
-//import Modal from "./jsmodal_es6.js";
-// $(function () {
-//   console.log(`loading jquery as module ES6`);
-// });
 
 function init(config_list = {}) {
   let url_list = `${config_list.protocol_json}${config_list.srv_json}:${config_list.port_json}/${config_list.method[0]}`;
@@ -20,6 +15,7 @@ function createTable(objectArray, config_list = {}) {
 
   let body = document.getElementsByTagName("body")[0];
   let tbl = document.createElement("table");
+  tbl.setAttribute("id", "listBooks");
   let thead = document.createElement("thead");
   let thr = document.createElement("tr");
   fieldTitles.forEach((fieldTitle) => {
@@ -102,7 +98,6 @@ function modal(config_list = {}) {
 
       ////add attributes
       openFrame.setAttribute("type", "text/html");
-      ////openFrame.setAttribute("data", `${template}`);
       openFrame.width = "1200px";
       openFrame.height = "880px";
       console.log(openFrame);

@@ -1,7 +1,8 @@
 const paramClass = "class";
 const paramId = "id";
 const param = "size";
-const config_list = {
+const moduleName = "editor";
+const config_editor = {
   [param]: 12,
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   default_width: 1275,
@@ -9,7 +10,11 @@ const config_list = {
   srv_json: "baizabal.xyz",
   port_json: "8000",
   protocol_json: "https://",
-  method: ["books", "srcpositions", "upload"],
+  info: {
+    module: [`${moduleName.charAt(0).toUpperCase()}${moduleName.slice(1)}`],
+    author: "Ambagasdowa",
+  },
+  api_method: ["books", "srcpositions", "upload", "items", "srcpos"],
   frame_source: {
     View: {
       src: "fusion",
@@ -33,7 +38,7 @@ const config_list = {
       },
     },
   },
-  css_files: { list: "./css/list.css" },
+  css_files: { list: "./css/editor.css" },
   // app: "ediq",
   app: "baizabal.xyz",
   post: {
@@ -103,15 +108,18 @@ const config_list = {
       "EDIT",
     ],
   },
+  bookElements: { load: ".canvas" },
 };
-import { setStyles } from "../modules/lib.js";
-import * as ls from "../modules/listModule.js";
 
-setStyles(config_list.css_files);
+import { getAllUrlParams, setStyles } from "../modules/lib.js";
+import { initCanvas, initMsj } from "../modules/editorModule.js";
 
-ls.init(config_list);
+setStyles(config_editor.css_files);
 
-// window.onload = function () {
-//   var tf = new TableFilter("listBooks");
-//   tf.init();
-// };
+console.log(initMsj(config_editor.info));
+
+const paramsUrl = getAllUrlParams(window.location.href, false);
+
+window.onload = function () {
+  initCanvas(config_editor, paramsUrl);
+}; // WARNING End of windows onload
