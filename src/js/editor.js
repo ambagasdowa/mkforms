@@ -1,7 +1,11 @@
+import { getAllUrlParams, setStyles } from "../modules/lib.js";
+import { initCanvas, initMsj, setInitial } from "../modules/editorModule.js";
+
 const paramClass = "class";
 const paramId = "id";
 const param = "size";
 const moduleName = "editor";
+
 const config_editor = {
   [param]: 12,
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
@@ -109,16 +113,16 @@ const config_editor = {
     ],
   },
   bookElements: { load: ".canvas" },
+  xboxs: "",
 };
 
-import { getAllUrlParams, setStyles } from "../modules/lib.js";
-import { initCanvas, initMsj } from "../modules/editorModule.js";
-
 setStyles(config_editor.css_files);
-
 console.log(initMsj(config_editor.info));
-
 const paramsUrl = getAllUrlParams(window.location.href, false);
+
+config_editor.xboxs = setInitial(config_editor, paramsUrl.book_id);
+console.log("XXXXXXX");
+console.log(config_editor.xboxs);
 
 window.onload = function () {
   initCanvas(config_editor, paramsUrl);

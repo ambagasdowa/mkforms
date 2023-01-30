@@ -33,10 +33,8 @@ function initCanvas(config = {}, paramsUrl = {}) {
   // run()
   // change page
   // run()
-  let options = { book_id: paramsUrl.book_id, user_id: paramsUrl.user_id };
-  xboxs = setInitial(config, paramsUrl.book_id);
-  console.log("XXXXXXX");
-  console.log(xboxs);
+  console.log(config.xboxs);
+  const options = { book_id: paramsUrl.book_id, user_id: paramsUrl.user_id };
   loadApi(config, options);
 }
 
@@ -979,4 +977,4 @@ function initControlKeyboard(config = {}, bookResponse = {}) {
   });
 }
 
-export { initCanvas, initMsj };
+export { initCanvas, initMsj, setInitial };
