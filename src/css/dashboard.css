@@ -7,6 +7,8 @@
 :root {
   --background: #292c4a;
   --background-dark: #272944;
+  /* --background-blue: #00264d; */
+  --background-blue: #00172d;
   --foreground: rgb(255, 255, 255);
   --accent-color: rgb(216, 191, 228);
 
@@ -27,7 +29,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: var(--background-blue);
 }
 
 main {

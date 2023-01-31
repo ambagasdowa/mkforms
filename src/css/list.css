@@ -136,3 +136,22 @@ body {
 .modal-content > * {
   object-fit: cover;
 }
+
+table {
+  color: gray;
+}
+
+table > a:hover,
+table > a:visited,
+table > a:link,
+table > a:active {
+  text-decoration: none;
+}
+
+td a:hover,
+td a:visited,
+td a:link,
+td a:active {
+  text-decoration: none;
+  color: #1772db !important;
+}
