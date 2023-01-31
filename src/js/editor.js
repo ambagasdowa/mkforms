@@ -1,5 +1,5 @@
 import { getAllUrlParams, setStyles } from "../modules/lib.js";
-import { initCanvas, initMsj, setInitial } from "../modules/editorModule.js";
+import { initBooks, initMsj, setInitial } from "../modules/editorModule.js";
 
 const paramClass = "class";
 const paramId = "id";
@@ -120,10 +120,14 @@ setStyles(config_editor.css_files);
 console.log(initMsj(config_editor.info));
 const paramsUrl = getAllUrlParams(window.location.href, false);
 
-config_editor.xboxs = setInitial(config_editor, paramsUrl.book_id);
+const x = setInitial(config_editor, paramsUrl.book_id);
+x.then((data) => {
+  console.log(data);
+  config_editor.xboxs = x;
+});
 console.log("XXXXXXX");
 console.log(config_editor.xboxs);
 
 window.onload = function () {
-  initCanvas(config_editor, paramsUrl);
+  initBooks(config_editor, paramsUrl);
 }; // WARNING End of windows onload
