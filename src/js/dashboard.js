@@ -16,7 +16,7 @@ const config = {
   templates: {
     Libros: "list",
     Uploads: "upload",
-    Editor: "editor",
+    Editor: "editor_beta",
   },
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.

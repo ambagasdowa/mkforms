@@ -21,23 +21,26 @@ const canvas_height = (hy * percent_height) / 100;
 //alert(`canvas_width ==> ${canvas_width} -- canvas_height ==> ${canvas_height}`);
 //CREATE BOX INPUTS
 
-const lineOffset = 4;
-const anchrSize = 2;
-// const anchrSize = 4;
+var lineOffset = 4;
+var anchrSize = 2;
+// var anchrSize = 4;
 
-let mousedown = false;
-let clickedArea = { box: -1, pos: "o" };
-const x1 = -1;
-const y1 = -1;
-const x2 = -1;
-const y2 = -1;
-let xboxs = {};
-let boxes = [];
-let tmpBox = null;
-let page = 1;
-let bookid;
-let input_type = "text";
-let this_config = {};
+var mousedown = false;
+var clickedArea = { box: -1, pos: "o" };
+var x1 = -1;
+var y1 = -1;
+var x2 = -1;
+var y2 = -1;
+var xboxs = {};
+var xboxes = {};
+var boxes = [];
+var tmpBox = null;
+var page = 1;
+var pages = 0;
+var off_page = 0;
+var bookid;
+var input_type = "text";
+var this_config = {};
 
 function initMsj(info = {}) {
   return `${message} : ${info.module} by ${info.author}`;
@@ -94,7 +97,7 @@ function loadApi(config = {}, paramArray = {}) {
     //call xboxes?
     console.log(bookResponse);
     let numberPages = document.querySelector(`#number-pages`);
-    numberPages.innerHTML = bookResponse.pages;
+    pages = numberPages.innerHTML = bookResponse.pages;
     //note draw book call turn.js lib for drawing the background
     drawBook(config, bookResponse);
   });
@@ -148,11 +151,6 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
 }
 
 function loadBook(config = {}, bookResponse = {}) {
-  // let page = 15;
-
-  // if (next_page != "Undefined") {
-  //   page = page + next_page;
-  // }
   // WORKING HIR
   // LOAD all Canvas set
   initCanvasEngine(this_config, bookid, page);
@@ -162,26 +160,65 @@ function initCanvasEngine(config = {}, bookid, page) {
   // NOTE
   console.log(`We known xboxs in add page ??? `);
   // NOTE WORKING  HIR
-
   console.log(`PROMISE XBOXS`);
   config.xboxs.then((data) => {
     let sourcePositions = data[0].sourcePositions;
+    //xboxes = sourcePositions;
+
     console.log(sourcePositions[page]);
+    console.log(typeof sourcePositions[page]);
 
-    let pageNumber = document.querySelector(`#page-number`);
-    pageNumber.value = `${page}`;
+    if (sourcePositions[page] != undefined) {
+      xboxes[page] = sourcePositions[page];
+      // load ,replace into boxes
+      //      redraw();
+      boxes = xboxes[page];
+      alert(`Have data in api server , now save or replace? in xboxes`);
+      //      redraw();
+    }
+    //  boxes = xboxes[page];
 
+    console.log(JSON.stringify(xboxes[page]));
+    // PAGE CONTROL:
+    console.log(`off_page : ${off_page}`);
     if (page > 1) {
-      let prevDiv = document.querySelector(`[data-in-page="${page - 1}"]`);
-      prevDiv.classList.add("off");
+      let parentUpDiv = document.querySelector(`[data-in-page="${page - 1}"]`);
+      // let parentDownDiv = document.querySelector(
+      //   `[data-in-page="${page + 1}"]`
+      // );
+      parentUpDiv.classList.add("off");
+      // parentDownDiv.classList.add("off");
+      let hiddenDiv = document.querySelector(`[data-in-page="${off_page}"]`);
+      hiddenDiv.classList.add("off");
+    }
+    if (page < 0) {
+      // let parentDownDiv = document.querySelector(
+      //   `[data-in-page="${pages + page + 1}"]`
+      // );
+      let hiddenDiv = document.querySelector(`[data-in-page="${off_page}"]`);
+      hiddenDiv.classList.add("off");
+      // parentDownDiv.classList.add("off");
+      page = pages + page;
     }
 
+    if (page == 0) {
+      let prevDiv = document.querySelector(`[data-in-page="${1}"]`);
+      prevDiv.classList.add("off");
+      let hiddenDiv = document.querySelector(`[data-in-page="${off_page}"]`);
+      hiddenDiv.classList.add("off");
+
+      page = pages;
+    }
+    console.log(page);
+    let pageNumber = document.querySelector(`#page-number`);
+    pageNumber.value = `${page}`;
+    off_page = `${page}`;
     let currentDiv = document.querySelector(`[data-in-page="${page}"]`);
-
     currentDiv.classList.remove("off");
-
     let curdiv = currentDiv.getBoundingClientRect();
+
     currentDiv.append(attachCanvas(page));
+    redraw();
     let canvas = document.getElementById(`canvas_${page}`);
     let context = canvas.getContext("2d");
     console.log(canvas);
@@ -191,21 +228,173 @@ function initCanvasEngine(config = {}, bookid, page) {
     console.log(msg);
     msg = `The New Canvas Width is : ${bound.width} and the Heigth is : ${bound.height}`;
     console.log(msg);
-    console.log(`LOAD XBOXES on page : ${page}`);
+    console.log(`LOAD BOXES on page : ${page}`);
 
-    console.log(`INITIAL XBOXES`);
-    console.log(boxes);
+    console.log(`INITIAL BOXES`);
+    console.log(boxes[page]);
+    // CANVAS CONTROL
+    document.getElementById(`canvas_${page}`).onmousedown = function (e) {
+      mousedown = true;
+      console.log(`mouse[DOWN] TRUE BOXES --> `);
+      console.log(xboxes[page]);
+      console.log(`mouse[DOWN] TRUE --> ${e.offsetX} ::: ${e.offsetY}`);
+      clickedArea = findCurrentArea(e.offsetX, e.offsetY);
+      x1 = e.offsetX;
+      y1 = e.offsetY;
+      x2 = e.offsetX;
+      y2 = e.offsetY;
+
+      if (clickedArea.box != -1) {
+        //boxes = xboxes[page];
+        var selBox = boxes[clickedArea.box];
+        // === === === === === === === === === === === === === === === === === === //
+        //            Check if we need delete it
+        // === === === === === === === === === === === === === === === === === === //
+        let delStroke = document.querySelector("#delStroke");
+        console.log(delStroke);
+        console.log(`IsDeleteOn : ${delStroke.checked}`);
+
+        let cpStroke = document.querySelector("#cpStroke");
+        console.log(cpStroke);
+        console.log(`IsCopyOn : ${cpStroke.checked}`);
+
+        if (delStroke.checked) {
+          boxes.splice(clickedArea.box, 1);
+          let reload = new reloadCanvas(boxes, context);
+        } else if (cpStroke.checked) {
+          let xbox1 = selBox.x1 + config.copySize;
+          let xboy1 = selBox.y1 + config.copySize;
+          let xbox2 = selBox.x2 + config.copySize;
+          let xboy2 = selBox.y2 + config.copySize;
+          boxes.push(newBox(xbox1, xboy1, xbox2, xboy2));
+          reloadCanvas(boxes, context);
+        } else {
+          //something else
+        }
+        //null
+      } //ClickedArea
+    }; // onmousedown
+
+    document.getElementById(`canvas_${page}`).onmouseup = function (e) {
+      if (clickedArea.box == -1 && tmpBox != null) {
+        boxes.push(tmpBox);
+        xboxes[page] = boxes;
+      } else if (clickedArea.box != -1) {
+        var selectedBox = boxes[clickedArea.box];
+        //  } else {
+        if (selectedBox.x1 > selectedBox.x2) {
+          var previousX1 = selectedBox.x1;
+          selectedBox.x1 = selectedBox.x2;
+          selectedBox.x2 = previousX1;
+        }
+        if (selectedBox.y1 > selectedBox.y2) {
+          var previousY1 = selectedBox.y1;
+          selectedBox.y1 = selectedBox.y2;
+          selectedBox.y2 = previousY1;
+        }
+      }
+
+      clickedArea = { box: -1, pos: "o" };
+      tmpBox = null;
+      mousedown = false;
+      //  console.log(`xboxes[page] that can be saved  :`);
+      //  console.log(xboxes[page]);
+    };
+
+    document.getElementById(`canvas_${page}`).onmouseout = function (e) {
+      console.log(`mouse[OUT] TRUE --> ${e.offsetX} ::: ${e.offsetY}`);
+
+      if (clickedArea.box != -1) {
+        var selectedBox = boxes[clickedArea.box];
+        if (selectedBox.x1 > selectedBox.x2) {
+          var previousX1 = selectedBox.x1;
+          selectedBox.x1 = selectedBox.x2;
+          selectedBox.x2 > previousX1;
+        }
+        if (selectedBox.y1 > selectedBox.y2) {
+          var previousY1 = selectedBox.y1;
+          selectedBox.y1 = selectedBox.y2;
+          selectedBox.y2 > previousY1;
+        }
+      }
+      mousedown = false;
+      clickedArea = { box: -1, pos: "o" };
+      tmpBox = null;
+    };
+
+    // Delete circles
+    // https://stackoverflow.com/questions/32736999/remove-circle-drawn-in-html5-canvas-once-user-clicks-on-it
+
+    document.getElementById(`canvas_${page}`).onmousemove = function (e) {
+      //console.log(`mouse[MOVE] TRUE --> ${e.offsetX} ::: ${e.offsetY}`);
+
+      if (mousedown && clickedArea.box == -1) {
+        console.log(`mousedown && clickedArea.box = -1`);
+        x2 = e.offsetX;
+        y2 = e.offsetY;
+        redraw();
+      } else if (mousedown && clickedArea.box != -1) {
+        console.log(`mousedown && clickedArea.box != -1`);
+        x2 = e.offsetX;
+        y2 = e.offsetY;
+        let xOffset = x2 - x1;
+        let yOffset = y2 - y1;
+        x1 = x2;
+        y1 = y2;
+
+        // NOTE RESIZE ENGINE:
+        /*
+        -> +---+---+ 
+           |       |
+        -> +   +   +
+           |       |
+        -> +---+---+
+      */
+        if (
+          clickedArea.pos == "i" || //inner | init ?
+          clickedArea.pos == "tl" || //top-left
+          clickedArea.pos == "l" || //left
+          clickedArea.pos == "bl" // bottom-left
+        ) {
+          boxes[clickedArea.box].x1 += xOffset;
+        }
+        if (
+          clickedArea.pos == "i" || //inner
+          clickedArea.pos == "tl" || //top-left
+          clickedArea.pos == "t" || //top
+          clickedArea.pos == "tr" // top-right
+        ) {
+          boxes[clickedArea.box].y1 += yOffset;
+        }
+        if (
+          clickedArea.pos == "i" || //inner
+          clickedArea.pos == "tr" || //top-right
+          clickedArea.pos == "r" || //right
+          clickedArea.pos == "br" // bottom-right
+        ) {
+          boxes[clickedArea.box].x2 += xOffset;
+        }
+        if (
+          clickedArea.pos == "i" || // inner
+          clickedArea.pos == "bl" || //botom-left
+          clickedArea.pos == "b" || //bottom
+          clickedArea.pos == "br" // bottom-right
+        ) {
+          boxes[clickedArea.box].y2 += yOffset;
+        }
+        // NOTE TEMPORA:
+        xboxes[page] = boxes;
+        // NOTE TEMPORA:
+        redraw();
+      }
+    };
   });
 } //initCanvasEngine
 
 function attachCanvas(page) {
-  // console.log(`ELEMENT:`);
-  // console.log(element);
   let canvas = document.createElement(`canvas`);
   canvas.setAttribute(`data-page`, `${page}`);
   canvas.setAttribute("id", `canvas_${page}`);
-  //  canvas.setAttribute("id", `canvas`);
-
   canvas.setAttribute(`width`, `${canvas_width}px`);
   canvas.setAttribute(`height`, `${canvas_height}px`);
   canvas.innerText = `Your browser doesn't suppor canvas on page ${page}`;
@@ -221,6 +410,346 @@ function attachCanvas(page) {
   //  element.appendChild(canvas);
   //  element.innerHTML(canvas);
   return canvas;
+}
+
+function redraw() {
+  // canvas.width = canvas.width;
+  console.log(`REDRAW Function : ${page}`);
+  const context = document.getElementById(`canvas_${page}`).getContext("2d");
+
+  context.clearRect(0, 0, canvas_width, canvas_height); // NOTE him or her define this in the canvas element
+  context.strokeStyle = "blue";
+  // WARNING get url source and set if exists
+  //console.log(context.canvas);
+  console.log(`set type of input -> ${input_type}`);
+  // === === === === === === === === === === === === === === === //
+  //   This can hold text,textare and crossword
+  // === === === === === === === === === === === === === === === //
+  context.beginPath();
+  console.log(`What is selected in [::REDRAW::] ==> ${input_type}`);
+  //Call to WS and  SET the previus boxes
+  console.log(`ON REDRAW page = ${page}`);
+
+  console.log(boxes);
+  console.log(xboxes);
+
+  if (typeof xboxes[page] === undefined) {
+    boxes = [];
+  }
+
+  for (let i = 0; i < boxes.length; i++) {
+    drawBoxOn(boxes[i], context);
+  }
+  if (clickedArea.box == -1) {
+    tmpBox = newBox(x1, y1, x2, y2);
+    if (tmpBox != null) {
+      drawBoxOn(tmpBox, context);
+    }
+  }
+
+  // === === === === === === === === === === === === === === === //
+} // End of redraw
+
+function findCurrentArea(x, y) {
+  for (let i = 0; i < boxes.length; i++) {
+    let box = boxes[i];
+
+    console.log(`what we have in box?`);
+    console.log(JSON.stringify(box));
+
+    let xCenter = box.x1 + (box.x2 - box.x1) / 2;
+    let yCenter = box.y1 + (box.y2 - box.y1) / 2;
+    if (box.x1 - lineOffset < x && x < box.x1 + lineOffset) {
+      if (box.y1 - lineOffset < y && y < box.y1 + lineOffset) {
+        return { box: i, pos: "tl" };
+      } else if (box.y2 - lineOffset < y && y < box.y2 + lineOffset) {
+        return { box: i, pos: "bl" };
+      } else if (yCenter - lineOffset < y && y < yCenter + lineOffset) {
+        return { box: i, pos: "l" };
+      }
+    } else if (box.x2 - lineOffset < x && x < box.x2 + lineOffset) {
+      if (box.y1 - lineOffset < y && y < box.y1 + lineOffset) {
+        return { box: i, pos: "tr" };
+      } else if (box.y2 - lineOffset < y && y < box.y2 + lineOffset) {
+        return { box: i, pos: "br" };
+      } else if (yCenter - lineOffset < y && y < yCenter + lineOffset) {
+        return { box: i, pos: "r" };
+      }
+    } else if (xCenter - lineOffset < x && x < xCenter + lineOffset) {
+      if (box.y1 - lineOffset < y && y < box.y1 + lineOffset) {
+        return { box: i, pos: "t" };
+      } else if (box.y2 - lineOffset < y && y < box.y2 + lineOffset) {
+        return { box: i, pos: "b" };
+      } else if (box.y1 - lineOffset < y && y < box.y2 + lineOffset) {
+        return { box: i, pos: "i" };
+      }
+    } else if (box.x1 - lineOffset < x && x < box.x2 + lineOffset) {
+      if (box.y1 - lineOffset < y && y < box.y2 + lineOffset) {
+        return { box: i, pos: "i" };
+      }
+    }
+  }
+  return { box: -1, pos: "o" };
+}
+
+function newBox(x1, y1, x2, y2) {
+  let boxX1 = x1 < x2 ? x1 : x2;
+  let boxY1 = y1 < y2 ? y1 : y2;
+  let boxX2 = x1 > x2 ? x1 : x2;
+  let boxY2 = y1 > y2 ? y1 : y2;
+  if (boxX2 - boxX1 > lineOffset * 2 && boxY2 - boxY1 > lineOffset * 2) {
+    return {
+      x1: boxX1,
+      y1: boxY1,
+      x2: boxX2,
+      y2: boxY2,
+      lineWidth: 1,
+      color: "DeepSkyBlue",
+      inputType: input_type,
+      source_width: canvas_width,
+      source_height: canvas_height,
+      default_width: this_config.default_width,
+      default_height: this_config.default_height,
+      bms_books_id: bookid,
+      bms_bookpages_id: page,
+      page: page,
+    };
+  } else {
+    return null;
+  }
+}
+
+function drawBoxOn(box, context) {
+  let xCenter = box.x1 + (box.x2 - box.x1) / 2;
+  let yCenter = box.y1 + (box.y2 - box.y1) / 2;
+  let ratio = (box.x2 - box.x1) / 2;
+
+  context.shadowColor = "DeepSkyBlue";
+  context.shadowBlur = 13;
+
+  context.strokeStyle = box.color;
+  context.fillStyle = box.color;
+  context.lineWidth = box.lineWidth;
+
+  console.log(`DEBUG::`);
+
+  //update rect coordinates
+  // rect.top = rect.top * ratio_h;
+  // rect.left = rect.left * ratio_w;
+  // rect.height = rect.height * ratio_h;
+  // rect.width = rect.width * ratio_w;
+
+  console.log(
+    `Whe need to recalculate the size and positions so defaults : ${
+      this_config.default_width
+    } X ${this_config.default_height}
+        Calling to redraw() size of canvas is : ${context.canvas.width} and ${
+      context.canvas.height
+    }
+        and the saved sizes are : ${box.x1} X ${box.y1} for sizes ${
+      box.source_width
+    } X ${box.source_height}
+        so the new sizes must be for defaults = ${
+          (box.x1 / context.canvas.width) * this_config.default_width
+        } and ${(box.y1 / context.canvas.height) * this_config.default_height}
+        and sizes for defaults = ${
+          (box.x1 / box.source_width) * context.canvas.width
+        } and ${(box.y1 / box.source_height) * context.canvas.height}
+      `
+  );
+  console.log(recalCanvasStrokes(box, context));
+  // console.log(`xCenter => ${xCenter} and yCenter ${yCenter}`);
+  // console.log(`position in x => ${box.x1} and y ${box.y1}`);
+  // console.log(`Color => ${box.color}`);
+  console.log(box);
+
+  if (
+    box.inputType == "text" ||
+    box.inputType == "textarea" ||
+    box.inputType == "crossword"
+  ) {
+    context.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+    //      context.closePath();
+    context.stroke();
+
+    // aesthetic resize decorator marks
+    // +------------+------------+
+    // |                         |
+    // +            +            +
+    // |                         |
+    // +------------+------------+
+
+    // top-left
+    context.fillRect(
+      box.x1 - anchrSize,
+      box.y1 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //top-center
+    context.fillRect(
+      box.x1 - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //top-right
+    context.fillRect(
+      box.x1 - anchrSize,
+      box.y2 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //middle-left
+    context.fillRect(
+      xCenter - anchrSize,
+      box.y1 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //middle-center
+    context.fillRect(
+      xCenter - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //middle-right
+    context.fillRect(
+      xCenter - anchrSize,
+      box.y2 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //bottom-left
+    context.fillRect(
+      box.x2 - anchrSize,
+      box.y1 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //bottom-center
+    context.fillRect(
+      box.x2 - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //bottom-right
+    context.fillRect(
+      box.x2 - anchrSize,
+      box.y2 - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+  } // input type as text
+
+  if (box.inputType == "option") {
+    context.beginPath();
+    //context.arc(xCenter, yCenter, ratio, 0, Math.PI * 2, true); // Outer circle
+    var arco = new circle(xCenter, yCenter, ratio);
+    context.stroke(arco);
+
+    //top
+    context.fillRect(
+      xCenter - anchrSize,
+      yCenter - ratio - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //left
+    context.fillRect(
+      xCenter - ratio - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //center
+    context.fillRect(
+      xCenter - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //right
+    context.fillRect(
+      xCenter + ratio - anchrSize,
+      yCenter - anchrSize,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+    //bottom
+    context.fillRect(
+      xCenter,
+      yCenter - 1.5 + ratio,
+      2 * anchrSize,
+      2 * anchrSize
+    );
+  }
+}
+
+// function clickHandler(e) {
+//   var r = context.canvas.getBoundingClientRect(),
+//     x = e.clientX - r.left,
+//     y = e.clientY - r.top,
+//     i;
+//   console.log(`ClickHan R => `);
+//   // console.log(clickedArea);
+//   console.log(r);
+
+//   console.log(context.getContextAttributes());
+//   for (i = boxes.length - 1; i >= 0; --i) {
+//     console.log(i);
+//     if (context.isPointInPath(boxes[i], x, y, "nonzero")) {
+//       boxes.splice(i, 1);
+//     }
+//   }
+
+//   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+//   context.beginPath();
+
+//   for (var i = 0; i < boxes.length; i++) {
+//     drawBoxOn(boxes[i], context);
+//   }
+// }
+
+function reloadCanvas(boxes, context) {
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  context.beginPath();
+  for (var i = 0; i < boxes.length; i++) {
+    drawBoxOn(boxes[i], context);
+  }
+}
+
+function circle(x, y, radius) {
+  var c = new Path2D();
+  c.arc(x, y, radius, 0, Math.PI * 2);
+  return c;
+}
+
+function recalCanvasStrokes(box, context) {
+  //make canvas same as image, which may have changed size and position
+
+  console.log(box);
+  console.log(context);
+
+  //compute ratio comparing the NEW canvas rect with the OLD (current)
+  var ratio_w = box.source_width / context.canvas.width;
+  var ratio_h = box.source_height / context.canvas.height;
+  //update rect coordinates
+  let xtop = box.x1 * ratio_h;
+  let xleft = box.y1 * ratio_w;
+  let xwidth = box.x2 * ratio_w;
+  let xheight = box.y2 * ratio_h;
+
+  console.log(
+    `New sizez positions : ${xtop} X ${xleft} -> ${xwidth} : ${xheight}`
+  );
+  //NOTE set new positions
+  // box.x1 = xtop;
+  // box.y1 = xleft;
+  // box.x2 = xwidth;
+  // box.y2 = xheight;
 }
 
 function initControlKeyboard(config = {}, bookResponse = {}) {
@@ -277,7 +806,6 @@ function handleEventOnDom(element, typeEvent) {
           break;
         case "dblclick":
           // some code here…
-
           break;
         case "change":
           console.log(`change is on`);
@@ -286,7 +814,7 @@ function handleEventOnDom(element, typeEvent) {
     }
     // NOTE Handle events for post json data
     if (typeEvent == "postapi") {
-      let url = `https://baizabal.xyz:8000/srcpositions/${book}/${page}`;
+      let url = `https://baizabal.xyz:8000/srcpositions/${bookid}/${page}`;
       let data = JSON.parse(JSON.stringify(boxes));
 
       console.log(`SEND POST : `);
@@ -301,20 +829,32 @@ function handleEventOnDom(element, typeEvent) {
       alert(JSON.stringify(boxes));
     }
     // NOTE relative to the canvas UIX
-    if (typeEvent == "navigator") {
+    if (typeEvent == "next") {
       switch (event.type) {
         case "click":
           // change page:
-          let current_page = document.querySelector(`#page-number`);
           page = page + 1;
-
           console.log(`next :${page}`);
-
+          initCanvasEngine(this_config, bookid, page, true);
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+    if (typeEvent == "prev") {
+      switch (event.type) {
+        case "click":
+          // change page:
+          page = page - 1;
+          console.log(`prev :${page}`);
           initCanvasEngine(this_config, bookid, page);
           break;
         case "dblclick":
           // some code here…
-
           break;
         case "change":
           console.log(`change is on`);
@@ -342,6 +882,10 @@ let send_data = new handleEventOnDom(send, "postapi");
 
 const next = document.querySelector("#next");
 console.log(`Next : ${next}`);
-let next_page = new handleEventOnDom(next, "navigator");
+let next_page = new handleEventOnDom(next, "next");
+
+const prev = document.querySelector("#prev");
+console.log(`Next : ${prev}`);
+let prev_page = new handleEventOnDom(prev, "prev");
 
 export { initBooks, initMsj, setInitial };
