@@ -34,6 +34,10 @@ const y2 = -1;
 let xboxs = {};
 let boxes = [];
 let tmpBox = null;
+let page = 1;
+let bookid;
+let input_type = "text";
+let this_config = {};
 
 function initMsj(info = {}) {
   return `${message} : ${info.module} by ${info.author}`;
@@ -41,6 +45,8 @@ function initMsj(info = {}) {
 
 function initBooks(config = {}, paramsUrl = {}) {
   const options = { book_id: paramsUrl.book_id, user_id: paramsUrl.user_id };
+  bookid = options.book_id;
+  this_config = config;
   // funciton run(){
   // set book_id
   // set pages
@@ -87,6 +93,8 @@ function loadApi(config = {}, paramArray = {}) {
     }
     //call xboxes?
     console.log(bookResponse);
+    let numberPages = document.querySelector(`#number-pages`);
+    numberPages.innerHTML = bookResponse.pages;
     //note draw book call turn.js lib for drawing the background
     drawBook(config, bookResponse);
   });
@@ -116,16 +124,12 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
   // NOTE WORKING  HIR
   console.log(config.xboxs);
 
-  // Create an element for this page
-  // const sizes = ruled();
-  // console.log(sizes);
-
   for (let page = 1; page <= bookResponse.pages; page++) {
     const background_img = bookResponse.book_pages[page];
 
     let page_book = document.createElement("div");
     page_book.setAttribute("data-in-page", `${page}`);
-
+    page_book.classList.add(`off`);
     const book_attr = document.createAttribute("style");
     book_attr.value = `
                         background-image: url(${background_img});
@@ -135,7 +139,6 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
                         max-height: 100%;
                         width: ${canvas_width}px;
                         height: ${canvas_height}px;
-                        display:block;
     `;
 
     page_book.setAttributeNode(book_attr);
@@ -145,59 +148,17 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
 }
 
 function loadBook(config = {}, bookResponse = {}) {
-  $(function () {
-    console.log(`loading jquery as module ES6`);
-  });
+  // let page = 15;
 
-  let flipbook = $(`${config.bookElements.load}`);
-  console.log(flipbook);
-
-  // const sizes = ruled();
-
-  flipbook.turn({
-    display: "single",
-    // Magazine width
-    width: canvas_width,
-    // Magazine height
-    height: canvas_height,
-    // Duration in millisecond
-    duration: 1000,
-    // Hardware acceleration
-    acceleration: true, //!isChrome(),
-    // Enables gradients
-    gradients: true, //!$.isTouch,
-    // Auto center this flipbook
-    autoCenter: true,
-    // Elevation from the edge of the flipbook when turning a page
-    elevation: 50,
-    //    The number of pages
-    pages: bookResponse.pages,
-    // Events
-    when: {
-      turning: function (event, page, view) {}, //turning
-      //load the canvas
-      turned: function (e, page) {
-        $("#page-number").val(page);
-        console.log("Current page: ", $(this).turn("view"));
-        console.log(
-          `[send data] book_id : ${bookResponse.book_id}, page_id : ${$(
-            this
-          ).turn("view")}`
-        );
-        initCanvasEngine(config, bookResponse.book_id, page);
-        console.log(`turned goes to #page-number : ${page}`);
-      },
-    },
-  });
-
-  $("#number-pages").html(bookResponse.pages);
-
-  $("#page-number").keydown(function (e) {
-    if (e.keyCode == 13) $(flipbook).turn("page", $("#page-number").val());
-  });
+  // if (next_page != "Undefined") {
+  //   page = page + next_page;
+  // }
+  // WORKING HIR
+  // LOAD all Canvas set
+  initCanvasEngine(this_config, bookid, page);
 } //loadBook
 
-function initCanvasEngine(config = {}, book_id, page) {
+function initCanvasEngine(config = {}, bookid, page) {
   // NOTE
   console.log(`We known xboxs in add page ??? `);
   // NOTE WORKING  HIR
@@ -207,7 +168,18 @@ function initCanvasEngine(config = {}, book_id, page) {
     let sourcePositions = data[0].sourcePositions;
     console.log(sourcePositions[page]);
 
+    let pageNumber = document.querySelector(`#page-number`);
+    pageNumber.value = `${page}`;
+
+    if (page > 1) {
+      let prevDiv = document.querySelector(`[data-in-page="${page - 1}"]`);
+      prevDiv.classList.add("off");
+    }
+
     let currentDiv = document.querySelector(`[data-in-page="${page}"]`);
+
+    currentDiv.classList.remove("off");
+
     let curdiv = currentDiv.getBoundingClientRect();
     currentDiv.append(attachCanvas(page));
     let canvas = document.getElementById(`canvas_${page}`);
@@ -234,8 +206,8 @@ function attachCanvas(page) {
   canvas.setAttribute("id", `canvas_${page}`);
   //  canvas.setAttribute("id", `canvas`);
 
-  // canvas.setAttribute(`width`, `${canvas_width}px`);
-  // canvas.setAttribute(`height`, `${canvas_height}px`);
+  canvas.setAttribute(`width`, `${canvas_width}px`);
+  canvas.setAttribute(`height`, `${canvas_height}px`);
   canvas.innerText = `Your browser doesn't suppor canvas on page ${page}`;
 
   // let canvas_attr = document.createAttribute("style");
@@ -252,35 +224,124 @@ function attachCanvas(page) {
 }
 
 function initControlKeyboard(config = {}, bookResponse = {}) {
-  let keyControls = $(`${config.bookElements.load}`);
-
-  $(document).keydown(function (e) {
-    var previous = 37,
-      next = 39,
-      esc = 27;
-
-    switch (e.keyCode) {
-      case previous:
-        // left arrow
-        keyControls.turn("previous");
-        // keyControls.turn("page".$("#page-number").val());
-        e.preventDefault();
-
-        break;
-      case next:
-        //right arrow
-        keyControls.turn("next");
-        // keyControls.turn("page".$("#page-number").val());
-        e.preventDefault();
-
-        break;
-      case esc:
-        $(".magazine-viewport").zoom("zoomOut");
-        e.preventDefault();
-
-        break;
-    }
-  });
+  const inputs = document.querySelectorAll("[name=inpsel]");
+  for (const input of inputs) {
+    input.addEventListener("change", (evt) => {
+      switch (evt.target.value) {
+        case "text":
+          console.log(`text`);
+          input_type = "text";
+          console.log(`set input_type to ${input_type}`);
+          return input_type;
+        case "option":
+          console.log(`option`);
+          input_type = "option";
+          console.log(`set input_type to ${input_type}`);
+          return input_type;
+        case "textarea":
+          console.log(`textarea`);
+          input_type = "textarea";
+          console.log(`set input_type to ${input_type}`);
+          return input_type;
+        case "crossword":
+          console.log(`crossword`);
+          input_type = "crossword";
+          console.log(`set input_type to ${input_type}`);
+          return input_type;
+        default:
+          console.log(`original or default`);
+          input_type = "text";
+          console.log(`set input_type to ${input_type}`);
+          return input_type;
+      }
+    });
+  }
 }
+
+function handleEventOnDom(element, typeEvent) {
+  // |this| is a newly created object
+  this.name = `Initialize Dom ${typeEvent}`;
+  this.handleEvent = function (event) {
+    console.log(this.name); // 'Something Good', as this is bound to newly created object
+
+    // NOTE relative to the canvas UIX
+    if (typeEvent == "canvas") {
+      switch (event.type) {
+        case "click":
+          // reset canvas
+          boxes = null;
+          send_post = null;
+          boxes = [];
+          context.clearRect(0, 0, canvas_width, canvas_height);
+          context.strokeStyle = "blue";
+          break;
+        case "dblclick":
+          // some code here…
+
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+    // NOTE Handle events for post json data
+    if (typeEvent == "postapi") {
+      let url = `https://baizabal.xyz:8000/srcpositions/${book}/${page}`;
+      let data = JSON.parse(JSON.stringify(boxes));
+
+      console.log(`SEND POST : `);
+      console.log(url);
+      console.log(data);
+
+      //      let response_json = postData(url, data);
+
+      //      console.log(`RESPONSE : `);
+      //      console.log(response_json);
+
+      alert(JSON.stringify(boxes));
+    }
+    // NOTE relative to the canvas UIX
+    if (typeEvent == "navigator") {
+      switch (event.type) {
+        case "click":
+          // change page:
+          let current_page = document.querySelector(`#page-number`);
+          page = page + 1;
+
+          console.log(`next :${page}`);
+
+          initCanvasEngine(this_config, bookid, page);
+          break;
+        case "dblclick":
+          // some code here…
+
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+  };
+
+  // Note that the listeners in this case are |this|, not this.handleEvent
+  element.addEventListener("click", this, false);
+  element.addEventListener("dblclick", this, false);
+
+  // You can properly remove the listeners
+  //  element.removeEventListener('click', this, false);
+  //  element.removeEventListener('dblclick', this, false);
+}
+
+const cleaner = document.querySelector("#cleanCanvas");
+console.log(`Clean : ${cleaner}`);
+let clean = new handleEventOnDom(cleaner, "canvas");
+
+const send = document.querySelector("#save_page");
+console.log(`Send : ${send}`);
+let send_data = new handleEventOnDom(send, "postapi");
+
+const next = document.querySelector("#next");
+console.log(`Next : ${next}`);
+let next_page = new handleEventOnDom(next, "navigator");
 
 export { initBooks, initMsj, setInitial };

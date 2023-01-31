@@ -76,3 +76,7 @@ canvas {
 .control_panel label:hover {
   background: #ddd;
 }
+
+.off {
+  display: none;
+}
