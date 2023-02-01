@@ -65,15 +65,15 @@ function initBooks(config = {}, paramsUrl = {}) {
   //   xboxs = data;
   // });
 
-  console.log(`Calll previous boxes:`);
+  // console.log(`Calll previous boxes:`);
   xboxs = config.xboxs;
-  console.log(config.xboxs);
+  // console.log(config.xboxs);
   loadApi(config, options);
 }
 
 function setInitial(config = {}, book_id) {
   let get_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method[1]}/${book_id}`;
-  console.log(`positions : ${get_url}`);
+  // console.log(`positions : ${get_url}`);
   return connect.getData(get_url, config);
 }
 
@@ -95,7 +95,7 @@ function loadApi(config = {}, paramArray = {}) {
       bookResponse = data[0];
     }
     //call xboxes?
-    console.log(bookResponse);
+    // console.log(bookResponse);
     let numberPages = document.querySelector(`#number-pages`);
     pages = numberPages.innerHTML = bookResponse.pages;
     //note draw book call turn.js lib for drawing the background
@@ -108,8 +108,8 @@ function loadApi(config = {}, paramArray = {}) {
 function drawBook(config = {}, bookResponse = {}) {
   // load div with background images
   loadDivBlock(config, bookResponse);
-  console.log("CHECK CANVAS");
-  console.log(document.querySelector(".canvas"));
+  // console.log("CHECK CANVAS");
+  // console.log(document.querySelector(".canvas"));
   // set the options
   // load Book from api
   loadBook(config, bookResponse);
@@ -121,11 +121,11 @@ function drawBook(config = {}, bookResponse = {}) {
 
 async function loadDivBlock(config = {}, bookResponse = {}) {
   // Check if the page is not in the book
-  console.log(`We known xboxs in add page ??? `);
-  console.log(config.bookElements.load);
+  // console.log(`We known xboxs in add page ??? `);
+  // console.log(config.bookElements.load);
   const book_section = document.querySelector(`${config.bookElements.load}`);
   // NOTE WORKING  HIR
-  console.log(config.xboxs);
+  // console.log(config.xboxs);
 
   for (let page = 1; page <= bookResponse.pages; page++) {
     const background_img = bookResponse.book_pages[page];
@@ -158,22 +158,22 @@ function loadBook(config = {}, bookResponse = {}) {
 
 function initCanvasEngine(config = {}, bookid, page) {
   // NOTE
-  console.log(`We known xboxs in add page ??? `);
+  // console.log(`We known xboxs in add page ??? `);
   // NOTE WORKING  HIR
-  console.log(`PROMISE XBOXS`);
+  // console.log(`PROMISE XBOXS`);
   config.xboxs.then((data) => {
     let sourcePositions = data[0].sourcePositions;
     //xboxes = sourcePositions;
 
-    console.log(sourcePositions[page]);
-    console.log(typeof sourcePositions[page]);
+    // console.log(sourcePositions[page]);
+    // console.log(typeof sourcePositions[page]);
 
     if (sourcePositions[page] != undefined) {
       xboxes[page] = sourcePositions[page];
       // load ,replace into boxes
       //      redraw();
       boxes = xboxes[page];
-      alert(`Have data in api server , now save or replace? in xboxes`);
+      // alert(`Have data in api server , now save or replace? in xboxes`);
       //      redraw();
     }
     //  boxes = xboxes[page];
@@ -209,7 +209,7 @@ function initCanvasEngine(config = {}, bookid, page) {
 
       page = pages;
     }
-    console.log(page);
+    // console.log(page);
     let pageNumber = document.querySelector(`#page-number`);
     pageNumber.value = `${page}`;
     off_page = `${page}`;
@@ -219,19 +219,20 @@ function initCanvasEngine(config = {}, bookid, page) {
 
     currentDiv.append(attachCanvas(page));
     redraw();
+
     let canvas = document.getElementById(`canvas_${page}`);
     let context = canvas.getContext("2d");
-    console.log(canvas);
-    let bound = context.canvas.getBoundingClientRect();
-    console.log(bound);
-    let msg = `The New DIV Width is : ${curdiv.width} and the Heigth is : ${curdiv.height}`;
-    console.log(msg);
-    msg = `The New Canvas Width is : ${bound.width} and the Heigth is : ${bound.height}`;
-    console.log(msg);
-    console.log(`LOAD BOXES on page : ${page}`);
+    // console.log(canvas);
+    // let bound = context.canvas.getBoundingClientRect();
+    // console.log(bound);
+    // let msg = `The New DIV Width is : ${curdiv.width} and the Heigth is : ${curdiv.height}`;
+    // console.log(msg);
+    // msg = `The New Canvas Width is : ${bound.width} and the Heigth is : ${bound.height}`;
+    // console.log(msg);
+    // console.log(`LOAD BOXES on page : ${page}`);
 
-    console.log(`INITIAL BOXES`);
-    console.log(boxes[page]);
+    // console.log(`INITIAL BOXES`);
+    // console.log(boxes[page]);
     // CANVAS CONTROL
     document.getElementById(`canvas_${page}`).onmousedown = function (e) {
       mousedown = true;
@@ -251,12 +252,12 @@ function initCanvasEngine(config = {}, bookid, page) {
         //            Check if we need delete it
         // === === === === === === === === === === === === === === === === === === //
         let delStroke = document.querySelector("#delStroke");
-        console.log(delStroke);
-        console.log(`IsDeleteOn : ${delStroke.checked}`);
+        // console.log(delStroke);
+        // console.log(`IsDeleteOn : ${delStroke.checked}`);
 
         let cpStroke = document.querySelector("#cpStroke");
-        console.log(cpStroke);
-        console.log(`IsCopyOn : ${cpStroke.checked}`);
+        // console.log(cpStroke);
+        // console.log(`IsCopyOn : ${cpStroke.checked}`);
 
         if (delStroke.checked) {
           boxes.splice(clickedArea.box, 1);
@@ -266,7 +267,9 @@ function initCanvasEngine(config = {}, bookid, page) {
           let xboy1 = selBox.y1 + config.copySize;
           let xbox2 = selBox.x2 + config.copySize;
           let xboy2 = selBox.y2 + config.copySize;
+          console.log(`boxesPUSH`);
           boxes.push(newBox(xbox1, xboy1, xbox2, xboy2));
+          xboxes[page] = boxes;
           reloadCanvas(boxes, context);
         } else {
           //something else
@@ -421,17 +424,17 @@ function redraw() {
   context.strokeStyle = "blue";
   // WARNING get url source and set if exists
   //console.log(context.canvas);
-  console.log(`set type of input -> ${input_type}`);
+  // console.log(`set type of input -> ${input_type}`);
   // === === === === === === === === === === === === === === === //
   //   This can hold text,textare and crossword
   // === === === === === === === === === === === === === === === //
   context.beginPath();
-  console.log(`What is selected in [::REDRAW::] ==> ${input_type}`);
-  //Call to WS and  SET the previus boxes
-  console.log(`ON REDRAW page = ${page}`);
+  //console.log(`What is selected in [::REDRAW::] ==> ${input_type}`);
+  ////Call to WS and  SET the previus boxes
+  //console.log(`ON REDRAW page = ${page}`);
 
-  console.log(boxes);
-  console.log(xboxes);
+  //console.log(boxes);
+  //console.log(xboxes);
 
   if (typeof xboxes[page] === undefined) {
     boxes = [];
@@ -454,8 +457,8 @@ function findCurrentArea(x, y) {
   for (let i = 0; i < boxes.length; i++) {
     let box = boxes[i];
 
-    console.log(`what we have in box?`);
-    console.log(JSON.stringify(box));
+    // console.log(`what we have in box?`);
+    // console.log(JSON.stringify(box));
 
     let xCenter = box.x1 + (box.x2 - box.x1) / 2;
     let yCenter = box.y1 + (box.y2 - box.y1) / 2;
@@ -835,7 +838,11 @@ function handleEventOnDom(element, typeEvent) {
           // change page:
           page = page + 1;
           console.log(`next :${page}`);
+          alert(JSON.stringify(xboxes[page]));
+          alert(JSON.stringify(boxes));
           initCanvasEngine(this_config, bookid, page, true);
+
+          redraw();
           break;
         case "dblclick":
           // some code here…
@@ -851,7 +858,10 @@ function handleEventOnDom(element, typeEvent) {
           // change page:
           page = page - 1;
           console.log(`prev :${page}`);
+          alert(JSON.stringify(xboxes[page]));
+          alert(JSON.stringify(boxes));
           initCanvasEngine(this_config, bookid, page);
+          redraw();
           break;
         case "dblclick":
           // some code here…
@@ -885,7 +895,7 @@ console.log(`Next : ${next}`);
 let next_page = new handleEventOnDom(next, "next");
 
 const prev = document.querySelector("#prev");
-console.log(`Next : ${prev}`);
+console.log(`Prev : ${prev}`);
 let prev_page = new handleEventOnDom(prev, "prev");
 
 export { initBooks, initMsj, setInitial };
