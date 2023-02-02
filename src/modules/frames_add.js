@@ -15,9 +15,10 @@ $(window).on("load", function () {
       innerFrame.src = `./${modalId}.html`;
       ////add attributes
       innerFrame.setAttribute("type", "text/html");
-      ////innerFrame.setAttribute("data", `${template}`);
-      innerFrame.width = "1200px";
-      innerFrame.height = "880px";
+      // Gateway Frame after open module from list dashboard
+      innerFrame.width = "1920px";
+      innerFrame.height = "980px";
+
       console.log(innerFrame);
       //innerFrame.src = template;
     });

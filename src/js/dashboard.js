@@ -6,7 +6,11 @@ const config = {
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   default_width: 1275,
   default_height: 1650,
-  css_files: { main: "./css/dashboard.css" },
+  css_files: {
+    main: "./css/dashboard.css",
+    awesomeFonts:
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css",
+  },
   srv_json: "baizabal.xyz",
   port_json: "8000",
   protocol_json: "https://",
@@ -14,9 +18,8 @@ const config = {
   // app: "ediq",
   app: "baizabal.xyz",
   templates: {
-    Libros: "list",
-    Uploads: "upload",
-    Editor: "editor_beta",
+    Libros: { list: { icon: "fa-solid fa-book", other: "another" } },
+    Uploads: { upload: { icon: "fa-solid fa-upload" } },
   },
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.

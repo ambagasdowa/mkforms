@@ -32,7 +32,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* height: 100vh; */
   font: 16px/1.5 sans-serif;
 }
 
@@ -139,6 +138,7 @@ body {
 
 table {
   color: gray;
+  width: 90%;
 }
 
 table > a:hover,

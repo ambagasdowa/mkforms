@@ -1,5 +1,4 @@
 const message = "Initializing all libs and  modules for slider";
-
 function greet(name) {
   return `Starting module =>, ${name} by Ambagasdowa`;
 }
@@ -26,15 +25,19 @@ function waitForElm(selector) {
 }
 export { waitForElm };
 
-function setStyles(documents) {
+function setStyles(documents, dev = false) {
   Object.keys(documents).forEach((key) => {
     console.log(`Index INPUT : ${key} with value : ${documents[key]}`);
     // NOTE This is constant for all books
     /* create the link element */
+    let link = documents[key];
+    if (dev == true) {
+      link = link + `?dev=${Math.floor(Math.random() * 100)}`;
+    }
     const linkElement = document.createElement("link");
     // add attributes
     linkElement.setAttribute("rel", "stylesheet");
-    linkElement.setAttribute("href", documents[key]);
+    linkElement.setAttribute("href", link);
     // Attach to the document head
     document.getElementsByTagName("head")[0].appendChild(linkElement);
   });

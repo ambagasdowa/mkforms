@@ -33,7 +33,9 @@ const config_list = {
       },
     },
   },
-  css_files: { list: "./css/list.css" },
+  css_files: {
+    list: "./css/list.css",
+  },
   // app: "ediq",
   app: "baizabal.xyz",
   post: {
@@ -100,14 +102,14 @@ const config_list = {
       "IS_URL",
       "MODIFIED",
       "PAGES",
-      "EDIT",
+      "EDITION",
     ],
   },
 };
 import { setStyles } from "../modules/lib.js";
 import * as ls from "../modules/listModule.js";
 
-setStyles(config_list.css_files);
+setStyles(config_list.css_files, true);
 
 ls.init(config_list);
 

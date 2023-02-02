@@ -6,6 +6,9 @@ const hx = window.innerWidth;
 const hy = window.innerHeight;
 const msg = `The Window Width is :  ${hx} and the Heigth is : ${hy}`;
 console.log(msg);
+document.querySelector("#width").textContent = hx;
+document.querySelector("#height").textContent = hy;
+
 // === === === === === === === === === === === === === === === === === === //
 //          Construct for set the backgorund img and canvas
 // === === === === === === === === === === === === === === === === === === //
@@ -889,5 +892,15 @@ let next_page = new handleEventOnDom(next, "next");
 const prev = document.querySelector("#prev");
 console.log(`Prev : ${prev}`);
 let prev_page = new handleEventOnDom(prev, "prev");
+
+function reportWindowSize() {
+  const heightOutput = document.querySelector("#height");
+  const widthOutput = document.querySelector("#width");
+
+  heightOutput.textContent = window.innerHeight;
+  widthOutput.textContent = window.innerWidth;
+}
+window.onresize = reportWindowSize;
+//window.addEventListener("resize", reportWindowSize);
 
 export { initBooks, initMsj, setInitial };

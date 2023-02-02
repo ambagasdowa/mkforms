@@ -82,7 +82,7 @@ function modal(config_list = {}) {
   for (const el of openEls) {
     el.addEventListener("click", function () {
       console.log(this.dataset.openModal);
-      alert(this.dataset.frame);
+      // alert(this.dataset.frame);
 
       const modalId = "modal_frame";
 
@@ -98,8 +98,8 @@ function modal(config_list = {}) {
 
       ////add attributes
       openFrame.setAttribute("type", "text/html");
-      openFrame.width = "1200px";
-      openFrame.height = "880px";
+      openFrame.width = "1680px";
+      openFrame.height = "980px";
       console.log(openFrame);
 
       document.getElementById(modalId).classList.add(isVisible);
