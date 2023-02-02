@@ -120,14 +120,6 @@ setStyles(config_editor.css_files);
 console.log(initMsj(config_editor.info));
 const paramsUrl = getAllUrlParams(window.location.href, false);
 
-const x = setInitial(config_editor, paramsUrl.book_id);
-x.then((data) => {
-  console.log(data);
-  config_editor.xboxs = x;
-});
-console.log("XXXXXXX");
-console.log(config_editor.xboxs);
-
 window.onload = function () {
   initBooks(config_editor, paramsUrl);
 }; // WARNING End of windows onload
