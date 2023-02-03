@@ -136,9 +136,66 @@ body {
   object-fit: cover;
 }
 
+/* TABLES */
+/* table { */
+/*   display: inline-table; */
+/*   border-collapse: collapse; */
+/*   width: 95%; */
+/*   /1* border: 1px solid gray !important; *1/ */
+/* } */
+
+/* th { */
+/*   border: 1px solid grey !important; */
+/* } */
+
+/* TableFox */
+
 table {
-  color: gray;
-  width: 90%;
+  /* table-layout: fixed; */
+  table-layout: auto;
+  width: 95%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  overflow-x: auto;
+  /* border-spacing: 0; */
+}
+
+table,
+th,
+td {
+  border: 1px solid gray !important;
+}
+
+/* tbody { */
+/*   white-space: nowrap; */
+/* } */
+
+th,
+td {
+  /* white-space: nowrap; */
+  padding: 5px 10px;
+  /* border-top-width: 0; */
+  /* border-left-width: 0; */
+}
+
+/* th { */
+/*   /1* position: sticky; *1/ */
+/*   top: 0; */
+/*   /1* background: #fff; *1/ */
+/*   vertical-align: bottom; */
+/* } */
+
+/* th:last-child, */
+/* td:last-child { */
+/*   border-right-width: 0; */
+/* } */
+
+/* tr:last-child td { */
+/*   border-bottom-width: 0; */
+/* } */
+
+table > tbody > tr:first-child > td:first-child {
+  white-space: nowrap;
 }
 
 table > a:hover,
@@ -151,7 +208,28 @@ table > a:active {
 td a:hover,
 td a:visited,
 td a:link,
-td a:active {
+td a:active,
+th,
+.inf {
   text-decoration: none;
   color: #1772db !important;
+}
+
+input,
+thead,
+th,
+tr,
+tbody,
+td,
+.pgSlci,
+.inf {
+  color: grey;
+  background-color: transparent !important;
+}
+
+input[type="text"] {
+  border: none;
+  z-index: -1;
+  /* color: transparent !important; */
+  border-bottom: 1px dashed gray;
 }

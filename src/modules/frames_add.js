@@ -16,7 +16,7 @@ $(window).on("load", function () {
       ////add attributes
       innerFrame.setAttribute("type", "text/html");
       // Gateway Frame after open module from list dashboard
-      innerFrame.width = "1920px";
+      innerFrame.width = "1820px";
       innerFrame.height = "980px";
 
       console.log(innerFrame);

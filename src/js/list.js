@@ -85,24 +85,70 @@ const config_list = {
     classIdentifier: "book_id",
     dataIdentifier: "book_id",
     fieldsBooks: [
-      "book_id",
+      // "id",
       "book_name",
       "created",
-      "id",
-      "is_url",
+      // "is_url",
       "modified",
+      "book_id",
       "pages",
       "status",
     ],
     fieldTitleBooks: [
+      // "ID",
+      "NOMBRE DEL LIBRO",
+      "FECHA DE CREACION",
+      // "IS_URL",
+      "MODIFICADO",
       "BOOK_ID",
-      "BOOK_NAME",
-      "CREATED",
-      "ID",
-      "IS_URL",
-      "MODIFIED",
-      "PAGES",
-      "EDITION",
+      "PAGINAS TOTALES",
+      "EDICION",
+    ],
+  },
+  tableFilterConfig: {
+    base_path: "./js/node_modules/tablefilter/dist/tablefilter/",
+    paging: {
+      results_per_page: ["Records: ", [10, 25, 50, 100]],
+    },
+    // state: {
+    //   types: ["local_storage"],
+    //   filters: true,
+    //   page_number: true,
+    //   page_length: true,
+    //   sort: true,
+    // },
+    btn_reset: true,
+    rows_counter: true,
+    loader: true,
+    status_bar: true,
+    single_filter: true,
+    highlight_keywords: true,
+    ignore_diacritics: true,
+    // responsive: true,
+    rows_counter: {
+      text: "Libros: ",
+    },
+    // loader: {
+    //   html: '<div id="loader_msj"></div>',
+    //   css_class: "loader",
+    // },
+    // status_bar: {
+    //   target_id: "statusBar",
+    //   css_class: "status",
+    // },
+    no_results_message: false,
+    // single_filter: {
+    //   exclude_cols: [3, 4, 5, 6, 7, 8],
+    //   css_class: "form-control",
+    // },
+    watermark: "Filtrar Libros :",
+    auto_filter: true,
+    themes: [{ name: "transparent" }],
+    // themes: [{ name: "default" }],
+    extensions: [
+      {
+        name: "sort",
+      },
     ],
   },
 };
@@ -114,6 +160,4 @@ setStyles(config_list.css_files, true);
 ls.init(config_list);
 
 // window.onload = function () {
-//   var tf = new TableFilter("listBooks");
-//   tf.init();
 // };

@@ -1,4 +1,5 @@
 import * as requestData from "./uploadModule.js";
+import "../js/node_modules/tablefilter/dist/tablefilter/tablefilter.js";
 
 function init(config_list = {}) {
   let url_list = `${config_list.protocol_json}${config_list.srv_json}:${config_list.port_json}/${config_list.method[0]}`;
@@ -65,7 +66,9 @@ function createTable(objectArray, config_list = {}) {
   body.appendChild(tbl);
 
   attach(config_list);
-  return tbl;
+  // return tbl;
+  let tf = new TableFilter(tbl, config_list.tableFilterConfig);
+  tf.init();
 }
 
 function attach(config_list = {}) {
