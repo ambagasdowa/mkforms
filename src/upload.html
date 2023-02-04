@@ -10,14 +10,21 @@
     <div class="container">
       <h1>Multipart File Upload</h1>
       <form id="form" enctype="multipart/form-data">
-        <label for="token">User Token</label>
+        <label for="token">User Token : </label>
         <input
           type="text"
           name="token"
           id="token"
           value="ioafsyudfoansdfnjnkajsnd017341782yhodklasdhjnallaisdfu=="
         />
-        <input type="text" value="" name="book_name" id="book_name" />
+        <label for="book_name">Nombre del libro : </label>
+        <input
+          type="text"
+          value=""
+          placeholder="name_a,name_b,...,"
+          name="book_name"
+          id="book_name"
+        />
         <div class="input-group">
           <label for="files">Select files</label>
           <input id="file" type="file" multiple />
