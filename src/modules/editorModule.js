@@ -732,15 +732,7 @@ function saveBox() {
 
   let url = `${this_config.protocol_json}${this_config.srv_json}:${this_config.port_json}/${this_config.api_method[1]}/${bookid}/${page}`;
 
-  //  let url = `https://baizabal.xyz:8000/srcpositions/${bookid}/${page}`;
-  //let data = JSON.parse(JSON.stringify(boxes));
-
-  console.log(`SEND POST : `);
-  console.log(url);
-  //  console.log(data);
   let response_json = connect.postData(url, boxes);
-  // console.log(`RESPONSE : `);
-  console.log(response_json);
   console.log(
     `url: ${url} and request : ${JSON.stringify(
       boxes
@@ -914,7 +906,8 @@ function convertSizes(xbox = {}, canvas, element) {
   let canvasDimensions = canvas.getBoundingClientRect();
   console.log(canvasDimensions);
   console.log(`::ElementDiv::`);
-  console.log(element.getBoundingClientRect());
+  let div = element.getBoundingClientRect();
+  console.log(div);
 
   let newDimensions = Math.hypot(
     canvasDimensions.width,
@@ -938,11 +931,31 @@ function convertSizes(xbox = {}, canvas, element) {
     xbox[keys].x2 = xbox[keys].x2 * scaleFactor;
     xbox[keys].y2 = xbox[keys].y2 * scaleFactor;
 
-    console.log(` Top = ${xbox[keys].x1 * scaleFactor} vs : ${psp[keys].x1}`);
-    console.log(` Left = ${xbox[keys].y1 * scaleFactor} vs : ${psp[keys].y1}`);
-    console.log(` Width = ${xbox[keys].x2 * scaleFactor} vs : ${psp[keys].x2}`);
+    // calculate percents
+    let top = (xbox[keys].x1 / div.width) * 100;
+    let left = (xbox[keys].y1 / div.height) * 100;
+    let width = (xbox[keys].x2 / div.width) * 100;
+    let height = (xbox[keys].y2 / div.height) * 100;
+
     console.log(
-      ` Heigth = ${xbox[keys].y2 * scaleFactor} vs : ${psp[keys].y2}`
+      ` Top = ${xbox[keys].x1 * scaleFactor} vs : ${
+        psp[keys].x1
+      } and percents : ${top}`
+    );
+    console.log(
+      ` Left = ${xbox[keys].y1 * scaleFactor} vs : ${
+        psp[keys].y1
+      } and percents : ${left}`
+    );
+    console.log(
+      ` Width = ${xbox[keys].x2 * scaleFactor} vs : ${
+        psp[keys].x2
+      } and percents : ${width}`
+    );
+    console.log(
+      ` Heigth = ${xbox[keys].y2 * scaleFactor} vs : ${
+        psp[keys].y2
+      } and percents : ${height}`
     );
   });
   // set new size and positions
