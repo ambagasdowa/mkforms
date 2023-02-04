@@ -16,11 +16,11 @@ document.querySelector("#height").textContent = hy;
 // const percent_width = 95;
 // const percent_height = 250;
 
-const percent_width = 80;
+const percent_width = 90;
 const percent_height = 150;
 
-const canvas_width = (hx * percent_width) / 100;
-const canvas_height = (hy * percent_height) / 100;
+const canvas_width = Math.abs((hx * percent_width) / 100);
+const canvas_height = Math.abs((hy * percent_height) / 100);
 //alert(`canvas_width ==> ${canvas_width} -- canvas_height ==> ${canvas_height}`);
 //CREATE BOX INPUTS
 
@@ -138,6 +138,7 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
     book_attr.value = `
                         background-image: url(${background_img});
                         background-size: contain;
+                        /*background-size: cover;*/
                         background-repeat: no-repeat;
                         max-width :100%;
                         max-height: 100%;
@@ -166,13 +167,12 @@ function initCanvasEngine(config = {}, bookid, page) {
 
   const bookPages = setInitial(config);
   bookPages.then((data) => {
-    if (data.length > 0) {
-      console.log(`DAATA`);
-      console.log(data);
-      boxes = data;
-      console.log(`On initCanvasEngine :: After positions`);
-      console.log(boxes);
-    }
+    // if (data.length > 0) {
+    //   console.log(`DAATA`);
+    //   boxes = convertSizes(data);
+    //   console.log(`On initCanvasEngine :: After positions`);
+    //   console.log(boxes);
+    // }
 
     console.log(`off_page : ${off_page}`);
     if (page > 1) {
@@ -203,6 +203,7 @@ function initCanvasEngine(config = {}, bookid, page) {
 
       page = pages;
     }
+
     // console.log(page);
     let pageNumber = document.querySelector(`#page-number`);
     pageNumber.value = `${page}`;
@@ -214,6 +215,13 @@ function initCanvasEngine(config = {}, bookid, page) {
     // currentDiv.append(attachCanvas(page));
     let canvas = document.getElementById(`canvas_${page}`);
     let context = canvas.getContext("2d");
+
+    if (data.length > 0) {
+      console.log(`DATABOXES`);
+      boxes = convertSizes(data, canvas, currentDiv);
+      console.log(`On initCanvasEngine :: After positions`);
+      console.log(boxes);
+    }
     // ===============================================================//
     reloadCanvas(boxes, context);
     // ===============================================================//
@@ -893,14 +901,68 @@ const prev = document.querySelector("#prev");
 console.log(`Prev : ${prev}`);
 let prev_page = new handleEventOnDom(prev, "prev");
 
+// Working from hir
+function convertSizes(xbox = {}, canvas, element) {
+  //Dimensions for
+  // console.log(data);
+  let psp = {};
+  psp = xbox;
+
+  // let containerImg = document.querySelector(`canvas_${page}`);
+
+  console.log(`::CANVAS::`);
+  let canvasDimensions = canvas.getBoundingClientRect();
+  console.log(canvasDimensions);
+  console.log(`::ElementDiv::`);
+  console.log(element.getBoundingClientRect());
+
+  let newDimensions = Math.hypot(
+    canvasDimensions.width,
+    canvasDimensions.height
+  );
+  console.log(newDimensions);
+
+  Object.keys(xbox).forEach((keys) => {
+    // Teorem
+    let sourceDimensions = Math.hypot(
+      xbox[keys].source_width,
+      xbox[keys].source_height
+    );
+    console.log(sourceDimensions);
+    let scaleFactor = newDimensions / sourceDimensions;
+    console.log(scaleFactor);
+
+    //calculate new dimensions and positions
+    xbox[keys].x1 = xbox[keys].x1 * scaleFactor;
+    xbox[keys].y1 = xbox[keys].y1 * scaleFactor;
+    xbox[keys].x2 = xbox[keys].x2 * scaleFactor;
+    xbox[keys].y2 = xbox[keys].y2 * scaleFactor;
+
+    console.log(` Top = ${xbox[keys].x1 * scaleFactor} vs : ${psp[keys].x1}`);
+    console.log(` Left = ${xbox[keys].y1 * scaleFactor} vs : ${psp[keys].y1}`);
+    console.log(` Width = ${xbox[keys].x2 * scaleFactor} vs : ${psp[keys].x2}`);
+    console.log(
+      ` Heigth = ${xbox[keys].y2 * scaleFactor} vs : ${psp[keys].y2}`
+    );
+  });
+  // set new size and positions
+  // data.x1 = x1 ...
+  return xbox;
+}
+
 function reportWindowSize() {
   const heightOutput = document.querySelector("#height");
   const widthOutput = document.querySelector("#width");
 
   heightOutput.textContent = window.innerHeight;
   widthOutput.textContent = window.innerWidth;
-}
-window.onresize = reportWindowSize;
-//window.addEventListener("resize", reportWindowSize);
 
-export { initBooks, initMsj, setInitial };
+  const msg = ` \
+          reportWindowSize width :  ${window.innerWidth} \
+          and the Heigth : ${window.innerHeight} \
+  `;
+  console.log(msg);
+}
+// window.addEventListener("resize", reportWindowSize);
+
+export { initBooks, initMsj, setInitial, reportWindowSize };

@@ -159,5 +159,10 @@ setStyles(config_list.css_files, true);
 
 ls.init(config_list);
 
+// window.load = reportWindowSize;
+// window.onload = reportWindowSize;
+
+// window.addEventListener("onload", reportWindowSize);
 // window.onload = function () {
+//   alert(`window onload`);
 // };

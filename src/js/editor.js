@@ -1,5 +1,10 @@
 import { getAllUrlParams, setStyles } from "../modules/lib.js";
-import { initBooks, initMsj, setInitial } from "../modules/editorModule.js";
+import {
+  initBooks,
+  initMsj,
+  setInitial,
+  reportWindowSize,
+} from "../modules/editorModule.js";
 
 const paramClass = "class";
 const paramId = "id";
@@ -116,10 +121,13 @@ const config_editor = {
   xboxs: "",
 };
 
-setStyles(config_editor.css_files);
 console.log(initMsj(config_editor.info));
+setStyles(config_editor.css_files);
 const paramsUrl = getAllUrlParams(window.location.href, false);
 
-window.onload = function () {
+window.onload = (event) => {
+  console.log(`onload`);
   initBooks(config_editor, paramsUrl);
 }; // WARNING End of windows onload
+
+window.onresize = reportWindowSize;
