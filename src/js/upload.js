@@ -4,7 +4,7 @@ const config_upload = {
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   default_width: 1275,
   default_height: 1650,
-  css_files: { main: "./css/dashboard.css" },
+  css_files: { main: "./css/upload.css" },
   srv_json: "baizabal.xyz",
   port_json: "8000",
   protocol_json: "https://",
@@ -26,6 +26,10 @@ const config_upload = {
   },
   headers: {},
 };
+
+import { setStyles } from "../modules/lib.js";
+
+setStyles(config_upload.css_files, true);
 
 import * as requestData from "../modules/uploadModule.js";
 

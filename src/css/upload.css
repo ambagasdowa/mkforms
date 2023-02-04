@@ -1,0 +1,69 @@
+/*=============== GOOGLE FONTS ===============*/
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+/*=============== VARIABLES ===============*/
+
+:root {
+  --background: #292c4a;
+  --background-dark: #272944;
+  /* --background-blue: #00264d; */
+  --background-blue: #00172d;
+  --foreground: rgb(255, 255, 255);
+  --accent-color: rgb(216, 191, 228);
+
+  --nav-width-collapsed: 80px;
+  --nav-width: 350px;
+  --main-padding: 20px;
+  --lightgray: #efefef;
+  --blue: steelblue;
+  --white: #fff;
+  --black: rgba(0, 0, 0, 0.8);
+  --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+}
+
+/*=============== BASE ===============*/
+
+* {
+  font-family: "Montserrat", sans-serif;
+  /* color: var(--foreground); */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background-blue);
+  color: gray;
+}
+
+/*=============== ARTICLES ===============*/
+
+header {
+  font-size: 2em;
+  font-weight: 600;
+  margin-top: 2em;
+}
+
+article {
+  font-size: 16px;
+  line-height: 2;
+}
+
+/*=============== CODE SECTIONS ===============*/
+
+code {
+  background: #181a2e88;
+  border-radius: 5px;
+  color: var(--accent-color);
+  page-break-inside: avoid;
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 1.6em;
+  max-width: 100%;
+  padding: 1em 1.5em;
+  display: block;
+  word-wrap: break-word;
+}
