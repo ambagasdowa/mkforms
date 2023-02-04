@@ -6,7 +6,11 @@ const config = {
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   default_width: 1275,
   default_height: 1650,
-  css_files: { layers: "./css/layers.css", uix: "./css/uix.css" },
+  css_files: {
+    layers: "./css/layers.css",
+    uix: "./css/uix.css",
+  },
+  dev: false, //css developer-mode [true|false] , default:false
   srv_json: "baizabal.xyz",
   port_json: "8000",
   protocol_json: "https://",
@@ -34,7 +38,7 @@ let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
 //import { setStyles } from "./lib.js";
-slideModule.setStyles(config.css_files);
+slideModule.setStyles(config.css_files, config.dev);
 // NOTE Load the jquerys
 import $ from "../modules/extend.js";
 //import { getAllUrlParams } from "./lib.js";

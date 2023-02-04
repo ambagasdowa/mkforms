@@ -88,6 +88,7 @@ body {
 .modal-header,
 .modal-footer {
   background: var(--lightgray);
+  /* background: transparent; */
 }
 
 .modal-header {
@@ -97,7 +98,9 @@ body {
 }
 
 .modal-header .close-modal {
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
+  font-size: 1.2rem;
+  /* font-size: 11px; */
 }
 
 .modal p + p {
@@ -223,7 +226,7 @@ tbody,
 td,
 .pgSlci,
 .inf {
-  color: grey;
+  color: grey !important;
   background-color: transparent !important;
 }
 

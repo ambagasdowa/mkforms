@@ -5,7 +5,7 @@
 /*=============== VARIABLES ===============*/
 
 :root {
-  --background: #292c4a;
+  --background: #f2f2f2;
   --background-dark: #272944;
   /* --background-blue: #00264d; */
   --background-blue: #00172d;
@@ -27,6 +27,9 @@
 * {
   font-family: "Montserrat", sans-serif;
   /* color: var(--foreground); */
+  box-sizing: border-box;
+  background-color: transparent;
+  color: gray;
 }
 
 html {
@@ -34,36 +37,71 @@ html {
 }
 
 body {
-  background: var(--background-blue);
+  /* background: var(--background); */
   color: gray;
 }
 
-/*=============== ARTICLES ===============*/
-
-header {
-  font-size: 2em;
-  font-weight: 600;
-  margin-top: 2em;
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #1772db;
+  border-radius: 4px;
+  resize: vertical;
 }
 
-article {
-  font-size: 16px;
-  line-height: 2;
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
 }
 
-/*=============== CODE SECTIONS ===============*/
+input[type="submit"] {
+  background-color: royalblue;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
 
-code {
-  background: #181a2e88;
+input[type="submit"]:hover {
+  background-color: #aaa;
+  outline: #1772db;
+}
+
+.container_upload {
   border-radius: 5px;
-  color: var(--accent-color);
-  page-break-inside: avoid;
-  font-family: monospace;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 1.6em;
-  max-width: 100%;
-  padding: 1em 1.5em;
-  display: block;
-  word-wrap: break-word;
+  /* background-color: #f2f2f2; */
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
+    width: 100%;
+    margin-top: 0;
+  }
 }

@@ -72,4 +72,4 @@ function addElement(element, name, value) {
   }
   return null;
 }
-export { drawIn };
+export { drawIn, addElement };

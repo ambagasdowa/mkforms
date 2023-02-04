@@ -1,5 +1,6 @@
 import * as requestData from "./uploadModule.js";
 import "../js/node_modules/tablefilter/dist/tablefilter/tablefilter.js";
+import { addElement } from "./frames.js";
 
 function init(config_list = {}) {
   let url_list = `${config_list.protocol_json}${config_list.srv_json}:${config_list.port_json}/${config_list.method[0]}`;

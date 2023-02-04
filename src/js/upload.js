@@ -9,6 +9,7 @@ const config_upload = {
   port_json: "8000",
   protocol_json: "https://",
   method: ["books", "srcpositions", "upload"],
+  dev: true, //css developer-mode [true|false] , default:false
   // app: "ediq",
   app: "baizabal.xyz",
   templates: {
@@ -29,7 +30,7 @@ const config_upload = {
 
 import { setStyles } from "../modules/lib.js";
 
-setStyles(config_upload.css_files, true);
+setStyles(config_upload.css_files, config_upload.dev);
 
 import * as requestData from "../modules/uploadModule.js";
 

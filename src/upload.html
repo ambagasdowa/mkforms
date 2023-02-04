@@ -7,29 +7,47 @@
     <script defer src="./js/upload.js" charset="utf-8" type="module"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container_upload">
       <h1>Multipart File Upload</h1>
       <form id="form" enctype="multipart/form-data">
-        <label for="token">User Token : </label>
-        <input
-          type="text"
-          name="token"
-          id="token"
-          value="ioafsyudfoansdfnjnkajsnd017341782yhodklasdhjnallaisdfu=="
-        />
-        <label for="book_name">Nombre del libro : </label>
-        <input
-          type="text"
-          value=""
-          placeholder="name_a,name_b,...,"
-          name="book_name"
-          id="book_name"
-        />
-        <div class="input-group">
-          <label for="files">Select files</label>
-          <input id="file" type="file" multiple />
+        <div class="row">
+          <div class="col-25">
+            <label for="token">User Token : </label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              name="token"
+              id="token"
+              value="ioafsyudfoansdfnjnkajsnd017341782yhodklasdhjnallaisdfu=="
+            />
+          </div>
         </div>
-        <button class="submit-btn" type="submit">Upload</button>
+        <div class="row">
+          <div class="col-25">
+            <label for="book_name">Nombre del libro[s] : </label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              value=""
+              placeholder="nombres separados por comas : name_a,name_b,...,"
+              name="book_name"
+              id="book_name"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="files">Select files</label>
+          </div>
+          <div class="col-75">
+            <input id="file" type="file" multiple />
+          </div>
+        </div>
+        <div class="row">
+          <button class="submit-btn" type="submit">Upload</button>
+        </div>
       </form>
     </div>
   </body>

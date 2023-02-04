@@ -35,9 +35,11 @@ const config_list = {
   },
   css_files: {
     list: "./css/list.css",
+    awesomeFonts:
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css",
   },
   // app: "ediq",
-  app: "baizabal.xyz",
+  app: "baizabal.xyz", // [ediq|baizabal.xyz]
   post: {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -108,15 +110,8 @@ const config_list = {
   tableFilterConfig: {
     base_path: "./js/node_modules/tablefilter/dist/tablefilter/",
     paging: {
-      results_per_page: ["Records: ", [10, 25, 50, 100]],
+      results_per_page: ["Registros: ", [10, 25, 50, 100]],
     },
-    // state: {
-    //   types: ["local_storage"],
-    //   filters: true,
-    //   page_number: true,
-    //   page_length: true,
-    //   sort: true,
-    // },
     btn_reset: true,
     rows_counter: true,
     loader: true,

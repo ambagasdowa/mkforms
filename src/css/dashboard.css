@@ -208,4 +208,6 @@ code {
   display: block;
   width: 95vw;
   height: 100%;
+  color: grey !important;
+  background-color: transparent !important;
 }

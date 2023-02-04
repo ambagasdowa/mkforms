@@ -47,7 +47,11 @@ const config_editor = {
       },
     },
   },
-  css_files: { list: "./css/editor.css" },
+  css_files: {
+    list: "./css/editor.css",
+    awesomeFonts:
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css",
+  },
   // app: "ediq",
   app: "baizabal.xyz",
   post: {
