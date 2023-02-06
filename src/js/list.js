@@ -123,6 +123,11 @@ const config_list = {
     rows_counter: {
       text: "Libros: ",
     },
+    help_instructions: false, //{
+    // Instructions text (accepts HTML)
+    // text: "Ayuda",
+    // btn_text: "?", // btn_text oder btn_html
+    // },
     // loader: {
     //   html: '<div id="loader_msj"></div>',
     //   css_class: "loader",

@@ -4,22 +4,11 @@
     <meta charset="UTF-8" />
     <title>Path Editing</title>
 
-    <!-- <link -->
-    <!--   rel="stylesheet" -->
-    <!--   href="css/index.css" -->
-    <!--   type="text/css" -->
-    <!--   media="screen" -->
-    <!--   title="no title" -->
-    <!--   charset="utf-8" -->
-    <!-- /> -->
-    <!-- <script src="js/index.js" charset="utf-8"></script> -->
     <script defer src="./js/editor.js" charset="utf-8" type="module"></script>
   </head>
   <body>
     <div id="elder" class="scroller">
-      <div class="canvas">
-        <!-- <canvas id="canvas">Your browser doesn't support canvas</canvas> -->
-      </div>
+      <div class="canvas">&nbsp;</div>
     </div>
 
 
@@ -36,7 +25,6 @@
               checked="checked"
             />
           </li>
-
           <li>
             <label class="btn btn-default" for="option"><i class="fa-regular fa-list-ul"></i></label>
             <input type="radio" id="option" name="inpsel" value="option" />
@@ -79,21 +67,14 @@
           <li>
             <label id="height" class="btn btn-default">xheight</label>
           </li>
-
-
           <li>
-      <label class="btn btn-default" for="prev"><i class="fa-regular fa-caret-left"></i></label>
-      <input type="button" name="prev" id="prev" />
-
+            <label class="btn btn-default" for="prev"><i class="fa-regular fa-caret-left"></i></label>
+            <input type="button" name="prev" id="prev" />
           </li>
-
-    <!-- <div id="controls"> -->
-      <li>
-      <label for="page-number">&nbsp;
-      <input type="text" id="page-number" /> 
-      <!-- <div id="page-number"></div> -->
-      </label>
-      </li>
+        <li>
+            <label class="none" for="page-number">&nbsp;</label>
+            <input type="text" id="page-number" name="page-number" /> 
+        </li>
 
       <li>
       <label id="number-pages"></label>

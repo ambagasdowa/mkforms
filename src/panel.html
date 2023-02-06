@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel</title>
+    <style type="text/css" media="screen">
+      body {
+        background-color: darkslategray;
+      }
+      #right_panel {
+        display: inline;
+        position: absolute;
+        width: 96px;
+        padding-left: 4px;
+        height: 100%;
+        right: 0;
+        background-color: skyblue;
+      }
+
+      #resize {
+        background-color: seagreen;
+        position: absolute;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        cursor: w-resize;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas">TESTARDASDA</div>
+    <div id="right_panel">
+      <div id="resize"></div>
+    </div>
+  </body>
+  <script charset="utf-8">
+    var m_pos;
+    function resize(e) {
+      var parent = resize_el.parentNode;
+      var dx = m_pos - e.x;
+      m_pos = e.x;
+      parent.style.width =
+        parseInt(getComputedStyle(parent, "").width) + dx + "px";
+    }
+
+    var resize_el = document.getElementById("resize");
+    resize_el.addEventListener(
+      "mousedown",
+      function (e) {
+        m_pos = e.x;
+        document.addEventListener("mousemove", resize, false);
+      },
+      false
+    );
+    document.addEventListener(
+      "mouseup",
+      function () {
+        document.removeEventListener("mousemove", resize, false);
+      },
+      false
+    );
+  </script>
+</html>
