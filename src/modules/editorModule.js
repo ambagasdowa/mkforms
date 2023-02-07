@@ -139,7 +139,6 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
     book_attr.value = `
                         background-image: url(${background_img});
                         background-size: contain;
-                        /*background-size: cover;*/
                         background-repeat: no-repeat;
                         max-width :100%;
                         max-height: 100%;
