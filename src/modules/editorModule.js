@@ -9,6 +9,7 @@ console.log(msg);
 document.querySelector("#width").textContent = hx;
 document.querySelector("#height").textContent = hy;
 
+let m_pos;
 // === === === === === === === === === === === === === === === === === === //
 //          Construct for set the backgorund img and canvas
 // === === === === === === === === === === === === === === === === === === //
@@ -17,7 +18,7 @@ document.querySelector("#height").textContent = hy;
 // const percent_height = 250;
 
 const percent_width = 90;
-const percent_height = 150;
+const percent_height = 250;
 
 const canvas_width = Math.abs((hx * percent_width) / 100);
 const canvas_height = Math.abs((hy * percent_height) / 100);
@@ -977,5 +978,32 @@ function reportWindowSize() {
   console.log(msg);
 }
 // window.addEventListener("resize", reportWindowSize);
+
+// ControlPanel
+
+function resize(e) {
+  let parent = resize_el.parentNode;
+  let dx = m_pos - e.x;
+  m_pos = e.x;
+  parent.style.width = parseInt(getComputedStyle(parent, "").width) + dx + "px";
+}
+
+let resize_el = document.getElementById("resize");
+resize_el.addEventListener(
+  "mousedown",
+  function (e) {
+    m_pos = e.x;
+    document.addEventListener("mousemove", resize, false);
+  },
+  false
+);
+
+document.addEventListener(
+  "mouseup",
+  function () {
+    document.removeEventListener("mousemove", resize, false);
+  },
+  false
+);
 
 export { initBooks, initMsj, setInitial, reportWindowSize };

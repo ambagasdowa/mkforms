@@ -8,14 +8,20 @@
       body {
         background-color: darkslategray;
       }
+
+      .scroller {
+        position: fixed;
+        overflow: hidden;
+      }
+
       #right_panel {
-        display: inline;
         position: absolute;
         width: 96px;
         padding-left: 4px;
         height: 100%;
         right: 0;
-        background-color: skyblue;
+        background-color: sienna;
+        overflow: hidden;
       }
 
       #resize {
@@ -29,13 +35,23 @@
     </style>
   </head>
   <body>
-    <div class="canvas">TESTARDASDA</div>
-    <div id="right_panel">
-      <div id="resize"></div>
+    <div id="elder" class="scroll">
+      <div class="scroller">TESTARDASDA</div>
+
+      <div id="right_panel">
+        <div id="resize"></div>
+        <ul>
+          <li>one</li>
+          <li>two</li>
+          <li>three</li>
+          <li>four</li>
+        </ul>
+      </div>
     </div>
   </body>
   <script charset="utf-8">
     var m_pos;
+
     function resize(e) {
       var parent = resize_el.parentNode;
       var dx = m_pos - e.x;
@@ -53,6 +69,7 @@
       },
       false
     );
+
     document.addEventListener(
       "mouseup",
       function () {

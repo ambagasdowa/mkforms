@@ -1,17 +1,29 @@
 body {
   background-color: #002b36;
   color: darkgray;
-  position: relative;
+  /* position: relative; */
 }
 
-.scroller {
+/* .scroller { */
+/* border-color: seagreen; */
+/* border: 2px solid royalblue; */
+/* width: 1126px; */
+/* max-width: 95vw; */
+/* max-height: 90vh; */
+/* height: 900px; */
+/* position: fixed; */
+/* overflow: scroll; */
+/* } */
+
+.canvas {
   /* border-color: seagreen; */
   /* border: 2px solid royalblue; */
   /* width: 1126px; */
-  max-width: 95vw;
+  /* max-width: 95vw; */
   /* max-height: 90vh; */
   /* height: 900px; */
-  overflow: scroll;
+  position: fixed;
+  /* overflow: scroll; */
 }
 
 div[data-in-page] {
@@ -47,9 +59,9 @@ canvas {
 }
 
 .control_panel li {
-  float: left;
+  /* float: left; */
   margin: 0 5px 0 0;
-  width: 110px;
+  width: 30px;
   height: 30px;
   position: relative;
 }
@@ -75,7 +87,7 @@ canvas {
 
 .control_panel label {
   padding: 5px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   cursor: pointer;
   z-index: 90;
 }
@@ -86,4 +98,25 @@ canvas {
 
 .off {
   display: none;
+}
+
+/* resizable navbar */
+
+.right_panel {
+  position: absolute;
+  width: 10%;
+  padding-left: 4px;
+  height: 100%;
+  right: 0;
+  background-color: midnightblue;
+  overflow: hidden;
+}
+
+#resize {
+  background-color: seagreen;
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  cursor: w-resize;
 }

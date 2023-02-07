@@ -126,7 +126,7 @@ const config_editor = {
 };
 
 console.log(initMsj(config_editor.info));
-setStyles(config_editor.css_files);
+setStyles(config_editor.css_files, true);
 const paramsUrl = getAllUrlParams(window.location.href, false);
 
 window.onload = (event) => {
