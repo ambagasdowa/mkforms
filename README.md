@@ -20,13 +20,15 @@ styles:
 # mkforms
 
 Html Forms Maker
-# Collaborate to this repo 
+
+# Collaborate to this repo
 
 - clone repo git clone repo
 - create a new branch git checkout -b newFeature
-- send a pull request 
+- send a pull request
 
 # Todo
+
 ## Admin Section
 
 - Admininstrator
@@ -39,7 +41,7 @@ Html Forms Maker
     - [x]Delete poligon
     - [x]Clone poligon
     - [x]Clean canvas
-    - [x]Set a page turn compatible for the admin module 
+    - [x]Set a page turn compatible for the admin module
     - [x]Build a reload method of canvas and get() data if exists for change to a new page
     - []Add Text[Correct Answer]
     - []~~Add color option~~[optional]
@@ -49,22 +51,26 @@ Html Forms Maker
   - []~~Add a datepicker~~[optional]
   - []Group checkboxes and options in control ribbon[initial set of boxes : n options -> create || select checkboxes and set a group]
   - [x]Build the control panel ribbon
-- Viewver
+- View
   - []Evaluator module : set a visual and textual[report] check for rigth answer
   - Internal
-    - []Build an option for get the images from local or server source
-    -[x]DragBar that's containt the control panel
+    - []Build an option for get the images from local or server source -[x]DragBar that's containt the control panel
 - Canvas
   - [x]Build Canvas Engine initial
   - [x]Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
-  - [x]link to a database and build the mechanism to get() and post() data of items 
+  - [x]link to a database and build the mechanism to get() and post() data of items
   - [-]Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
   - []Convert to css dimensions
   - []Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
   - []Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
 - Validator
   -[]Create a validator engine[ Map inputs id's with a unique answer table]
-- Api
-  -[-]Reorder Items method for release mysql work
-  -[-]Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
+
+- Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
+
+  -[-]Reorder Items method for release mysql work -[-]Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
   -[]Add server or local parameter to img-paths[bookpages:{}] responses
+
+> - [x] : done
+> - [-] : Working on
+> - []: TODO
