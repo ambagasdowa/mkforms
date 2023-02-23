@@ -32,7 +32,7 @@ Html Forms Maker
 ## Admin Section
 
 - Admininstrator
-  - [-] Draw BookPage directly to canvas object against draw img as div background
+  - [~] Draw BookPage directly to canvas object against draw img as div background
   - [x] Add grid builder Option->Canvas : draw poligon and split in multiple poligons inside take a int as parameter [crucigramas , sopa de letras ...]
   - Draw properties window over a poligon for add options to box
     - [x] Add positions of the item
@@ -60,7 +60,7 @@ Html Forms Maker
   - [x] Build Canvas Engine initial
   - [x] Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
   - [x] link to a database and build the mechanism to get() and post() data of items
-  - [-] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
+  - [~] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
   - [ ] Convert to css dimensions
   - [ ] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
   - [ ] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
@@ -70,8 +70,8 @@ Html Forms Maker
 
 - Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
 
-  - [-] Reorder Items method for release mysql work
-  - [-] Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
+  - [~] Reorder Items method for release mysql work
+  - [~] Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
   - [ ] Add server or local parameter to img-paths[bookpages:{}] responses
 
 > - [x] : done
