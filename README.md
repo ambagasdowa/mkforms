@@ -80,4 +80,4 @@ Html Forms Maker
 
 # Database source
 
-> [database](https://gitlab.com/ambagasdowa/sql/-/blob/5e9ef33d282d271f0dd3a6f62a1fc55aec3ce44b/mariadb/panamericano/bms.sql)
+> [database](https://gitlab.com/ambagasdowa/sql/-/raw/master/mariadb/panamericano/bms.sql)
