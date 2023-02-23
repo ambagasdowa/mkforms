@@ -54,7 +54,8 @@ Html Forms Maker
 - View
   - [ ] Evaluator module : set a visual and textual[report] check for rigth answer
   - Internal
-    - [ ] Build an option for get the images from local or server source -[x]DragBar that's containt the control panel
+    - [ ] Build an option for get the images from local or server source
+    - [x] DragBar that's containt the control panel
 - Canvas
   - [x] Build Canvas Engine initial
   - [x] Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
