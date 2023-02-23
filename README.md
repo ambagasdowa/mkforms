@@ -75,7 +75,7 @@ Html Forms Maker
   - [ ] Add server or local parameter to img-paths[bookpages:{}] responses
 
 > - [x] : done
-> - [-] : Working on
+> - [~] : Working on
 > - [ ] : TODO
 
 # Database source
