@@ -64,12 +64,14 @@ Html Forms Maker
   - []Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
   - []Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
 - Validator
-  -[]Create a validator engine[ Map inputs id's with a unique answer table]
+
+  - []Create a validator engine[ Map inputs id's with a unique answer table]
 
 - Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
 
-  -[-]Reorder Items method for release mysql work -[-]Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
-  -[]Add server or local parameter to img-paths[bookpages:{}] responses
+  - [-]Reorder Items method for release mysql work
+  - [-]Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
+  - []Add server or local parameter to img-paths[bookpages:{}] responses
 
 > - [x] : done
 > - [-] : Working on
