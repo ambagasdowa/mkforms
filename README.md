@@ -60,8 +60,9 @@ Html Forms Maker
   - [x] Build Canvas Engine initial
   - [x] Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
   - [x] link to a database and build the mechanism to get() and post() data of items
-  - [~] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
+  - [ ] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
   - [~] Convert to css dimensions
+  - [~] Convert from box positions to inputs elements
   - [~] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
   - [~] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
 - Validator
