@@ -1,0 +1,214 @@
+{
+  "book_pages": {
+    "1": "https://ediq.mx/public/guias/guia_demo_uv_040321_2/pages/1.jpg",
+    "2": "/src/bms/src/book-source/guia/unam/001/pages/14.jpg",
+    "3": "/src/bms/src/book-source/guia/unam/001/pages/15.jpg",
+    "4": "/src/bms/src/book-source/guia/unam/001/pages/147.jpg",
+    "5": "/src/bms/src/book-source/guia/unam/001/pages/35.jpg",
+    "6": "/src/bms/src/book-source/guia/unam/001/pages/36.jpg",
+    "7": "https://ediq.mx/public/guias/guia_demo_uv_040321_2/pages/7.jpg",
+    "8": "/src/bms/src/book-source/guia/unam/001/pages/180.jpg"
+  },
+  "book_pages_maps": {
+    "1": "",
+
+    "2": ".pages_2>form>#a2{top:54.4%;left:14.4%;width:67%;} .pages_2>form>#b2{top:55.9%;left:20.4%;width:61.3%;} .pages_2>form>#cx{top:57.4%;left:20.4%;width:61.2%;} .pages_2>form>#d2{top:69.5%;left:14.4%;width:67%;} .pages_2>form>#e2{top:71.1%;left:20.4%;width:61.3%;} .pages_2>form>#f2{top:72.5%;left:20.4%;width:61.2%;}.pages_2>form>#g2{top:89.1%;left:14.4%;width:67%;}.pages_2>form>#h2{top:90.6%;left:20.4%;width:61.3%;}.pages_2>form>#i2{top:92.2%;left:20.4%;width:61.2%;}",
+
+    "3": ".pages_3 > form > #a{top:36%;left:48.7%;width:3%;} .pages_3 > form > #b{top:37.5%;left:48.7%;width:3%;} .pages_3 > form > #c{top:38.9%;left:48.7%;width:3%;} .pages_3 > form > #d{top:40.4%;left:48.7%;width:3%;} .pages_3 > form > #a2{top:44.9%;left:48.7%;width:3%;} .pages_3 > form > #b2{top:46.3%;left:48.7%;width:3%;} .pages_3 > form > #c2{top:47.8%;left:48.7%;width:3%;} .pages_3 > form > #d2{top:49.2%;left:48.7%;width:3%;} ",
+
+    "4": "",
+
+    "5": " .pages_5 > form > #a{top:70.2%;left:190px;width:3%;} .pages_5 > form > #b{bottom:17.5%;right:66.5%;width:3%;} .pages_5 > form > #c{top:80.2%;left:43%;width:3%;}",
+
+    "6": " .pages_6 > form > #a{top:60.2%;left:190px;width:3%;} .pages_6 > form > #b{bottom:17.5%;right:66.5%;width:3%;} .pages_6 > form > #c{top:80.2%;left:43%;width:3%;}",
+
+    "7": " .pages_7 > form > #a{top:90.2%;left:190px;width:3%;} .pages_7 > form > #b{bottom:17.5%;right:66.5%;width:3%;} .pages_7 > form > #c{top:80.2%;left:43%;width:3%;}",
+
+    "8": " .pages_8 > form > #a{top:90.2%;left:190px;width:3%;} .pages_8 > form > #b{bottom:17.5%;right:66.5%;width:3%;} .pages_8 > form > #c{top:80.2%;left:43%;width:3%;}"
+  },
+  "book_inputs": {
+    "1": [{}],
+    "2": [
+      {
+        "type": "text",
+        "name": "a2",
+        "id": "a2",
+        "autofocus": "on",
+        "placeholder": "Responder Actividad 3 Pregunta 1",
+        "class": "saved",
+        "value": "Previous Answer not editable",
+        "disabled": "disabled",
+        "style": "color:magenta!important;"
+      },
+      {
+        "type": "text",
+        "name": "b222",
+        "id": "b2",
+        "placeholder": "Responder Actividad 3  Pregunta 2",
+        "class": "edition",
+        "value": "Previous Answer and editable"
+      },
+      {
+        "type": "text",
+        "name": "c222",
+        "id": "cx",
+        "placeholder": "Responder Actividad 3 Pregunta 3",
+        "class": "blank"
+      },
+      {
+        "type": "text",
+        "name": "a2",
+        "id": "d2",
+        "autofocus": "on",
+        "placeholder": "Responder Actividad 3 Pregunta 4",
+        "class": "saved",
+        "value": "Previous Answer not editable",
+        "disabled": "disabled",
+        "style": "color:magenta!important;"
+      },
+      {
+        "type": "text",
+        "name": "b222",
+        "id": "e2",
+        "placeholder": "Responder Actividad 3 Pregunta 5",
+        "class": "edition",
+        "value": "Previous Answer and editable"
+      },
+      {
+        "type": "text",
+        "name": "c222",
+        "id": "f2",
+        "placeholder": "Responder Actividad 3 Pregunta 6",
+        "class": "blank"
+      },
+      {
+        "type": "text",
+        "name": "c222",
+        "id": "g2",
+        "placeholder": "Responder Actividad 3 Pregunta 7",
+        "class": "blank"
+      },
+      {
+        "type": "text",
+        "name": "c222",
+        "id": "h2",
+        "placeholder": "Responder Actividad 3 Pregunta 8",
+        "class": "blank"
+      },
+      {
+        "type": "text",
+        "name": "c222",
+        "id": "i2",
+        "placeholder": "Responder Actividad 3 Pregunta 9",
+        "class": "blank"
+      }
+    ],
+    "3": [
+      {
+        "type": "radio",
+        "name": "actividad-one",
+        "id": "a",
+        "placeholder": "a3333",
+        "class": "option-input radio",
+        "value": "a",
+        "onclick": "onlyOne(this,'actividad-one')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-one",
+        "id": "b",
+        "value": "b",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-one')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-one",
+        "id": "c",
+        "value": "c",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-one')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-one",
+        "id": "d",
+        "value": "d",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-one')"
+      },
+
+      {
+        "type": "radio",
+        "name": "actividad-two",
+        "id": "a2",
+        "placeholder": "a3333",
+        "class": "option-input radio",
+        "value": "a",
+        "onclick": "onlyOne(this,'actividad-two')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-two",
+        "id": "b2",
+        "value": "b",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-two')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-two",
+        "id": "c2",
+        "value": "c",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-two')"
+      },
+      {
+        "type": "radio",
+        "name": "actividad-two",
+        "id": "d2",
+        "value": "d",
+        "class": "option-input radio",
+        "onclick": "onlyOne(this,'actividad-two')"
+      }
+    ],
+    "4": [{}],
+    "5": [
+      {
+        "type": "text",
+        "name": "a",
+        "id": "a",
+        "autofocus": "on",
+        "placeholder": "-",
+        "class": "someclasse"
+      },
+      { "type": "text", "name": "b", "id": "b", "placeholder": "b55555" },
+      { "type": "text", "name": "c", "id": "c", "placeholder": "c55555" }
+    ],
+    "6": [
+      {
+        "type": "text",
+        "name": "a",
+        "id": "a",
+        "autofocus": "on",
+        "placeholder": "a6",
+        "class": "someclassf"
+      },
+      { "type": "text", "name": "b", "id": "b", "placeholder": "b6" },
+      { "type": "text", "name": "c", "id": "c", "placeholder": "c6" }
+    ],
+    "7": [
+      {
+        "type": "text",
+        "name": "a",
+        "id": "a",
+        "autofocus": "on",
+        "placeholder": "a7",
+        "class": "someclassg"
+      },
+      { "type": "text", "name": "b", "id": "b", "placeholder": "b7" },
+      { "type": "text", "name": "c", "id": "c", "placeholder": "c7" }
+    ],
+    "8": [{}]
+  }
+}
