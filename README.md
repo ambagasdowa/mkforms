@@ -61,17 +61,17 @@ Html Forms Maker
   - [x] Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
   - [x] link to a database and build the mechanism to get() and post() data of items
   - [~] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
-  - [ ] Convert to css dimensions
-  - [ ] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
-  - [ ] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
+  - [~] Convert to css dimensions
+  - [~] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
+  - [~] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
 - Validator
 
   - [ ] Create a validator engine[ Map inputs id's with a unique answer table]
 
 - Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
 
-  - [~] Reorder Items method for release mysql work
-  - [~] Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
+  - [x] Reorder Items method for release mysql work
+  - [x] Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
   - [ ] Add server or local parameter to img-paths[bookpages:{}] responses
 
 > - [x] : done
