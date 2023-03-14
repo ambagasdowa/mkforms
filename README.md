@@ -63,8 +63,8 @@ Html Forms Maker
   - [ ] Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
   - [~] Convert to css dimensions
   - [~] Convert from box positions to inputs elements
-  - [~] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
-  - [~] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
+  - [ ] Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
+  - [ ] Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
 - Validator
 
   - [ ] Create a validator engine[ Map inputs id's with a unique answer table]
