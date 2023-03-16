@@ -75,6 +75,10 @@ Html Forms Maker
   - [x] Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
   - [ ] Add server or local parameter to img-paths[bookpages:{}] responses
 
+- App
+  - [ ] Build as package for npm installation (webpack,...)
+  - [ ] Build a configuration system with a config.ini file
+
 > - [x] : done
 > - [~] : Working on
 > - [ ] : TODO

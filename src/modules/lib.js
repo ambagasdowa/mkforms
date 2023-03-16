@@ -254,7 +254,8 @@ function buildDivBook(object = {}) {
     }
     // NOTE this maps must come from an api json bridge
     // asking for a system_users.user_id
-    if (obj.book_pages_maps[index].length) {
+
+    if (obj.book_pages_maps[index]) {
       //NOTE add positions via css
       console.log(`Found something in book_pages_maps`);
       setMappings(obj, index);
