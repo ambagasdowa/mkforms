@@ -833,7 +833,7 @@ function handleEventOnDom(element, typeEvent) {
           console.log(`Sending Data ... :${element}`);
           saveBox();
           // clearPageCanvas(page);
-          initCanvasEngine(this_config, bookid, page);
+          redraw();
           break;
         case "dblclick":
           // some code here…
