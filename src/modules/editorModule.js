@@ -830,8 +830,10 @@ function handleEventOnDom(element, typeEvent) {
     if (typeEvent == "postapi") {
       switch (event.type) {
         case "click":
-          saveBox();
           console.log(`Sending Data ... :${element}`);
+          saveBox();
+          clearPageCanvas(page);
+          initCanvasEngine(this_config, bookid, page);
           break;
         case "dblclick":
           // some code here…
