@@ -249,7 +249,7 @@ function buildDivBook(object = {}) {
     // Add form hir
 
     // NOTE add forms to div
-    if (obj.book_inputs[index].length) {
+    if (obj.book_inputs[index]) {
       setForms(obj, index, page_book);
     }
     // NOTE this maps must come from an api json bridge
