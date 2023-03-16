@@ -56,6 +56,8 @@ Html Forms Maker
   - Internal
     - [ ] Build an option for get the images from local or server source
     - [x] DragBar that's containt the control panel
+  - UIX:
+    - [~] Save Method by user
 - Canvas
   - [x] Build Canvas Engine initial
   - [x] Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
