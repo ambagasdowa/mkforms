@@ -828,13 +828,13 @@ function handleEventOnDom(element, typeEvent) {
     }
     // NOTE Handle events for post json data
     if (typeEvent == "postapi") {
-      // saveBox;
+      saveBox();
     }
     // NOTE relative to the canvas UIX
     if (typeEvent == "next") {
       switch (event.type) {
         case "click":
-          saveBox();
+          // saveBox();
           page = page + 1;
           console.log(`next :${page}`);
 
@@ -853,7 +853,7 @@ function handleEventOnDom(element, typeEvent) {
       switch (event.type) {
         case "click":
           // change page:
-          saveBox();
+          // saveBox();
           page = page - 1;
           console.log(`prev :${page}`);
           initCanvasEngine(this_config, bookid, page);
