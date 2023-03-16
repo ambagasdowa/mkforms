@@ -828,7 +828,19 @@ function handleEventOnDom(element, typeEvent) {
     }
     // NOTE Handle events for post json data
     if (typeEvent == "postapi") {
-      saveBox();
+      switch (event.type) {
+        case "click":
+          saveBox();
+          console.log(`Sending Data ... :${element}`);
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+      // saveBox();
     }
     // NOTE relative to the canvas UIX
     if (typeEvent == "next") {
