@@ -162,6 +162,7 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
 function initCanvasEngine(config = {}, bookid, page) {
   // NOTE
   console.log(`In which page we are ${page}`);
+  console.log(`And which Book ${bookid}`);
 
   clearPageCanvas(page);
 
