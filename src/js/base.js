@@ -126,6 +126,8 @@ $(function () {
       display: "single",
       acceleration: true,
       gradients: !$.isTouch,
+      width: config.default_width,
+      height: config.default_height,
       elevation: 50,
       when: {
         turned: function (e, page) {

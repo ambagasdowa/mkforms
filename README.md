@@ -78,8 +78,23 @@ Html Forms Maker
   - [ ] Add server or local parameter to img-paths[bookpages:{}] responses
 
 - App
+
   - [ ] Build as package for npm installation (webpack,...)
   - [ ] Build a configuration system with a config.ini file
+
+- FixIt
+
+  - Editor:
+
+    - When Reload the page with boxes from json , send data via POST retrieves (needs async logic) :
+
+    ```bash
+      XHRPOST
+      https://baizabal.xyz:8000/srcpositions/38/7
+      [HTTP/1.1 404 Not Found 519ms]
+    ```
+
+detail "Something Happend Try again "
 
 > - [x] : done
 > - [~] : Working on

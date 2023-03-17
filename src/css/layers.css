@@ -9,8 +9,8 @@ body {
 
 /* NOTE : build more efficent viewport */
 
-#form,
-#magazine {
+/* #magazine, */
+#form {
   width: 1152px;
   height: 1552px;
 }
