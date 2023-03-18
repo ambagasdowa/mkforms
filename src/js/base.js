@@ -157,7 +157,7 @@ $(function () {
       when: {
         turned: function (e, page) {
           currentPage.pag = $(this).turn("view");
-          console.log(typeof currentPage.pag);
+          console.log(currentPage.pag.toString());
           console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
           let send_data = new send.eventOnDom(
             save,
