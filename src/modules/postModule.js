@@ -54,7 +54,7 @@ function eventOnDom(element, typeEvent) {
           console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           console.log(event.target);
           alert("saveBox");
-          //saveBox();
+          sendData(url, event);
           break;
         case "dblclick":
           // some code here…
@@ -79,22 +79,23 @@ function sendData(url = "", event) {
   const form = document.getElementById("form");
   const formData = new FormData();
 
-  const sendSubmit = (event) => {
-    event.preventDefault();
-    // Get the form data from the event object
-    console.log(event.target);
+  // const sendSubmit = (event) => {
+  //   event.preventDefault();
+  // Get the form data from the event object
+  console.log(url);
+  console.log(event.target);
 
-    for (const [key, value] of Object.entries(event.target)) {
-      console.log(
-        `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-      );
-      formData.append(value.name, value.value);
-    }
+  for (const [key, value] of Object.entries(event.target)) {
+    console.log(
+      `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+    );
+    formData.append(value.name, value.value);
+  }
 
-    console.log(JSON.stringify(formData));
-    // const send = requestData.postFileData(url, config_upload, formData);
-    // send.then((data) => console.log(data));
-  }; //End HandleSubmit
+  console.log(JSON.stringify(formData));
+  // const send = requestData.postFileData(url, config_upload, formData);
+  // send.then((data) => console.log(data));
+  // }; //End HandleSubmit
 
   // form.addEventListener("submit", sendSubmit);
 }
