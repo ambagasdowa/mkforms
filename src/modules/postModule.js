@@ -95,7 +95,7 @@ function sendData(url = "", page, event) {
   // }
 
   // console.log(JSON.stringify(formData));
-  const send = requestData.postFileData(url, config_upload, formData);
+  const send = requestData.postFileData(url, config_upload, form);
   send.then((data) => console.log(data));
   // }; //End HandleSubmit
 
