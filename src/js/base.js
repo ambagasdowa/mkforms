@@ -142,7 +142,7 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          pg = $(this).turn("view");
+          let pg = $(this).turn("view");
 
           send.sendData(config, `${url}${pg}`, tokenTag, false);
 
