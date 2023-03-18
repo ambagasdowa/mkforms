@@ -109,7 +109,7 @@ console.log(`prop : ${book_id} and ${user_id}`);
 // if (window.location.hostname == config.srv_json) {
 //   config.srv_json = "127.0.0.1";
 // }
-
+var page;
 let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.get_method}/${book_id}/${user_id}`;
 
 console.log(`the url is --> ${book_url}`);
@@ -129,7 +129,9 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 
 console.log(url);
 const save = document.querySelector("#submit");
-console.log(`Send : ${save}`);
+alert(`Send : ${page}`);
+let xurl = `${save_url}${page}`;
+let send_data = new send.eventOnDom(xurl, save, "save");
 
 //
 //NOTE logic for turn lib-->
@@ -148,8 +150,6 @@ $(function () {
           let pg = $(this).turn("view");
 
           // send.sendData(config, `${url}${pg}`, tokenTag, false);
-          let xurl = `${save_url}${pg}`;
-          let send_data = new send.eventOnDom(xurl, save, "save");
 
           console.log(`Current page: ${pg} `);
           console.log(
