@@ -41,7 +41,7 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function handleEventOnDom(element, typeEvent) {
+function eventOnDom(element, typeEvent) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
@@ -70,9 +70,9 @@ function handleEventOnDom(element, typeEvent) {
   element.addEventListener("dblclick", this, false);
 }
 
-const send = document.querySelector("#save_page");
+const send = document.querySelector("#submit");
 console.log(`Send : ${send}`);
-let send_data = new handleEventOnDom(send, "postapi");
+let send_data = new eventOnDom(send, "postapi");
 
 function sendData(
   config_upload = {},
