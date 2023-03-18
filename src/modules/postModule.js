@@ -41,7 +41,7 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function eventOnDom(element, typeEvent, url, page) {
+function eventOnDom(element, typeEvent, url, user_id, page) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
@@ -54,7 +54,7 @@ function eventOnDom(element, typeEvent, url, page) {
           // console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           // console.log(event.target);
           // alert(url);
-          sendData(url, page, event);
+          sendData(url, user_id, page, event);
           break;
         case "dblclick":
           // some code here…
@@ -75,7 +75,7 @@ export { eventOnDom };
 // console.log(`Send : ${save}`);
 // let send_data = new eventOnDom(save, "save");
 
-function sendData(url = "", page, event) {
+function sendData(url = "", user_id, page, event) {
   console.log("DEFINITIONS in sendData");
   console.log(url);
   // console.log(event);
@@ -90,9 +90,12 @@ function sendData(url = "", page, event) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
-    formData.append(value.name, value.value);
+
+    formData.append("bms_inputs_ctrls_id", value.name.replace("inp", ""));
+    formData.append("user_id", user_id);
+    formData.append("attribute", "value");
+    formData.append("value", value.value);
   }
-  console.log(JSON.stringify(formData));
 
   const send = requestData.postFileData(url, config_upload, formData);
   send.then((data) => console.log(data));
