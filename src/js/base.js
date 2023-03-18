@@ -147,11 +147,11 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          let pg = $(this).turn("view");
+          page = $(this).turn("view");
 
           // send.sendData(config, `${url}${pg}`, tokenTag, false);
 
-          console.log(`Current page: ${pg} `);
+          console.log(`Current page: ${page} `);
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
