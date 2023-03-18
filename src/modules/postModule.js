@@ -41,6 +41,39 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
+function handleEventOnDom(element, typeEvent) {
+  // |this| is a newly created object
+  this.name = `Initialize Dom ${typeEvent}`;
+  this.handleEvent = function (event) {
+    console.log(this.name); // 'Something Good', as this is bound to newly created object
+    // NOTE Handle events for post json data
+    if (typeEvent == "postapi") {
+      switch (event.type) {
+        case "click":
+          console.log(`Sending Data ... :${element}`);
+          alert("saveBox");
+          //saveBox();
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+      // saveBox();
+    }
+  };
+
+  // Note that the listeners in this case are |this|, not this.handleEvent
+  element.addEventListener("click", this, false);
+  element.addEventListener("dblclick", this, false);
+}
+
+const send = document.querySelector("#save_page");
+console.log(`Send : ${send}`);
+let send_data = new handleEventOnDom(send, "postapi");
+
 function sendData(
   config_upload = {},
   url = "",
@@ -48,10 +81,6 @@ function sendData(
   is_file = false
 ) {
   const form = document.getElementById("form");
-
-  if (is_file) {
-    const inputFile = document.getElementById("file");
-  }
 
   const formData = new FormData();
 
@@ -72,11 +101,6 @@ function sendData(
       // if (is_file) {
       formData.append(value.name, value.value);
       // }
-    }
-    if (is_file) {
-      for (const file of inputFile.files) {
-        formData.append("files", file);
-      }
     }
 
     console.log(JSON.stringify(formData));
