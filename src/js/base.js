@@ -163,6 +163,7 @@ $(function () {
             save,
             "save",
             save_url,
+            `${user_id}`,
             `${currentPage.pag}`
           );
           console.log(
