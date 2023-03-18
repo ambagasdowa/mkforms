@@ -131,7 +131,7 @@ console.log(save_url);
 const save = document.querySelector("#submit");
 alert(`Send : ${page}`);
 let xurl = `${save_url}${page}`;
-let send_data = new send.eventOnDom(xurl, save, "save");
+let send_data = new send.eventOnDom(save, "save", xurl);
 
 //
 //NOTE logic for turn lib-->

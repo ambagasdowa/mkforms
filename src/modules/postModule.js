@@ -41,7 +41,7 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function eventOnDom(element, typeEvent) {
+function eventOnDom(element, typeEvent, url) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
