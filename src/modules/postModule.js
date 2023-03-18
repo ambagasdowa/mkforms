@@ -95,12 +95,13 @@ function sendData(url = "", user_id, page, event) {
     formData.append("user_id", user_id);
     formData.append("attribute", "value");
     formData.append("value", value.value);
+
+    const send = requestData.postFileData(url, config_upload, formData);
+    send.then((data) => console.log(data));
   }
 
   console.log(formData);
 
-  const send = requestData.postFileData(url, config_upload, formData);
-  send.then((data) => console.log(data));
   // }; //End HandleSubmit
 
   // form.addEventListener("submit", sendSubmit);
