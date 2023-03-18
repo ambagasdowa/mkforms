@@ -52,7 +52,7 @@ function eventOnDom(element, typeEvent, url, page) {
       switch (event.type) {
         case "click":
           // console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
-          console.log(event.target);
+          // console.log(event.target);
           // alert(url);
           sendData(url, page, event);
           break;
@@ -76,6 +76,8 @@ export { eventOnDom };
 // let send_data = new eventOnDom(save, "save");
 
 function sendData(url = "", page, event) {
+  console.log("DEFINITIONS in sendData");
+  console.log(url);
   console.log(event);
   console.log(page);
 
@@ -85,7 +87,7 @@ function sendData(url = "", page, event) {
   // const sendSubmit = (event) => {
   //   event.preventDefault();
   // Get the form data from the event object
-  console.log(url);
+  // console.log(url);
   console.log(data);
 
   for (const [key, value] of Object.entries(data)) {
