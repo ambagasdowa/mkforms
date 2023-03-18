@@ -18,7 +18,7 @@ const config = {
   api_method: "?",
   // app: "ediq",
   app: "baizabal.xyz",
-  page: "",
+  page: 1,
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -38,7 +38,7 @@ const config = {
 import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
 import * as send from "../modules/postModule.js";
-let page;
+var page = 1;
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
