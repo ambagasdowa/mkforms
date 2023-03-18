@@ -291,16 +291,16 @@ function setForms(obj, index, div) {
     formx.appendChild(input_x);
   } // NOTE end of main for
 
-  // const createButton = document.createElement("button");
-  // let button = document.createElement("input");
-  // button.type = "button";
-  // button.id = "submit";
-  // button.value = "Save This Page";
-  // button.className = "btn";
-  // button.style =
-  //   "bottom:20%;left:15%;display:block !important ;border:2px red solid !important;";
-  // // button.innerText = "Guardar";
-  // formx.appendChild(button);
+  const createButton = document.createElement("button");
+  let button = document.createElement("input");
+  button.type = "button";
+  button.id = "submit";
+  button.value = "Save This Page";
+  button.className = "btn";
+  button.style =
+    "bottom:20%;left:15%;display:block !important ;border:2px red solid !important;";
+  // button.innerText = "Guardar";
+  formx.appendChild(button);
   div.appendChild(formx);
 } // NOTE End setForms
 
