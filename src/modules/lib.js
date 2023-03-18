@@ -300,8 +300,9 @@ function setForms(obj, index, div) {
   button.style =
     "bottom:20%;left:15%;display:block !important ;border:2px red solid !important;";
   // button.innerText = "Guardar";
-  formx.appendChild(button);
   div.appendChild(formx);
+
+  div.appendChild(button);
 } // NOTE End setForms
 
 // NOTE Set Maps
