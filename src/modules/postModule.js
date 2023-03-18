@@ -41,7 +41,7 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function eventOnDom(element, typeEvent) {
+function eventOnDom(el, typeEvent) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
@@ -50,7 +50,7 @@ function eventOnDom(element, typeEvent) {
     if (typeEvent == "postapi") {
       switch (event.type) {
         case "click":
-          console.log(`Sending Data ... :${element}`);
+          console.log(`Sending Data ... :${el}`);
           alert("saveBox");
           //saveBox();
           break;
@@ -65,8 +65,8 @@ function eventOnDom(element, typeEvent) {
   };
 
   // Note that the listeners in this case are |this|, not this.handleEvent
-  element.addEventListener("click", this, false);
-  element.addEventListener("dblclick", this, false);
+  el.addEventListener("click", this, false);
+  el.addEventListener("dblclick", this, false);
 }
 
 const send = document.querySelector("#submit");
