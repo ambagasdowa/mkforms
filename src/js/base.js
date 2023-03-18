@@ -38,7 +38,7 @@ const config = {
 import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
 import * as send from "../modules/postModule.js";
-
+let page;
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -129,9 +129,10 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //
-console.log(config.page);
+console.log("PAGE:L");
+console.log(page);
 const save = document.querySelector("#submit");
-let send_data = new send.eventOnDom(save, "save", config.page);
+let send_data = new send.eventOnDom(save, "save", page);
 
 //NOTE logic for turn lib-->
 
@@ -146,7 +147,7 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          config.page = $(this).turn("view");
+          page = $(this).turn("view");
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
