@@ -83,9 +83,9 @@ function sendData(url = "", event) {
   //   event.preventDefault();
   // Get the form data from the event object
   console.log(url);
-  console.log(event.target);
+  console.log(form);
 
-  for (const [key, value] of Object.entries(form)) {
+  for (const [key, value] of Object.entries(event.target)) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
