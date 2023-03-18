@@ -85,7 +85,7 @@ function sendData(url = "", user_id, page, event) {
   console.log(form);
 
   // const formData = new FormData();
-  let datamx = JSON.parse({});
+  let datamx = JSON.parse("{}");
   // let toData = JSON.parse(datamx);
 
   for (const [key, value] of Object.entries(form)) {
