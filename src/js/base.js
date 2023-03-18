@@ -141,7 +141,7 @@ $(function () {
         turned: function (e, page) {
           pg = $(this).turn("view");
 
-          send.sendData(config, `${url}${pg}`, tokenTag, false);
+          // send.sendData(config, `${url}${pg}`, tokenTag, false);
 
           console.log(`Current page: ${pg} `);
           console.log(
