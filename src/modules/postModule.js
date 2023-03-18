@@ -98,10 +98,9 @@ function sendData(url = "", user_id, page, event) {
 
     // const send = requestData.postFileData(url, config_upload, formData);
     // send.then((data) => console.log(data));
-
-    const send = requestData.postData(url, formData);
-    send.then((data) => console.log(data));
   }
+  const send = requestData.postData(url, formData);
+  send.then((data) => console.log(data));
 
   console.log(formData);
 
