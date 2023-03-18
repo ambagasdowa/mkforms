@@ -96,7 +96,10 @@ function sendData(url = "", user_id, page, event) {
     formData.append("attribute", "value");
     formData.append("value", value.value);
 
-    const send = requestData.postFileData(url, config_upload, formData);
+    // const send = requestData.postFileData(url, config_upload, formData);
+    // send.then((data) => console.log(data));
+
+    const send = requestData.postData(url, formData);
     send.then((data) => console.log(data));
   }
 
