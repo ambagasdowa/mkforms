@@ -125,13 +125,9 @@ const elm = await slideModule.waitForElm(".pages_last");
 
 // Working from hir ofr update user response
 
-let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
+let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
 console.log(url);
-
-const save = document.querySelector("#submit");
-console.log(`Send : ${save}`);
-let send_data = new send.eventOnDom(save, "save");
 
 //
 //NOTE logic for turn lib-->
@@ -150,6 +146,10 @@ $(function () {
           let pg = $(this).turn("view");
 
           // send.sendData(config, `${url}${pg}`, tokenTag, false);
+          let xurl = `${save_url}${pg}`;
+          const save = document.querySelector("#submit");
+          console.log(`Send : ${save}`);
+          let send_data = new send.eventOnDom(xurl, save, "save");
 
           console.log(`Current page: ${pg} `);
           console.log(
