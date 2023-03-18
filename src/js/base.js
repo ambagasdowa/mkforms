@@ -139,7 +139,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //
 console.log("PAGE:L");
-console.log(currentPage.pag);
+console.log(`SETTER : ${currentPage.pag}`);
 const save = document.querySelector("#submit");
 let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
 
