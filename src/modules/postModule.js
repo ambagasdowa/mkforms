@@ -51,10 +51,10 @@ function eventOnDom(element, typeEvent, url) {
     if (typeEvent == "save") {
       switch (event.type) {
         case "click":
-          console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
+          // console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           console.log(event.target);
-          alert(url);
-          sendData(url, event);
+          // alert(url);
+          // sendData(url, event);
           break;
         case "dblclick":
           // some code here…

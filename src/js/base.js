@@ -130,6 +130,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 // let send_data = new send.eventOnDom(save, "save", xurl);
 
 //
+const save = document.querySelector("#submit");
 //NOTE logic for turn lib-->
 
 $(function () {
@@ -143,7 +144,6 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          let save = document.querySelector("#submit");
           let send_data = new send.eventOnDom(
             save,
             "save",
