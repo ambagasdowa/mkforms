@@ -84,25 +84,28 @@ function sendData(url = "", user_id, page, event) {
   let form = document.querySelector(`#form_${page}`);
   console.log(form);
 
-  const formData = new FormData();
-
+  // const formData = new FormData();
+  datamx = {};
   for (const [key, value] of Object.entries(form)) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
 
-    formData.append("bms_inputs_ctrls_id", value.name.replace("inp", ""));
-    formData.append("user_id", user_id);
-    formData.append("attribute", "value");
-    formData.append("value", value.value);
+    datamx.push({
+      bms_inputs_ctrls_id: value.name.replace("inp", ""),
+      user_id: user_id,
+      attribute: "value",
+      value: value.value,
+    });
 
     // const send = requestData.postFileData(url, config_upload, formData);
     // send.then((data) => console.log(data));
   }
-  const send = requestData.postData(url, formData);
-  send.then((data) => console.log(data));
 
-  console.log(formData);
+  console.log(JSON.stringify(datamx));
+
+  const send = requestData.postData(url, datamx);
+  send.then((data) => console.log(data));
 
   // }; //End HandleSubmit
 
