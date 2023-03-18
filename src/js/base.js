@@ -131,6 +131,8 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 
 //
 const save = document.querySelector("#submit");
+let send_data = new send.eventOnDom(save, "save", `${save_url}`);
+
 //NOTE logic for turn lib-->
 
 $(function () {
@@ -144,11 +146,6 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          let send_data = new send.eventOnDom(
-            save,
-            "save",
-            `${save_url}${$(this).turn("view")}`
-          );
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
