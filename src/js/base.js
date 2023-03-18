@@ -157,6 +157,7 @@ $(function () {
       when: {
         turned: function (e, page) {
           currentPage.pag = $(this).turn("view");
+          console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
