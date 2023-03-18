@@ -128,7 +128,6 @@ const elm = await slideModule.waitForElm(".pages_last");
 let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
 console.log(save_url);
-const save = document.querySelector("#submit");
 alert(`Send : ${page}`);
 let xurl = `${save_url}${page}`;
 let send_data = new send.eventOnDom(save, "save", xurl);
@@ -147,11 +146,12 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          page = $(this).turn("view");
-
-          // send.sendData(config, `${url}${pg}`, tokenTag, false);
-
-          console.log(`Current page: ${page} `);
+          let save = document.querySelector("#submit");
+          let send_data = new send.eventOnDom(
+            save,
+            "save",
+            `${save_url}${$(this).turn("view")}`
+          );
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
