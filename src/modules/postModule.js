@@ -78,7 +78,7 @@ export { eventOnDom };
 function sendData(url = "", page, event) {
   console.log("DEFINITIONS in sendData");
   console.log(url);
-  console.log(event);
+  // console.log(event);
   console.log(page);
 
   let form = document.querySelector(`#form_${page}`);
