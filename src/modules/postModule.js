@@ -85,12 +85,12 @@ function sendData(url = "", event) {
   console.log(url);
   console.log(data);
 
-  // for (const [key, value] of Object.entries(formData)) {
-  //   console.log(
-  //     `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-  //   );
-  //   formData.append(value.name, value.value);
-  // }
+  for (const [key, value] of Object.entries(data)) {
+    console.log(
+      `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+    );
+    // formData.append(value.name, value.value);
+  }
 
   // console.log(JSON.stringify(formData));
   // const send = requestData.postFileData(url, config_upload, formData);
