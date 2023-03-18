@@ -297,7 +297,8 @@ function setForms(obj, index, div) {
   button.id = "submit";
   button.value = "Save This Page";
   button.className = "btn";
-  button.style = "bottom:20%;left:15%;display:block;border:2px red solid;";
+  button.style =
+    "bottom:20%;left:15%;display:block !important ;border:2px red solid !important;";
   // button.innerText = "Guardar";
   formx.appendChild(button);
   div.appendChild(formx);

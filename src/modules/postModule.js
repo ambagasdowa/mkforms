@@ -51,7 +51,7 @@ function eventOnDom(element, typeEvent) {
     if (typeEvent == "save") {
       switch (event.type) {
         case "click":
-          console.log(`Sending Data ... :${element}`);
+          console.log(`Sending Data ... :${JSON.stringify(element)}`);
           console.log(event.target);
           alert("saveBox");
           //saveBox();
