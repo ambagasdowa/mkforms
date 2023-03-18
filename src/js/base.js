@@ -18,6 +18,7 @@ const config = {
   api_method: "?",
   // app: "ediq",
   app: "baizabal.xyz",
+  page: "",
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -109,7 +110,6 @@ console.log(`prop : ${book_id} and ${user_id}`);
 // if (window.location.hostname == config.srv_json) {
 //   config.srv_json = "127.0.0.1";
 // }
-var page;
 let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.get_method}/${book_id}/${user_id}`;
 
 console.log(`the url is --> ${book_url}`);
@@ -128,10 +128,10 @@ const elm = await slideModule.waitForElm(".pages_last");
 let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
 // let send_data = new send.eventOnDom(save, "save", xurl);
-
 //
+console.log(config.page);
 const save = document.querySelector("#submit");
-let send_data = new send.eventOnDom(save, "save", `${save_url}`);
+let send_data = new send.eventOnDom(save, "save", config.page);
 
 //NOTE logic for turn lib-->
 
@@ -146,6 +146,7 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
+          config.page = $(this).turn("view");
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"

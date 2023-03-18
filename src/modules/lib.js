@@ -278,7 +278,7 @@ function setForms(obj, index, div) {
 
   //create a form
   const formx = document.createElement("form");
-  formx.id = index;
+  formx.id = `form_${index}`;
   for (const input of inputs) {
     let input_x = document.createElement("input");
     //  console.log(input);

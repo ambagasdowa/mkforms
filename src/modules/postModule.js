@@ -41,7 +41,7 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function eventOnDom(element, typeEvent, url) {
+function eventOnDom(element, typeEvent, page) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
@@ -54,7 +54,7 @@ function eventOnDom(element, typeEvent, url) {
           // console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           console.log(event.target);
           // alert(url);
-          sendData(url, event);
+          sendData(url, page, event);
           break;
         case "dblclick":
           // some code here…
@@ -75,8 +75,11 @@ export { eventOnDom };
 // console.log(`Send : ${save}`);
 // let send_data = new eventOnDom(save, "save");
 
-function sendData(url = "", event) {
-  let form = document.querySelector("form");
+function sendData(url = "", page, event) {
+  console.log(event);
+  console.log(page);
+
+  let form = document.querySelector(`#form_${page}`);
   let data = new FormData(form);
 
   // const sendSubmit = (event) => {
