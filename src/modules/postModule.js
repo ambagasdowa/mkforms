@@ -41,16 +41,17 @@ console.log(`Loading uploadInit module `);
 const log_msg = "Initializing postModule";
 export { log_msg };
 
-function eventOnDom(el, typeEvent) {
+function eventOnDom(element, typeEvent) {
   // |this| is a newly created object
   this.name = `Initialize Dom ${typeEvent}`;
   this.handleEvent = function (event) {
     console.log(this.name); // 'Something Good', as this is bound to newly created object
     // NOTE Handle events for post json data
-    if (typeEvent == "postapi") {
+    if (typeEvent == "save") {
       switch (event.type) {
         case "click":
-          console.log(`Sending Data ... :${el}`);
+          console.log(`Sending Data ... :${element}`);
+          console.log(event.target);
           alert("saveBox");
           //saveBox();
           break;
@@ -65,48 +66,35 @@ function eventOnDom(el, typeEvent) {
   };
 
   // Note that the listeners in this case are |this|, not this.handleEvent
-  el.addEventListener("click", this, false);
-  el.addEventListener("dblclick", this, false);
+  element.addEventListener("click", this, false);
+  element.addEventListener("dblclick", this, false);
 }
+export { eventOnDom };
+// const save = document.querySelector("#submit");
+// console.log(`Send : ${save}`);
+// let send_data = new eventOnDom(save, "save");
 
-const send = document.querySelector("#submit");
-console.log(`Send : ${send}`);
-let send_data = new eventOnDom(send, "postapi");
+function sendData(url = "", event) {
+  const form = document.getElementById("form");
+  const formData = new FormData();
 
-// function sendData(
-//   config_upload = {},
-//   url = "",
-//   tokenTag = "",
-//   is_file = false
-// ) {
-//   const form = document.getElementById("form");
+  const sendSubmit = (event) => {
+    event.preventDefault();
+    // Get the form data from the event object
+    console.log(event.target);
 
-//   const formData = new FormData();
+    for (const [key, value] of Object.entries(event.target)) {
+      console.log(
+        `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+      );
+      formData.append(value.name, value.value);
+    }
 
-//   const sendSubmit = (event) => {
-//     event.preventDefault();
-//     // Get the form data from the event object
-//     console.log(event.target);
+    console.log(JSON.stringify(formData));
+    // const send = requestData.postFileData(url, config_upload, formData);
+    // send.then((data) => console.log(data));
+  }; //End HandleSubmit
 
-//     for (const [key, value] of Object.entries(event.target)) {
-//       console.log(
-//         `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-//       );
-//       // console.log(value.name);
-//       // extract token
-//       if (value.name == tokenTag) {
-//         config_upload.headers[tokenTag] = value.value;
-//       }
-//       // if (is_file) {
-//       formData.append(value.name, value.value);
-//       // }
-//     }
-
-//     console.log(JSON.stringify(formData));
-//     // const send = requestData.postFileData(url, config_upload, formData);
-//     // send.then((data) => console.log(data));
-//   }; //End HandleSubmit
-
-//   form.addEventListener("submit", sendSubmit);
-// }
+  // form.addEventListener("submit", sendSubmit);
+}
 // export { sendData };

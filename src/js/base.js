@@ -128,6 +128,11 @@ const elm = await slideModule.waitForElm(".pages_last");
 let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
 console.log(url);
+
+const save = document.querySelector("#submit");
+console.log(`Send : ${save}`);
+let send_data = new send.eventOnDom(save, "save");
+
 //
 //NOTE logic for turn lib-->
 
