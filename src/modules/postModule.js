@@ -85,14 +85,14 @@ function sendData(url = "", user_id, page, event) {
   console.log(form);
 
   // const formData = new FormData();
-  let datamx = JSON.parse("{[]}");
+  let datamx = JSON.parse('{"data":[]}');
   // let toData = JSON.parse(datamx);
 
   for (const [key, value] of Object.entries(form)) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
-    datamx.push({
+    datamx[data].push({
       bms_inputs_ctrls_id: value.name.replace("inp", ""),
       user_id: user_id,
       attribute: "value",
@@ -105,7 +105,7 @@ function sendData(url = "", user_id, page, event) {
 
   console.log(JSON.stringify(datamx));
 
-  const send = requestData.postData(url, datamx);
+  const send = requestData.postData(url, datamx.data);
   send.then((data) => console.log(data));
 
   // }; //End HandleSubmit
