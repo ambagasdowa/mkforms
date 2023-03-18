@@ -295,7 +295,7 @@ function setForms(obj, index, div) {
   let button = document.createElement("input");
   button.type = "button";
   button.id = "submit";
-  button.value = "Submit";
+  button.value = "Save This Page";
   button.className = "btn";
   // button.innerText = "Guardar";
   formx.appendChild(button);
