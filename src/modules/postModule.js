@@ -53,7 +53,7 @@ function eventOnDom(element, typeEvent, url) {
         case "click":
           console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           console.log(event.target);
-          alert("saveBox");
+          alert(url);
           sendData(url, event);
           break;
         case "dblclick":
