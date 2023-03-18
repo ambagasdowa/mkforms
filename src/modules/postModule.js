@@ -103,7 +103,7 @@ function sendData(url = "", user_id, page, event) {
     // send.then((data) => console.log(data));
   }
 
-  console.log(JSON.stringify(datamx.data));
+  console.log(JSON.stringify(datamx));
 
   const send = requestData.postDataForm(url, datamx.data);
   send.then((data) => console.log(data));
