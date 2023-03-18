@@ -77,20 +77,20 @@ export { eventOnDom };
 
 function sendData(url = "", event) {
   const form = document.getElementById("form");
-  const formData = new FormData();
+  const formData = new FormData(form);
 
   // const sendSubmit = (event) => {
   //   event.preventDefault();
   // Get the form data from the event object
   console.log(url);
-  console.log(form);
+  console.log(formData);
 
-  for (const [key, value] of Object.entries(event.target)) {
-    console.log(
-      `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-    );
-    formData.append(value.name, value.value);
-  }
+  // for (const [key, value] of Object.entries(formData)) {
+  //   console.log(
+  //     `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+  //   );
+  //   formData.append(value.name, value.value);
+  // }
 
   console.log(JSON.stringify(formData));
   // const send = requestData.postFileData(url, config_upload, formData);
