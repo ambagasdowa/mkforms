@@ -81,6 +81,8 @@ function sendData(
       }
     }
 
+    console.log(JSON.stringify(formData));
+
     const send = requestData.postFileData(url, config_upload, formData);
     send.then((data) => console.log(data));
   }; //End HandleSubmit
