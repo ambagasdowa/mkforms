@@ -76,14 +76,14 @@ export { eventOnDom };
 // let send_data = new eventOnDom(save, "save");
 
 function sendData(url = "", event) {
-  const form = document.getElementById("form");
-  const formData = new FormData(form);
+  let form = document.querySelector("form");
+  let data = new FormData(form);
 
   // const sendSubmit = (event) => {
   //   event.preventDefault();
   // Get the form data from the event object
   console.log(url);
-  console.log(formData);
+  console.log(data);
 
   // for (const [key, value] of Object.entries(formData)) {
   //   console.log(
@@ -92,7 +92,7 @@ function sendData(url = "", event) {
   //   formData.append(value.name, value.value);
   // }
 
-  console.log(JSON.stringify(formData));
+  // console.log(JSON.stringify(formData));
   // const send = requestData.postFileData(url, config_upload, formData);
   // send.then((data) => console.log(data));
   // }; //End HandleSubmit
