@@ -141,7 +141,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 console.log("PAGE:L");
 console.log(`SETTER : ${currentPage.pag}`);
 const save = document.querySelector("#submit");
-let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
+// let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
 
 //NOTE logic for turn lib-->
 
@@ -158,6 +158,12 @@ $(function () {
         turned: function (e, page) {
           currentPage.pag = $(this).turn("view");
           console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
+          let send_data = new send.eventOnDom(
+            save,
+            "save",
+            save_url,
+            currentPage.pag
+          );
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
