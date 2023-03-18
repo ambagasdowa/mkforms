@@ -162,7 +162,8 @@ $(function () {
             save,
             "save",
             save_url,
-            currentPage.pag
+            // currentPage.pag
+            $(this).turn("view")
           );
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
