@@ -127,10 +127,7 @@ const elm = await slideModule.waitForElm(".pages_last");
 
 let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
-console.log(save_url);
-alert(`Send : ${page}`);
-let xurl = `${save_url}${page}`;
-let send_data = new send.eventOnDom(save, "save", xurl);
+// let send_data = new send.eventOnDom(save, "save", xurl);
 
 //
 //NOTE logic for turn lib-->
