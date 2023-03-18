@@ -85,12 +85,13 @@ function sendData(url = "", user_id, page, event) {
   console.log(form);
 
   // const formData = new FormData();
-  let datamx = {};
+  let datamx = JSON.parse({});
+  // let toData = JSON.parse(datamx);
+
   for (const [key, value] of Object.entries(form)) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
-
     datamx.push({
       bms_inputs_ctrls_id: value.name.replace("inp", ""),
       user_id: user_id,
