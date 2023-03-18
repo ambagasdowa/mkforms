@@ -47,6 +47,7 @@ function eventOnDom(element, typeEvent) {
   this.handleEvent = function (event) {
     console.log(this.name); // 'Something Good', as this is bound to newly created object
     // NOTE Handle events for post json data
+    event.preventDefault();
     if (typeEvent == "save") {
       switch (event.type) {
         case "click":
