@@ -18,7 +18,6 @@ const config = {
   api_method: "?",
   // app: "ediq",
   app: "baizabal.xyz",
-  page: 1,
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -38,7 +37,17 @@ const config = {
 import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
 import * as send from "../modules/postModule.js";
-var page = 1;
+
+let currentPage = {
+  index: 1,
+  get page() {
+    return `${this.index}`;
+  },
+  set page(value) {
+    [this.index] = value;
+  },
+};
+
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -130,7 +139,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //
 console.log("PAGE:L");
-console.log(page);
+console.log(currentPage.page);
 const save = document.querySelector("#submit");
 let send_data = new send.eventOnDom(save, "save", page);
 
@@ -147,7 +156,7 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          page = $(this).turn("view");
+          currentPage.page = $(this).turn("view");
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
