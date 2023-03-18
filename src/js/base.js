@@ -157,13 +157,13 @@ $(function () {
       when: {
         turned: function (e, page) {
           currentPage.pag = $(this).turn("view");
+          console.log(typeof currentPage.pag);
           console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
           let send_data = new send.eventOnDom(
             save,
             "save",
             save_url,
-            // currentPage.pag
-            $(this).turn("view")
+            currentPage.pag
           );
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
