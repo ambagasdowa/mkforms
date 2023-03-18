@@ -291,8 +291,9 @@ function setForms(obj, index, div) {
     formx.appendChild(input_x);
   } // NOTE end of main for
 
-  let button = document.createElement("input");
-  button.type = "button";
+  // const createButton = document.createElement("button");
+  let button = document.createElement("button");
+  // button.type = "button";
   button.id = "submit";
   button.value = "Submit";
   button.className = "btn";
