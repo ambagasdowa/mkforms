@@ -41,10 +41,10 @@ import * as send from "../modules/postModule.js";
 let currentPage = {
   index: 1,
   get page() {
-    return `${this.index}`;
+    return this.index;
   },
   set page(value) {
-    [this.index] = value;
+    this.index = value;
   },
 };
 
@@ -141,6 +141,8 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 console.log("PAGE:L");
 console.log(currentPage.page);
 const save = document.querySelector("#submit");
+currentPage.page = 10;
+console.log(currentPage.page);
 let send_data = new send.eventOnDom(save, "save", page);
 
 //NOTE logic for turn lib-->
