@@ -48,6 +48,16 @@ let currentPage = {
   },
 };
 
+let currentUser = {
+  id: 1,
+  get user() {
+    return this.id;
+  },
+  set user(value) {
+    this.id = value;
+  },
+};
+
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -109,6 +119,7 @@ if (config.app == "ediq") {
   var user_id = bookid.user_id;
 }
 console.log(`prop : ${book_id} and ${user_id}`);
+
 //let srv_json = window.location.hostname;
 //let srv_json = "baizabal.xyz";
 ////let srv_json = "10.14.17.105";
@@ -138,6 +149,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //
+currentUser.user = `${user_id}`;
 console.log("PAGE:L");
 console.log(`SETTER : ${currentPage.pag}`);
 const save = document.querySelector("#submit");
@@ -163,13 +175,13 @@ $(function () {
             save,
             "save",
             save_url,
-            `${user_id}`,
+            `${currentUser.user}`,
             `${currentPage.pag}`
           );
           console.log(
-            `[send data] user ${user_id} book_id : ${book_id}, page_id : ${$(
-              this
-            ).turn("view")}`
+            `[send data] user ${
+              currentUser.user
+            } book_id : ${book_id}, page_id : ${$(this).turn("view")}`
           );
         },
       },
