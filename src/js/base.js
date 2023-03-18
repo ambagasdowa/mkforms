@@ -15,7 +15,7 @@ const config = {
   port_json: "8000",
   protocol_json: "https://",
   get_method: "items",
-  api_method: "?",
+  api_method: "invalues",
   // app: "ediq",
   app: "baizabal.xyz",
   get: {
@@ -134,7 +134,7 @@ const elm = await slideModule.waitForElm(".pages_last");
 
 // Working from hir ofr update user response
 
-let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
+let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${user_id}`;
 
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //

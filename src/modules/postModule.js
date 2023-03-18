@@ -85,10 +85,6 @@ function sendData(url = "", page, event) {
   console.log(form);
   let data = new FormData(form);
 
-  // const sendSubmit = (event) => {
-  //   event.preventDefault();
-  // Get the form data from the event object
-  // console.log(url);
   console.log(data);
 
   for (const [key, value] of Object.entries(data)) {
