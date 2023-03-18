@@ -97,6 +97,8 @@ function sendData(url = "", user_id, page, event) {
     formData.append("value", value.value);
   }
 
+  console.log(formData);
+
   const send = requestData.postFileData(url, config_upload, formData);
   send.then((data) => console.log(data));
   // }; //End HandleSubmit
