@@ -38,6 +38,9 @@ console.log(requestData.initial);
 console.log(`Loading uploadInit module `);
 console.log(config_upload);
 
+const log_msg = "Initializing postModule";
+export { log_msg };
+
 function sendData(
   config_upload = {},
   url = "",

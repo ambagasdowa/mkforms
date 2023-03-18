@@ -41,6 +41,8 @@ import * as send from "../modules/postModule.js";
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
+
+console.log(send.log_msg);
 //import { setStyles } from "./lib.js";
 slideModule.setStyles(config.css_files, config.dev);
 // NOTE Load the jquerys
@@ -123,8 +125,9 @@ const elm = await slideModule.waitForElm(".pages_last");
 
 // Working from hir ofr update user response
 
-let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${bookid}/`;
+let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
+console.log(url);
 //
 //NOTE logic for turn lib-->
 
