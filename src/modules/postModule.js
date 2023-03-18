@@ -85,7 +85,7 @@ function sendData(url = "", user_id, page, event) {
   console.log(form);
 
   // const formData = new FormData();
-  datamx = {};
+  let datamx = {};
   for (const [key, value] of Object.entries(form)) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
