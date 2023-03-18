@@ -141,7 +141,7 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 console.log("PAGE:L");
 console.log(currentPage.pag);
 const save = document.querySelector("#submit");
-let send_data = new send.eventOnDom(save, "save", page);
+let send_data = new send.eventOnDom(save, "save", currentPage.pag);
 
 //NOTE logic for turn lib-->
 
