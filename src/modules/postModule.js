@@ -61,7 +61,6 @@ function eventOnDom(element, typeEvent) {
           console.log(`change is on`);
           break;
       }
-      // saveBox();
     }
   };
 
@@ -74,40 +73,40 @@ const send = document.querySelector("#submit");
 console.log(`Send : ${send}`);
 let send_data = new eventOnDom(send, "postapi");
 
-function sendData(
-  config_upload = {},
-  url = "",
-  tokenTag = "",
-  is_file = false
-) {
-  const form = document.getElementById("form");
+// function sendData(
+//   config_upload = {},
+//   url = "",
+//   tokenTag = "",
+//   is_file = false
+// ) {
+//   const form = document.getElementById("form");
 
-  const formData = new FormData();
+//   const formData = new FormData();
 
-  const sendSubmit = (event) => {
-    event.preventDefault();
-    // Get the form data from the event object
-    console.log(event.target);
+//   const sendSubmit = (event) => {
+//     event.preventDefault();
+//     // Get the form data from the event object
+//     console.log(event.target);
 
-    for (const [key, value] of Object.entries(event.target)) {
-      console.log(
-        `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-      );
-      // console.log(value.name);
-      // extract token
-      if (value.name == tokenTag) {
-        config_upload.headers[tokenTag] = value.value;
-      }
-      // if (is_file) {
-      formData.append(value.name, value.value);
-      // }
-    }
+//     for (const [key, value] of Object.entries(event.target)) {
+//       console.log(
+//         `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+//       );
+//       // console.log(value.name);
+//       // extract token
+//       if (value.name == tokenTag) {
+//         config_upload.headers[tokenTag] = value.value;
+//       }
+//       // if (is_file) {
+//       formData.append(value.name, value.value);
+//       // }
+//     }
 
-    console.log(JSON.stringify(formData));
-    // const send = requestData.postFileData(url, config_upload, formData);
-    // send.then((data) => console.log(data));
-  }; //End HandleSubmit
+//     console.log(JSON.stringify(formData));
+//     // const send = requestData.postFileData(url, config_upload, formData);
+//     // send.then((data) => console.log(data));
+//   }; //End HandleSubmit
 
-  form.addEventListener("submit", sendSubmit);
-}
-export { sendData };
+//   form.addEventListener("submit", sendSubmit);
+// }
+// export { sendData };
