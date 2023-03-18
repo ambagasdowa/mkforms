@@ -297,6 +297,7 @@ function setForms(obj, index, div) {
   button.id = "submit";
   button.value = "Submit";
   button.className = "btn";
+  button.innerText = "Click_Me";
   formx.appendChild(button);
   div.appendChild(formx);
 } // NOTE End setForms
