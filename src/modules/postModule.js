@@ -54,7 +54,7 @@ function eventOnDom(element, typeEvent, url) {
           // console.log(`Sending Data ... :${JSON.stringify(event.target)}`);
           console.log(event.target);
           // alert(url);
-          // sendData(url, event);
+          sendData(url, event);
           break;
         case "dblclick":
           // some code here…
