@@ -83,19 +83,17 @@ function sendData(url = "", page, event) {
 
   let form = document.querySelector(`#form_${page}`);
   console.log(form);
-  // let data = new FormData(form);
 
-  // console.log(data);
+  let data = new FormData();
+  for (const [key, value] of Object.entries(form)) {
+    console.log(
+      `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+    );
+    formData.append(value.name, value.value);
+  }
+  console.log(JSON.stringify(formData));
 
-  // for (const [key, value] of Object.entries(data)) {
-  //   console.log(
-  //     `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
-  //   );
-  //   // formData.append(value.name, value.value);
-  // }
-
-  // console.log(JSON.stringify(formData));
-  const send = requestData.postFileData(url, config_upload, form);
+  const send = requestData.postFileData(url, config_upload, formData);
   send.then((data) => console.log(data));
   // }; //End HandleSubmit
 
