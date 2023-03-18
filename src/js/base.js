@@ -127,7 +127,7 @@ const elm = await slideModule.waitForElm(".pages_last");
 
 let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${book_id}/`;
 
-console.log(url);
+console.log(save_url);
 const save = document.querySelector("#submit");
 alert(`Send : ${page}`);
 let xurl = `${save_url}${page}`;
