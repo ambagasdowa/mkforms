@@ -36,7 +36,7 @@ import * as requestData from "../modules/uploadModule.js";
 
 console.log(requestData.initial);
 console.log(`Loading uploadInit module `);
-console.log(config_upload);
+// console.log(config_upload);
 
 const log_msg = "Initializing postModule";
 export { log_msg };
