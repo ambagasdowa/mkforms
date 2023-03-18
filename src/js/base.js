@@ -40,10 +40,10 @@ import * as send from "../modules/postModule.js";
 
 let currentPage = {
   index: 1,
-  get page() {
+  get pag() {
     return this.index;
   },
-  set page(value) {
+  set pag(value) {
     this.index = value;
   },
 };
@@ -139,10 +139,8 @@ let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 // let send_data = new send.eventOnDom(save, "save", xurl);
 //
 console.log("PAGE:L");
-console.log(currentPage.page);
+console.log(currentPage.pag);
 const save = document.querySelector("#submit");
-currentPage.page = 10;
-console.log(currentPage.page);
 let send_data = new send.eventOnDom(save, "save", page);
 
 //NOTE logic for turn lib-->
@@ -158,7 +156,7 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          currentPage.page = $(this).turn("view");
+          currentPage.pag = $(this).turn("view");
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
