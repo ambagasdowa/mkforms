@@ -55,22 +55,21 @@ function sendData(
 
   const formData = new FormData();
 
-  const handleSubmit = (event) => {
+  const sendSubmit = (event) => {
     event.preventDefault();
     // Get the form data from the event object
     console.log(event.target);
 
     for (const [key, value] of Object.entries(event.target)) {
       //FD.append(name, value);
-      console.log(`key : ${key} name -> ${value.name} value -> ${value.value}`);
-      console.log(value.name);
-
+      console.log(
+        `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
+      );
+      // console.log(value.name);
       // extract token
-
       if (value.name == tokenTag) {
         config_upload.headers[tokenTag] = value.value;
       }
-
       // if (is_file) {
       formData.append(value.name, value.value);
       // }
@@ -82,11 +81,10 @@ function sendData(
     }
 
     console.log(JSON.stringify(formData));
-
     const send = requestData.postFileData(url, config_upload, formData);
     send.then((data) => console.log(data));
   }; //End HandleSubmit
 
-  form.addEventListener("submit", handleSubmit);
+  form.addEventListener("submit", sendSubmit);
 }
 export { sendData };
