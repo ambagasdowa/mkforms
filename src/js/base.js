@@ -15,6 +15,7 @@ const config = {
   port_json: "8000",
   protocol_json: "https://",
   get_method: "items",
+  api_method: "?",
   // app: "ediq",
   app: "baizabal.xyz",
   get: {
@@ -31,9 +32,12 @@ const config = {
     // 'Content-Type': 'application/x-www-form-urlencoded',
   },
 };
+
 // TODO build the provisional slider mechanism
 import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
+import * as send from "../modules/postModule.js";
+
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -117,6 +121,10 @@ response.then((data) => {
 
 const elm = await slideModule.waitForElm(".pages_last");
 
+// Working from hir ofr update user response
+
+let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${bookid}/`;
+
 //
 //NOTE logic for turn lib-->
 
@@ -131,7 +139,11 @@ $(function () {
       elevation: 50,
       when: {
         turned: function (e, page) {
-          console.log("Current page: ", $(this).turn("view"));
+          pg = $(this).turn("view");
+
+          send.sendData(config, `${url}${pg}`, tokenTag, false);
+
+          console.log(`Current page: ${pg} `);
           console.log(
             `[send data] book_id : ${book_id}, page_id : ${$(this).turn(
               "view"
