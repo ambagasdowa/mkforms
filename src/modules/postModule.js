@@ -82,6 +82,7 @@ function sendData(url = "", page, event) {
   console.log(page);
 
   let form = document.querySelector(`#form_${page}`);
+  console.log(form);
   let data = new FormData(form);
 
   // const sendSubmit = (event) => {
