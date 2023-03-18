@@ -1,32 +1,32 @@
-const param = "size";
-const config_upload = {
-  [param]: 12,
-  [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
-  default_width: 1275,
-  default_height: 1650,
-  css_files: { main: "./css/upload.css" },
-  srv_json: "baizabal.xyz",
-  port_json: "8000",
-  protocol_json: "https://",
-  method: ["books", "srcpositions", "upload"],
-  dev: true, //css developer-mode [true|false] , default:false
-  // app: "ediq",
-  app: "baizabal.xyz",
-  templates: {
-    Libros: "fusion",
-    Uploads: "upload",
-    Editor: "index",
-  },
-  post: {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "omit", // include, *same-origin, omit
-    //redirect: "follow", // manual, *follow, error
-    //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  },
-  headers: {},
-};
+// const param = "size";
+// const config_upload = {
+//   [param]: 12,
+//   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
+//   default_width: 1275,
+//   default_height: 1650,
+//   css_files: { main: "./css/upload.css" },
+//   srv_json: "baizabal.xyz",
+//   port_json: "8000",
+//   protocol_json: "https://",
+//   method: ["books", "srcpositions", "upload"],
+//   dev: true, //css developer-mode [true|false] , default:false
+//   // app: "ediq",
+//   app: "baizabal.xyz",
+//   templates: {
+//     Libros: "fusion",
+//     Uploads: "upload",
+//     Editor: "index",
+//   },
+//   post: {
+//     method: "POST", // *GET, POST, PUT, DELETE, etc.
+//     mode: "cors", // no-cors, *cors, same-origin
+//     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+//     credentials: "omit", // include, *same-origin, omit
+//     //redirect: "follow", // manual, *follow, error
+//     //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//   },
+//   headers: {},
+// };
 
 // import { setStyles } from "../modules/lib.js";
 
@@ -61,7 +61,6 @@ function sendData(
     console.log(event.target);
 
     for (const [key, value] of Object.entries(event.target)) {
-      //FD.append(name, value);
       console.log(
         `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
       );
@@ -81,8 +80,8 @@ function sendData(
     }
 
     console.log(JSON.stringify(formData));
-    const send = requestData.postFileData(url, config_upload, formData);
-    send.then((data) => console.log(data));
+    // const send = requestData.postFileData(url, config_upload, formData);
+    // send.then((data) => console.log(data));
   }; //End HandleSubmit
 
   form.addEventListener("submit", sendSubmit);
