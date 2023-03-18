@@ -291,12 +291,12 @@ function setForms(obj, index, div) {
     formx.appendChild(input_x);
   } // NOTE end of main for
 
-  let button = document.createElement("input");
-  button.type = "button";
-  button.id = "submit";
-  button.value = "Submit";
-  button.className = "btn";
-  formx.appendChild(button);
+  // let button = document.createElement("input");
+  // button.type = "button";
+  // button.id = "submit";
+  // button.value = "Submit";
+  // button.className = "btn";
+  // formx.appendChild(button);
   div.appendChild(formx);
 } // NOTE End setForms
 
