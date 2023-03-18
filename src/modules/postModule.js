@@ -92,7 +92,7 @@ function sendData(url = "", user_id, page, event) {
     console.log(
       `key in View : ${key} Xname -> ${value.name} Xvalue -> ${value.value}`
     );
-    datamx[data].push({
+    datamx["data"].push({
       bms_inputs_ctrls_id: value.name.replace("inp", ""),
       user_id: user_id,
       attribute: "value",
