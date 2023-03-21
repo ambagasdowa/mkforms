@@ -107,3 +107,7 @@ detail "Something Happend Try again "
 > [dataSample](https://gitlab.com/ambagasdowa/sql/-/raw/master/mariadb/panamericano/bms_bulk_data.sql)
 
 > JsonResponseSample : samples/source.json
+
+:battery:
+
+√
