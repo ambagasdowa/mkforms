@@ -110,4 +110,4 @@ detail "Something Happend Try again "
 
 :battery:
 
-√
+✓
