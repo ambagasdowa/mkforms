@@ -112,4 +112,4 @@ detail "Something Happend Try again "
 
 ## Overall Progress
 
-![Progress](https://progress-bar.dev/75/?title=completed)
+[Progress](https://progress-bar.dev/75/?title=completed)
