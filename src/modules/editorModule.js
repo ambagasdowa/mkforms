@@ -983,12 +983,23 @@ function reportWindowSize() {
   const heightOutput = document.querySelector("#height");
   const widthOutput = document.querySelector("#width");
 
+  const div_containt = document.querySelector("#vook");
+  const div_w = div_containt.offsetWidth;
+  const div_h = div_containt.offsetHeigth;
+
+  const cd = document.querySelector("#canvas");
+  const canvas_dimension = cd.getBoundingClientRect();
+  console.log(canvas_dimension);
+
   heightOutput.textContent = window.innerHeight;
   widthOutput.textContent = window.innerWidth;
 
   const msg = ` \
           reportWindowSize width :  ${window.innerWidth} \
           and the Heigth : ${window.innerHeight} \
+          Containt Div: \
+          Width : ${div_w} \
+          Heigth : ${div_h} \
   `;
   console.log(msg);
 }
