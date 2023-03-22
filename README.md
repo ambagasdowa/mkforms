@@ -112,7 +112,6 @@ detail "Something Happend Try again "
 
 ## Overall Progress
 
-![Progress](https://progress-bar.dev/58/?title=completed)
-https://progress-bar.dev/58/?title=completed
+![Progress](https://progress-bar.dev/74/?title=completed)
 
-[Progress](https://geps.dev/progress/32?dangerColor=800000&warningColor=ff9900&successColor=006600)
+![Progress](https://geps.dev/progress/32?dangerColor=800000&warningColor=ff9900&successColor=006600)
