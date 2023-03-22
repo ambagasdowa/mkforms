@@ -114,4 +114,4 @@ detail "Something Happend Try again "
 
 ![Progress](https://progress-bar.dev/76/?title=completed)
 
-![](https://geps.dev/progress/32?dangerColor=800000&warningColor=ff9900&successColor=006600)
+![](https://geps.dev/progress/76?dangerColor=800000&warningColor=ff9900&successColor=006600)
