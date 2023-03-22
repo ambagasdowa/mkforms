@@ -8,16 +8,16 @@ extensions:
 styles:
   style: solarized-dark
   table:
-    column_spacing: 15
+    column_spacing: 18
   margin:
-    top: 3
+    top: 2
     bottom: 0
   padding:
-    top: 3
-    bottom: 3
+    top: 1
+    bottom: 1
 ---
 
-# mkforms
+# MKFORMS
 
 Html Forms Maker
 
@@ -35,29 +35,29 @@ Html Forms Maker
   - ◐ Draw BookPage directly to canvas object against draw img as div background
   - ✓ Add grid builder Option->Canvas : draw poligon and split in multiple poligons inside take a int as parameter [crucigramas , sopa de letras ...]
   - Draw properties window over a poligon for add options to box
-    - ✓ Add positions of the item
-    - ✓ send dpr and coeficent of dimension display for each item box[poligon]
-    - ✓ Detect when the mouse is over a poligon
-    - ✓ Delete poligon
-    - ✓ Clone poligon
-    - ✓ Clean canvas
-    - ✓ Set a page turn compatible for the admin module
-    - ✓ Build a reload method of canvas and get() data if exists for change to a new page
-    - ▢ Add Text[Correct Answer]
-    - ▢ ~~Add color option~~[optional]
-    - ▢ Add Attributes [placeholder,data-x, etc]
-  - ▢ Import an Answer module [Optional]
-  - ▢ ~~Add a colorpicker~~[optional]
-  - ▢ ~~Add a datepicker~~[optional]
-  - ▢ Group checkboxes and options in control ribbon[initial set of boxes : n options -> create || select checkboxes and set a group]
-  - ✓ Build the control panel ribbon
+    1. ✓ Add positions of the item
+    1. ✓ send dpr and coeficent of dimension display for each item box[poligon]
+    1. ✓ Detect when the mouse is over a poligon
+    1. ✓ Delete poligon
+    1. ✓ Clone poligon
+    1. ✓ Clean canvas
+    1. ✓ Set a page turn compatible for the admin module
+    1. ✓ Build a reload method of canvas and get() data if exists for change to a new page
+    1. ▢ Add Text[Correct Answer]
+    1. ▢ ~~Add color option~~[optional]
+    1. ▢ Add Attributes [placeholder,data1.x, etc]
+  * ▢ Import an Answer module [Optional]
+  * ▢ ~~Add a colorpicker~~[optional]
+  * ▢ ~~Add a datepicker~~[optional]
+  * ▢ Group checkboxes and options in control ribbon[initial set of boxes : n options -> create || select checkboxes and set a group]
+  * ✓ Build the control panel ribbon
 - View
   - ◐ Evaluator module : set a visual and textual[report] check for rigth answer
   - Internal
-    - ▢ Build an option for get the images from local or server source
-    - ✓ DragBar that's containt the control panel
+    1. ▢ Build an option for get the images from local or server source
+    1. ✓ DragBar that's containt the control panel
   - UIX:
-    - ✓ Save Method by user
+    1. ✓ Save Method by user
 - Canvas
   - ✓ Build Canvas Engine initial
   - ✓ Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
@@ -86,7 +86,7 @@ Html Forms Maker
 
   - Editor:
 
-    - When Reload the page with boxes from json , send data via POST retrieves (needs async logic) :
+    1. When Reload the page with boxes from json , send data via POST retrieves (needs async logic) :
 
     ```bash
       XHRPOST
@@ -96,9 +96,11 @@ Html Forms Maker
 
 detail "Something Happend Try again "
 
-> - ✓ : done
-> - ◐ : Working on
-> - ▢ : TODO
+| symbol | Description |
+| ------ | ----------- |
+| ✓      | done        |
+| ◐      | Working on  |
+| ▢      | TODO        |
 
 # Database source
 

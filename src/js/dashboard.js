@@ -20,6 +20,7 @@ const config = {
   templates: {
     Libros: { list: { icon: "fa-solid fa-book", other: "another" } },
     Uploads: { upload: { icon: "fa-solid fa-upload" } },
+    Users: { users: { icon: "fa-solid fa-user" } },
   },
   get: {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
