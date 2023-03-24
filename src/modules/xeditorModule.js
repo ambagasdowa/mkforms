@@ -2,6 +2,8 @@ import * as configuration from "./config.js";
 import * as connect from "./uploadModule.js";
 
 let conf = configuration.config;
+let page = 1;
+let pages = {};
 const message = "Initializing module";
 
 function initMsj() {
@@ -35,7 +37,9 @@ function initBooks(paramsUrl = {}) {
         console.log(element);
       }
     }
-
+    pages = bookPages;
+    attachPage();
+    initControl();
     // =========================//
   });
 }
@@ -44,7 +48,7 @@ function initBooks(paramsUrl = {}) {
 //       BOOK CANVAS INITIALIZING
 //=========================================//
 
-function attachPage(source) {
+function attachPage() {
   /*--------------------
 Setup
 --------------------*/
@@ -86,6 +90,7 @@ Render
     ctx.clearRect(0, 0, win.w, win.h);
     const type = document.querySelector('input[name="type"]:checked').value;
     coverImg(img, type);
+
     requestAnimationFrame(render);
   };
 
@@ -95,15 +100,18 @@ Init
   const init = () => {
     resize();
     render();
+    // ============== TODO ================= //
+
+    loadEngine();
+    console.log(`image ${img.width} X ${img.height}`);
   };
 
   /*--------------------
 Preload Image
 --------------------*/
-  //const imgSrc = "https://baizabal.xyz/assets/Panamericano/files//source/guia/uv/002/demo/pages/5.jpg";
   //const imgSrc =
   // "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/autumn.jpg";
-  const imgSrc = source;
+  const imgSrc = pages[page];
   img.onload = init;
   img.src = imgSrc;
 
@@ -120,4 +128,105 @@ Resize
   };
   window.addEventListener("resize", init);
 }
+
+function loadEngine() {
+  return null;
+}
+
+function initControl() {
+  const next = document.querySelector("#next");
+  console.log(`Next : ${next}`);
+  let next_page = new handleEventOnDom(next, "next");
+
+  const prev = document.querySelector("#prev");
+  console.log(`Prev : ${prev}`);
+  let prev_page = new handleEventOnDom(prev, "prev");
+}
+
+function handleEventOnDom(element, typeEvent) {
+  // |this| is a newly created object
+  this.name = `Initialize Dom ${typeEvent}`;
+  this.handleEvent = function (event) {
+    console.log(this.name); // 'Something Good', as this is bound to newly created object
+
+    // NOTE relative to the canvas UIX
+    if (typeEvent == "canvas") {
+      switch (event.type) {
+        case "click":
+          clearPageCanvas(page);
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+    // NOTE Handle events for post json data
+    if (typeEvent == "postapi") {
+      switch (event.type) {
+        case "click":
+          console.log(`Sending Data ... :${element}`);
+          saveBox();
+          // clearPageCanvas(page);
+          // initCanvasEngine(this_config, bookid, page);
+          redraw();
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+      // saveBox();
+    }
+    // NOTE relative to the canvas UIX
+    if (typeEvent == "next") {
+      switch (event.type) {
+        case "click":
+          // saveBox();
+          page = page + 1;
+          console.log(`next :${page}`);
+          attachPage();
+          //initCanvasEngine(this_config, bookid, page, true);
+
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+    if (typeEvent == "prev") {
+      switch (event.type) {
+        case "click":
+          // change page:
+          // saveBox();
+          page = page - 1;
+          console.log(`prev :${page}`);
+          initCanvasEngine(this_config, bookid, page);
+          break;
+        case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+  };
+
+  // Note that the listeners in this case are |this|, not this.handleEvent
+  element.addEventListener("click", this, false);
+  element.addEventListener("dblclick", this, false);
+
+  // You can properly remove the listeners
+  //  element.removeEventListener('click', this, false);
+  //  element.removeEventListener('dblclick', this, false);
+}
+
 export { initMsj, initBooks };
