@@ -51,24 +51,6 @@ function initBooks(config = {}, paramsUrl = {}) {
   const options = { book_id: paramsUrl.book_id, user_id: paramsUrl.user_id };
   bookid = options.book_id;
   this_config = config;
-  // funciton run(){
-  // set book_id
-  // set pages
-  // request canvas info from api
-  // redraw canvas
-  //}
-  // init app
-  // run()
-  // change page
-  // run()
-  // const xb = setInitial(config, options.book_id);
-  // xb.then((data) => {
-  //   xboxs = data;
-  // });
-
-  // console.log(`Calll previous boxes:`);
-  // xboxs = config.xboxs;
-  // console.log(config.xboxs);
   loadApi(config, options);
 }
 
@@ -110,7 +92,7 @@ function drawBook(config = {}, bookResponse = {}) {
   loadDivBlock(config, bookResponse);
   // console.log("CHECK CANVAS");
   // at first page is equal to 1
-  initCanvasEngine(config, bookid, page);
+  initCanvasEngine(config, bookid, page, bookResponse);
   // console.log(document.querySelector(".canvas"));
   // set the options
   // load Book from api
@@ -135,6 +117,7 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
     let page_book = document.createElement("div");
     page_book.setAttribute("data-in-page", `${page}`);
     page_book.classList.add(`off`);
+    //Draw pages as background images
     const book_attr = document.createAttribute("style");
     book_attr.value = `
                         background-image: url(${background_img});
@@ -145,7 +128,7 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
                         width: ${canvas_width}px;
                         height: ${canvas_height}px;
     `;
-
+    //Attach image
     page_book.setAttributeNode(book_attr);
 
     page_book.append(attachCanvas(page));
@@ -159,17 +142,17 @@ async function loadDivBlock(config = {}, bookResponse = {}) {
 //   initCanvasEngine(this_config, bookid, page);
 // } //loadBook
 
-function initCanvasEngine(config = {}, bookid, page) {
+function initCanvasEngine(config = {}, bookid, page, bookResponse = {}) {
   // NOTE
   console.log(`In which page we are ${page}`);
   console.log(`And which Book ${bookid}`);
-
+  console.log(`BOOKRESPONSE inside initCanvasEngine`);
+  console.log(bookResponse);
   clearPageCanvas(page);
 
   const bookPages = setInitial(config);
   bookPages.then((data) => {
     // if (data.length > 0) {
-    //   console.log(`DAATA`);
     //   boxes = convertSizes(data);
     //   console.log(`On initCanvasEngine :: After positions`);
     //   console.log(boxes);
@@ -384,7 +367,7 @@ function initCanvasEngine(config = {}, bookid, page) {
   });
 } //initCanvasEngine
 
-function attachCanvas(page) {
+function attachCanvas(page, backgroundImg) {
   let canvas = document.createElement(`canvas`);
   canvas.setAttribute(`data-page`, `${page}`);
   canvas.setAttribute("id", `canvas_${page}`);
@@ -402,6 +385,7 @@ function attachCanvas(page) {
 
   //  element.appendChild(canvas);
   //  element.innerHTML(canvas);
+  console.log(canvas.getBoundingClientRect());
   return canvas;
 }
 
@@ -983,13 +967,9 @@ function reportWindowSize() {
   const heightOutput = document.querySelector("#height");
   const widthOutput = document.querySelector("#width");
 
-  const div_containt = document.querySelector("#vook");
+  const div_containt = document.querySelector(".canvas");
   const div_w = div_containt.offsetWidth;
   const div_h = div_containt.offsetHeigth;
-
-  const cd = document.querySelector("#canvas");
-  const canvas_dimension = cd.getBoundingClientRect();
-  console.log(canvas_dimension);
 
   heightOutput.textContent = window.innerHeight;
   widthOutput.textContent = window.innerWidth;
