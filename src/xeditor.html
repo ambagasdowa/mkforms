@@ -27,6 +27,10 @@
         box-shadow: 0 10px 10px -8px rgba(0, 0, 0, 0.2);
       }
 
+      canvas {
+        position: relative;
+      }
+
       label {
         position: relative;
         z-index: 1;
@@ -73,23 +77,24 @@ Twitter: https://twitter.com/supahfunk
 Codepen: https://codepen.io/supah/
 
 -->
-    <div style="max-height: 95%; max-width: 100%; overflow: scroll">
-      <canvas id="canvas"></canvas>
-    </div>
-    <fieldset>
-      <label
-        ><input type="radio" name="type" value="contain" checked /><span
-          >contain</span
-        ></label
-      >
-      <label
-        ><input type="radio" name="type" value="cover" /><span
-          >cover</span
-        ></label
-      >
+    <div class="main">
+      <canvas id="canvas" style="border: 1px solid darkgreen"></canvas>
+      <!-- </div> -->
+      <fieldset>
+        <label
+          ><input type="radio" name="type" value="contain" checked /><span
+            >contain</span
+          ></label
+        >
+        <label
+          ><input type="radio" name="type" value="cover" /><span
+            >cover</span
+          ></label
+        >
 
-      <input type="button" name="preview" value="prev" id="prev" />
-      <input type="button" name="next" value="next" id="next" />
-    </fieldset>
+        <input type="button" name="preview" value="prev" id="prev" />
+        <input type="button" name="next" value="next" id="next" />
+      </fieldset>
+    </div>
   </body>
 </html>

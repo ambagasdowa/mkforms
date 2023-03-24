@@ -1,5 +1,6 @@
 import * as configuration from "./config.js";
 import * as connect from "./uploadModule.js";
+import { zoom } from "./zoom.js";
 
 let conf = configuration.config;
 let page = 1;
@@ -38,14 +39,16 @@ function initBooks(paramsUrl = {}) {
       }
     }
     pages = bookPages;
+
     attachPage();
     initControl();
+
     // =========================//
   });
 }
 
 //=========================================//
-//       BOOK CANVAS INITIALIZING
+//       BOOK PAGE REDERING
 //=========================================//
 
 function attachPage() {
@@ -129,8 +132,37 @@ Resize
   window.addEventListener("resize", init);
 }
 
+//=========================================//
+//        Canvas Engine Section
+//=========================================//
 function loadEngine() {
-  return null;
+  dimensions();
+  mkzoom();
+}
+
+function dimensions() {
+  let dimensions = document.querySelector("canvas");
+  console.log(dimensions.getBoundingClientRect());
+}
+
+function mkzoom(event) {
+  console.log(`running zoom engine`);
+  console.log(event.target);
+  // document
+  //   .querySelector("#canvas")
+  //   .addEventListener("dblclick", function (event) {
+  event.preventDefault();
+  // zoom.to({ element: event.target });
+  zoom.to({
+    element: event.target,
+    // Amount of empty space around zoomed element
+    padding: 20,
+    // Function to call once zooming completes
+    callback: function () {
+      console.log(`zooming is complete `);
+    },
+  });
+  // });
 }
 
 function initControl() {
@@ -141,6 +173,11 @@ function initControl() {
   const prev = document.querySelector("#prev");
   console.log(`Prev : ${prev}`);
   let prev_page = new handleEventOnDom(prev, "prev");
+
+  //zoom engine
+  const zoom = document.querySelector(".main");
+  console.log(`Zoom : ${zoom}`);
+  let zoom_page = new handleEventOnDom(zoom, "zoom");
 }
 
 function handleEventOnDom(element, typeEvent) {
@@ -208,9 +245,28 @@ function handleEventOnDom(element, typeEvent) {
           // saveBox();
           page = page - 1;
           console.log(`prev :${page}`);
-          initCanvasEngine(this_config, bookid, page);
+          attachPage();
+          // initCanvasEngine(this_config, bookid, page);
           break;
         case "dblclick":
+          // some code here…
+          break;
+        case "change":
+          console.log(`change is on`);
+          break;
+      }
+    }
+
+    if (typeEvent == "zoom") {
+      switch (event.type) {
+        case "click":
+          console.log(`makeclick`);
+          // change page:
+          // saveBox();
+          break;
+        case "dblclick":
+          console.log(`ZOOM is CAlled on dblclick`);
+          mkzoom(event);
           // some code here…
           break;
         case "change":
