@@ -364,6 +364,7 @@ function initCanvasEngine(config = {}, bookid, page, bookResponse = {}) {
         redraw();
       }
     };
+    //////////
   });
 } //initCanvasEngine
 
