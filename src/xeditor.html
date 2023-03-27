@@ -72,23 +72,67 @@ Twitter: https://twitter.com/supahfunk
 Codepen: https://codepen.io/supah/
 
 -->
+    <div id="msj"></div>
     <canvas id="canvas" style="border: 1px solid darkgreen"></canvas>
     <fieldset>
-      <label
-        ><input type="radio" name="type" value="contain" checked /><span
-          >contain</span
-        ></label
-      >
-      <label
-        ><input type="radio" name="type" value="cover" /><span
-          >cover</span
-        ></label
-      >
+      <label>
+        <input type="radio" name="type" value="contain" checked />
+        <span>contain</span>
+      </label>
+      <label>
+        <input type="radio" name="type" value="cover" />
+        <span>cover</span>
+      </label>
 
       <input type="button" name="preview" value="prev" id="prev" />
       <input type="button" name="next" value="next" id="next" />
+
       <label id="dim"></label>
+
+      <label for="text"><i class="fa-regular fa-square"></i> </label>
+      <input
+        type="radio"
+        id="text"
+        name="inpsel"
+        value="text"
+        checked="checked"
+      />
+
+      <label for="option"><i class="fa-regular fa-list-ul"></i></label>
+      <input type="radio" id="option" name="inpsel" value="option" />
+      <label for="crossword"><i class="fa-regular fa-table-cells"></i></label>
+      <input type="radio" id="crossword" name="inpsel" value="crossword" />
+      <label for="delStroke"><i class="fa-regular fa-trash"></i></label>
+      <input type="radio" value="delStr" name="uix" id="delStroke" />
+      <label for="cpStroke"><i class="fa-regular fa-copy"></i></label>
+      <input type="radio" value="cpStr" name="uix" id="cpStroke" />
+      <label for="mvStroke"
+        ><i class="fa-regular fa-up-down-left-right"></i
+      ></label>
+      <input
+        type="radio"
+        value="mvStr"
+        name="uix"
+        id="mvStroke"
+        checked="checked"
+      />
+      <!-- <label for="prev"><i class="fa-regular fa-caret-left"></i></label> -->
+      <!-- <input type="button" name="prev" id="prev" /> -->
+      <label class="none" for="page-number">&nbsp;</label>
+      <input type="text" id="page-number" name="page-number" />
+      <label id="number-pages"></label>
+      <!-- </div> -->
+
+      <!-- <label for="next"><i class="fa-regular fa-caret-right"></i></label> -->
+      <!-- <input type="button" name="next" id="next" /> -->
+
+      <input type="button" id="cleanCanvas" name="cleanCanvas" value="clean" />
+      <input type="text" id="option" name="inpsel" value="option" />
+      <input type="button" id="option" name="inpsel" value="option" />
+
+      <input type="button" id="save_page" value="send" />
     </fieldset>
+
     <div id="debug"></div>
   </body>
 </html>

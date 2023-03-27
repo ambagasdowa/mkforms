@@ -48,7 +48,7 @@ function initBooks(paramsUrl = {}) {
     //   console.log(bookResponse);
     let bookPages = JSON.parse(JSON.stringify(bookResponse.book_pages));
 
-    console.log(bookPages.length);
+    // console.log(bookPages.length);
 
     for (const key in bookPages) {
       if (bookPages.hasOwnProperty.call(bookPages, key)) {
@@ -57,9 +57,12 @@ function initBooks(paramsUrl = {}) {
       }
     }
     pages = bookPages;
+
+    // loadBoxes();
     // RUN APP
     attachPage();
     initControl();
+    initControlKeyboard();
 
     // =========================//
   });
@@ -81,127 +84,115 @@ Setup
   };
   canvas_width = win.w;
   canvas_height = win.h;
+
+  cleanPageCanvasStrokes(canvas, ctx);
+
   let domTag = document.querySelector("#dim");
   domTag.innerHTML = `${canvas_width} X ${canvas_height}`;
-  const img = new Image();
 
-  /*--------------------
+  //LAB
+  const bookBoxes = getBoxes();
+  bookBoxes.then((data) => {
+    // console.log(JSON.stringify(data));
+
+    boxes = data;
+
+    const img = new Image();
+    /*--------------------
 Cover Image
 --------------------*/
-  const coverImg = (img, type = "cover") => {
-    const imgRatio = img.height / img.width;
-    const winRatio = window.innerHeight / window.innerWidth;
-    if (
-      (imgRatio < winRatio && type === "contain") ||
-      (imgRatio > winRatio && type === "cover")
-    ) {
-      const h = window.innerWidth * imgRatio;
-      ctx.drawImage(img, 0, (window.innerHeight - h) / 2, window.innerWidth, h);
-      // console.log(`COVER`);
-    }
-    if (
-      (imgRatio > winRatio && type === "contain") ||
-      (imgRatio < winRatio && type === "cover")
-    ) {
-      const w = (window.innerWidth * winRatio) / imgRatio;
-      ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
-      // console.log(`CONTAIN`);
-    }
-  };
+    const coverImg = (img, type = "cover") => {
+      const imgRatio = img.height / img.width;
+      const winRatio = window.innerHeight / window.innerWidth;
+      if (
+        (imgRatio < winRatio && type === "contain") ||
+        (imgRatio > winRatio && type === "cover")
+      ) {
+        const h = window.innerWidth * imgRatio;
+        ctx.drawImage(
+          img,
+          0,
+          (window.innerHeight - h) / 2,
+          window.innerWidth,
+          h
+        );
+        // console.log(`COVER`);
+      }
+      if (
+        (imgRatio > winRatio && type === "contain") ||
+        (imgRatio < winRatio && type === "cover")
+      ) {
+        const w = (window.innerWidth * winRatio) / imgRatio;
+        ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
+        // console.log(`CONTAIN`);
+      }
 
-  /*--------------------
+      loadEngine(canvas, ctx);
+    };
+
+    /*--------------------
 Render
 --------------------*/
-  const render = () => {
-    ctx.clearRect(0, 0, win.w, win.h);
-    const type = document.querySelector('input[name="type"]:checked').value;
+    const render = () => {
+      ctx.clearRect(0, 0, win.w, win.h);
+      const type = document.querySelector('input[name="type"]:checked').value;
 
-    coverImg(img, type);
+      coverImg(img, type);
 
-    requestAnimationFrame(render);
-  };
+      requestAnimationFrame(render);
+    };
 
-  /*--------------------
+    /*--------------------
 Init
 --------------------*/
-  const init = () => {
-    resize();
-    render();
-    // ============== TODO ================= //
+    const init = () => {
+      resize();
+      render();
+      // ============== TODO ================= //
 
-    loadEngine();
-    console.log(`image ${img.width} X ${img.height}`);
-  };
+      console.log(`image ${img.width} X ${img.height}`);
+    };
 
-  /*--------------------
+    /*--------------------
 Preload Image
 --------------------*/
-  //const imgSrc =
-  // "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/autumn.jpg";
-  const imgSrc = pages[page];
-  img.onload = init;
-  img.src = imgSrc;
+    //const imgSrc =
+    // "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/autumn.jpg";
+    const imgSrc = pages[page];
+    img.onload = init;
+    img.src = imgSrc;
 
-  /*--------------------
+    /*--------------------
 Resize
 --------------------*/
-  const resize = () => {
-    win.w = window.innerWidth;
-    win.h = window.innerHeight;
-    canvas.width = win.w;
-    canvas.height = win.h;
-    canvas.style.width = `${win.w}px`;
-    canvas.style.height = `${win.h}px`;
-  };
-  window.addEventListener("resize", init);
-}
+    const resize = () => {
+      win.w = window.innerWidth;
+      win.h = window.innerHeight;
+      canvas.width = win.w;
+      canvas.height = win.h;
+      canvas.style.width = `${win.w}px`;
+      canvas.style.height = `${win.h}px`;
+    };
+    window.addEventListener("resize", init);
+  }); // boxes data
+} //attachPage
 
+//////////////////////////////////////////////
 //=========================================//
 //        Canvas Engine Section
 //=========================================//
-function loadEngine() {
-  console.log(`loadEngine`);
-  dimensions();
-  initEditor();
+function loadEngine(canvas, ctx) {
+  // console.log(`loadEngine`);
+  // dimensions(canvas);
+  redraw(ctx);
+  canvasEngine(canvas, ctx);
 }
 
-function dimensions() {
-  let dimensions = document.querySelector("canvas");
-  console.log(dimensions.getBoundingClientRect());
-}
-
-function initEditor() {
-  // if loadBoxes() then
-  //  console.log(loadBoxes());
-  loadBoxes();
-  return null;
-}
-
-function loadBoxes() {
-  const bookBoxes = getBoxes();
-  bookBoxes.then((data) => {
-    console.log(JSON.stringify(data));
-
-    // load in boxes ?
-
-    // if (data.length != 1) {
-    //       bookResponse = data;
-    //     } else {
-    //       // set variables form api
-    //       bookResponse = data[0];
-    //     }
-
-    boxes = data;
-    // oloop(boxes);
-    // boxes = convertSizes(data, canvas, currentDiv);
-    redraw();
-    canvasEngine();
-    // End engine
-  }); // boxes data
-} // getBoxes
-
-function loadEditorTools() {
-  return null;
+function dimensions(canvas) {
+  let dimensions = canvas.getBoundingClientRect();
+  console.log(
+    `Canvas dimensions => ${dimensions.width} x ${dimensions.height}`
+  );
 }
 
 function oloop(data) {
@@ -218,7 +209,7 @@ function oloop(data) {
   }
 }
 
-function canvasEngine() {
+function canvasEngine(canvas, ctx) {
   // // ===============================================================//
   // Canvas Engine
   // // ===============================================================//
@@ -249,7 +240,7 @@ function canvasEngine() {
 
       if (delStroke.checked) {
         boxes.splice(clickedArea.box, 1);
-        let reload = new reloadCanvas(boxes, context);
+        let reload = new reloadCanvas(boxes, ctx);
       } else if (cpStroke.checked) {
         let xbox1 = selBox.x1 + config.copySize;
         let xboy1 = selBox.y1 + config.copySize;
@@ -257,7 +248,7 @@ function canvasEngine() {
         let xboy2 = selBox.y2 + config.copySize;
         console.log(`boxesPUSH`);
         boxes.push(newBox(xbox1, xboy1, xbox2, xboy2));
-        reloadCanvas(boxes, context);
+        reloadCanvas(boxes, ctx);
       } else {
         //something else
       }
@@ -321,7 +312,7 @@ function canvasEngine() {
       console.log(`mousedown && clickedArea.box = -1`);
       x2 = e.offsetX;
       y2 = e.offsetY;
-      redraw();
+      redraw(ctx);
     } else if (mousedown && clickedArea.box != -1) {
       console.log(`mousedown && clickedArea.box != -1`);
       x2 = e.offsetX;
@@ -374,7 +365,7 @@ function canvasEngine() {
       // NOTE TEMPORA:
       //        xboxes[page] = boxes;
       // NOTE TEMPORA:
-      redraw();
+      redraw(ctx);
     }
   };
   //////////
@@ -405,16 +396,24 @@ function mkzoom(event) {
 function initControl() {
   const next = document.querySelector("#next");
   console.log(`Next : ${next}`);
-  let next_page = new handleEventOnDom(next, "next");
+  new handleEventOnDom(next, "next");
 
   const prev = document.querySelector("#prev");
   console.log(`Prev : ${prev}`);
-  let prev_page = new handleEventOnDom(prev, "prev");
+  new handleEventOnDom(prev, "prev");
+
+  const cleaner = document.querySelector("#cleanCanvas");
+  console.log(`Clean : ${cleaner}`);
+  new handleEventOnDom(cleaner, "canvas");
+
+  const send = document.querySelector("#save_page");
+  console.log(`Send : ${send}`);
+  new handleEventOnDom(send, "postapi");
 
   //zoom engine
-  const zoom = document.querySelector("canvas");
-  console.log(`Zoom : ${zoom}`);
-  let zoom_page = new handleEventOnDom(zoom, "zoom");
+  // const zoom = document.querySelector("canvas");
+  // console.log(`Zoom : ${zoom}`);
+  // handleEventOnDom(zoom, "zoom");
 }
 
 function handleEventOnDom(element, typeEvent) {
@@ -443,9 +442,6 @@ function handleEventOnDom(element, typeEvent) {
         case "click":
           console.log(`Sending Data ... :${element}`);
           saveBox();
-          // clearPageCanvas(page);
-          // initCanvasEngine(this_config, bookid, page);
-          redraw();
           break;
         case "dblclick":
           // some code here…
@@ -463,7 +459,7 @@ function handleEventOnDom(element, typeEvent) {
           // saveBox();
           page = page + 1;
           console.log(`next :${page}`);
-          clearPageCanvas();
+          //clearPageCanvas();
           attachPage();
           //initCanvasEngine(this_config, bookid, page, true);
 
@@ -483,7 +479,7 @@ function handleEventOnDom(element, typeEvent) {
           // saveBox();
           page = page - 1;
           console.log(`prev :${page}`);
-          clearPageCanvas();
+          //clearPageCanvas();
           attachPage();
           // initCanvasEngine(this_config, bookid, page);
           break;
@@ -528,29 +524,37 @@ function handleEventOnDom(element, typeEvent) {
 //=================================//
 // Canvas Engine Tools
 //=================================//
-function redraw() {
+function redraw(ctx) {
   // canvas.width = canvas.width;
-  console.log(`REDRAW Function : ${page}`);
-  const context = document.getElementById(`canvas`).getContext("2d");
+  // console.log(`REDRAW Function : ${page}`);
+  // console.log(typeof ctx);
+  // // console.log(oloop(ctx));
+  // // if (typeof ctx === "undefined") {
+  // console.log(`no CTX ? `);
+  // const ctx = document.getElementById("canvas").getContext("2d");
+  // }
+  //  let cv = document.getElementById("canvas").getBoundingClientRect();
+  //  console.log(`widthCanvas => ${cv.width} HeigthCavnsas => ${cv.height}`);
+
   // context.clearRect(0, 0, canvas_width, canvas_height); // NOTE him or her define this in the canvas element
-  context.strokeStyle = "blue";
+  ctx.strokeStyle = "blue";
   // WARNING get url source and set if exists
   // === === === === === === === === === === === === === === === //
   //   This can hold text,textare and crossword
   // === === === === === === === === === === === === === === === //
-  console.log(`BOXES IN REDRAW`);
-  console.log(JSON.stringify(boxes));
-  console.log(boxes.length);
-  context.beginPath();
+  // console.log(`BOXES AND LENgth IN REDRAW`);
+  // console.log(JSON.stringify(boxes));
+  // console.log(boxes.length);
+  ctx.beginPath();
   //When call a new page for some reason the set of var boxes is lost and if
   //i don't have some previous data the var is destroyed
   for (let i = 0; i < boxes.length; i++) {
-    drawBoxOn(boxes[i], context);
+    drawBoxOn(boxes[i], ctx);
   }
   if (clickedArea.box == -1) {
     tmpBox = newBox(x1, y1, x2, y2);
     if (tmpBox != null) {
-      drawBoxOn(tmpBox, context);
+      drawBoxOn(tmpBox, ctx);
     }
   }
   // === === === === === === === === === === === === === === === //
@@ -626,8 +630,7 @@ function newBox(x1, y1, x2, y2) {
 }
 
 function drawBoxOn(box, context) {
-  console.log(`DEBUG::drawBoxOn --> ${box.inputType}`);
-  console.log(JSON.stringify(box));
+  // console.log(`DEBUG::drawBoxOn --> ${box.inputType}`);
   let xCenter = box.x1 + (box.x2 - box.x1) / 2;
   let yCenter = box.y1 + (box.y2 - box.y1) / 2;
   let ratio = (box.x2 - box.x1) / 2;
@@ -645,7 +648,8 @@ function drawBoxOn(box, context) {
     box.inputType == "crossword"
   ) {
     context.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
-    //      context.closePath();
+    // console.log(`Which INPUT TYPE is ${box.inputType} whidth anchor ${anchrSize}
+    // and lineOffset > ${lineOffset}`);
     context.stroke();
 
     // aesthetic resize decorator marks
@@ -723,6 +727,7 @@ function drawBoxOn(box, context) {
   if (box.inputType == "option") {
     context.beginPath();
     //context.arc(xCenter, yCenter, ratio, 0, Math.PI * 2, true); // Outer circle
+    // console.log(`IS an ARC ??`);
     var arco = new circle(xCenter, yCenter, ratio);
     context.stroke(arco);
 
@@ -796,6 +801,30 @@ function clearPageCanvas() {
   context.beginPath();
 }
 
+function cleanPageCanvasStrokes(canvas, ctx) {
+  console.log(`INSIDE CLEAR CANVAS`);
+  console.log(boxes);
+  console.log(`VARRS: ${x1} ${y1} ${x2} ${y2}`);
+  mousedown = false;
+  clickedArea = { box: -1, pos: "o" };
+  x1 = -1;
+  y1 = -1;
+  x2 = -1;
+  y2 = -1;
+  boxes = [];
+  tmpBox = null;
+  console.log(`RESET BOXES??`);
+  console.log(boxes);
+
+  // let canvas = document.getElementById(`canvas`);
+  // let context = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas_width, canvas_height);
+  ctx.strokeStyle = "blue";
+
+  // context.beginPath();
+}
+
 function saveBox() {
   console.log(`BOXES in X`);
   console.log(boxes);
@@ -803,11 +832,16 @@ function saveBox() {
   let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method[1]}/${bookid}/${page}`;
 
   let response_json = connect.postData(url, boxes);
-  console.log(
-    `url: ${url} and request : ${JSON.stringify(
-      boxes
-    )} and response ${JSON.stringify(response_json)}`
-  );
+  response_json.then((data) => {
+    console.log(
+      `url: ${url} and request : ${JSON.stringify(
+        boxes
+      )} and response ${JSON.stringify(data)}`
+    );
+
+    attachPage();
+    document.querySelector("#msj").innerText = "ok";
+  });
 }
 
 function circle(x, y, radius) {
@@ -840,74 +874,75 @@ function recalCanvasStrokes(box, context) {
   // box.x2 = xwidth;
   // box.y2 = xheight;
 }
-function convertSizes(xbox = {}, canvas, element) {
-  //Dimensions for
-  // console.log(data);
-  let psp = {};
-  psp = xbox;
 
-  // let containerImg = document.querySelector(`canvas_${page}`);
+//function convertSizes(xbox = {}, canvas, element) {
+//  //Dimensions for
+//  // console.log(data);
+//  let psp = {};
+//  psp = xbox;
 
-  console.log(`::CANVAS::`);
-  let canvasDimensions = canvas.getBoundingClientRect();
-  console.log(canvasDimensions);
-  console.log(`::ElementDiv::`);
-  let div = element.getBoundingClientRect();
-  console.log(div);
+//  // let containerImg = document.querySelector(`canvas_${page}`);
 
-  let newDimensions = Math.hypot(
-    canvasDimensions.width,
-    canvasDimensions.height
-  );
-  console.log(newDimensions);
+//  console.log(`::CANVAS::`);
+//  let canvasDimensions = canvas.getBoundingClientRect();
+//  console.log(canvasDimensions);
+//  console.log(`::ElementDiv::`);
+//  let div = element.getBoundingClientRect();
+//  console.log(div);
 
-  Object.keys(xbox).forEach((keys) => {
-    // Teorem
-    let sourceDimensions = Math.hypot(
-      xbox[keys].source_width,
-      xbox[keys].source_height
-    );
-    console.log(sourceDimensions);
-    let scaleFactor = newDimensions / sourceDimensions;
-    console.log(scaleFactor);
+//  let newDimensions = Math.hypot(
+//    canvasDimensions.width,
+//    canvasDimensions.height
+//  );
+//  console.log(newDimensions);
 
-    //calculate new dimensions and positions
-    xbox[keys].x1 = xbox[keys].x1 * scaleFactor;
-    xbox[keys].y1 = xbox[keys].y1 * scaleFactor;
-    xbox[keys].x2 = xbox[keys].x2 * scaleFactor;
-    xbox[keys].y2 = xbox[keys].y2 * scaleFactor;
+//  Object.keys(xbox).forEach((keys) => {
+//    // Teorem
+//    let sourceDimensions = Math.hypot(
+//      xbox[keys].source_width,
+//      xbox[keys].source_height
+//    );
+//    console.log(sourceDimensions);
+//    let scaleFactor = newDimensions / sourceDimensions;
+//    console.log(scaleFactor);
 
-    // calculate percents
-    let top = (xbox[keys].x1 / div.width) * 100;
-    let left = (xbox[keys].y1 / div.height) * 100;
-    let width = (xbox[keys].x2 / div.width) * 100;
-    let height = (xbox[keys].y2 / div.height) * 100;
+//    //calculate new dimensions and positions
+//    xbox[keys].x1 = xbox[keys].x1 * scaleFactor;
+//    xbox[keys].y1 = xbox[keys].y1 * scaleFactor;
+//    xbox[keys].x2 = xbox[keys].x2 * scaleFactor;
+//    xbox[keys].y2 = xbox[keys].y2 * scaleFactor;
 
-    console.log(
-      ` Top = ${xbox[keys].x1 * scaleFactor} vs : ${
-        psp[keys].x1
-      } and percents : ${top}`
-    );
-    console.log(
-      ` Left = ${xbox[keys].y1 * scaleFactor} vs : ${
-        psp[keys].y1
-      } and percents : ${left}`
-    );
-    console.log(
-      ` Width = ${xbox[keys].x2 * scaleFactor} vs : ${
-        psp[keys].x2
-      } and percents : ${width}`
-    );
-    console.log(
-      ` Heigth = ${xbox[keys].y2 * scaleFactor} vs : ${
-        psp[keys].y2
-      } and percents : ${height}`
-    );
-  });
-  // set new size and positions
-  // data.x1 = x1 ...
-  return xbox;
-}
+//    // calculate percents
+//    let top = (xbox[keys].x1 / div.width) * 100;
+//    let left = (xbox[keys].y1 / div.height) * 100;
+//    let width = (xbox[keys].x2 / div.width) * 100;
+//    let height = (xbox[keys].y2 / div.height) * 100;
+
+//    console.log(
+//      ` Top = ${xbox[keys].x1 * scaleFactor} vs : ${
+//        psp[keys].x1
+//      } and percents : ${top}`
+//    );
+//    console.log(
+//      ` Left = ${xbox[keys].y1 * scaleFactor} vs : ${
+//        psp[keys].y1
+//      } and percents : ${left}`
+//    );
+//    console.log(
+//      ` Width = ${xbox[keys].x2 * scaleFactor} vs : ${
+//        psp[keys].x2
+//      } and percents : ${width}`
+//    );
+//    console.log(
+//      ` Heigth = ${xbox[keys].y2 * scaleFactor} vs : ${
+//        psp[keys].y2
+//      } and percents : ${height}`
+//    );
+//  });
+//  // set new size and positions
+//  // data.x1 = x1 ...
+//  return xbox;
+//}
 
 function initControlKeyboard(config = {}, bookResponse = {}) {
   const inputs = document.querySelectorAll("[name=inpsel]");
