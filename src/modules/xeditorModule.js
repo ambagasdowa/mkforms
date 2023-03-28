@@ -25,6 +25,9 @@ let input_type = "text";
 let canvas_width;
 let canvas_height;
 
+let img_width = 0;
+let img_heigth = 0;
+
 const message = "Initializing module";
 
 function initMsj() {
@@ -88,6 +91,9 @@ Setup
   canvas_width = win.w;
   canvas_height = win.h;
 
+  img_width = img.width;
+  img_heigth = img.height;
+
   cleanPageCanvasStrokes(canvas, ctx);
 
   if (debug) {
@@ -135,7 +141,7 @@ Cover Image
         // console.log(`CONTAIN`);
       }
 
-      loadEngine(canvas, ctx);
+      loadEngine(canvas, ctx, img);
     };
 
     /*--------------------
@@ -191,20 +197,61 @@ Resize
 //=========================================//
 //        Canvas Engine Section
 //=========================================//
-function loadEngine(canvas, ctx) {
+function loadEngine(canvas, ctx, img) {
   // console.log(`loadEngine`);
-  // dimensions(canvas);
+  dimensions(canvas, ctx, img, boxes, "contain");
   redraw(ctx);
   canvasEngine(canvas, ctx);
 }
 
-function dimensions(canvas, ctx, process) {
+function dimensions(canvas, ctx, img, boxes, process) {
   let dimensions = canvas.getBoundingClientRect();
   console.log(
     `Canvas dimensions => ${dimensions.width} x ${dimensions.height}`
   );
   // =====================  //
-  //
+  // set ratios
+  console.log(`SET DIMENSIONS`);
+
+  // oloop(boxes);
+  // const boxRatio = h/w
+  const imgRatio = img.height / img.width;
+  const winRatio = window.innerHeight / window.innerWidth;
+
+  const h = window.innerWidth * imgRatio;
+  const w = (window.innerWidth * winRatio) / imgRatio;
+
+  console.log(`DIMENSIONS IMAGE ${img.width} X ${img.height}`);
+
+  for (const key in boxes) {
+    const jsonElement = boxes[key];
+    console.log(jsonElement);
+
+    // if (
+    //   (imgRatio < winRatio && type === "contain") ||
+    //   (imgRatio > winRatio && type === "cover")
+    // ) {
+    //   // const h = window.innerWidth * imgRatio;
+    //   // ctx.drawImage(
+    //   //   img,
+    //   //   0,
+    //   //   (window.innerHeight - h) / 2,
+    //   //   window.innerWidth,
+    //   //   h
+    //   // );
+    //   // // console.log(`COVER`);
+    // }
+    // if (
+    //   (imgRatio > winRatio && type === "contain") ||
+    //   (imgRatio < winRatio && type === "cover")
+    // ) {
+    //   // const w = (window.innerWidth * winRatio) / imgRatio;
+    //   // ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
+    //   // console.log(`CONTAIN`);
+    // }
+  }
+
+  //return new_boxes;
 } // Dimensions
 
 function oloop(data) {
@@ -842,6 +889,8 @@ function saveBox() {
   console.log(boxes);
 
   let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method[1]}/${bookid}/${page}`;
+
+  //TODO make boxes conversion then save
 
   let response_json = connect.postData(url, boxes);
   response_json.then((data) => {
