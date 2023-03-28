@@ -4,14 +4,13 @@ let config = {
     module: "xeditor",
     default_width: 1275,
     default_height: 1650,
+    debug: true,
     srv_json: "baizabal.xyz",
     port_json: "8000",
     protocol_json: "https://",
     api_method: ["books", "srcpositions", "upload", "items", "srcpos"],
     css_files: {
-      list: "./css/editor.css",
-      awesomeFonts:
-        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css",
+      awesomeFonts: "./fonts/all.min.css",
     },
     // app: "ediq",
     app: "baizabal.xyz",

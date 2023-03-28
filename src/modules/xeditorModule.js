@@ -7,6 +7,7 @@ let config = conf.xeditor;
 let page = 1;
 let pages = {};
 let bookid;
+let totalPages = 0;
 
 // Editor Engine
 let lineOffset = 4;
@@ -57,7 +58,9 @@ function initBooks(paramsUrl = {}) {
       }
     }
     pages = bookPages;
-
+    if (debug) {
+      document.querySelector("#number-pages").innerText = bookPages["pages"];
+    }
     // loadBoxes();
     // RUN APP
     attachPage();
@@ -87,8 +90,13 @@ Setup
 
   cleanPageCanvasStrokes(canvas, ctx);
 
-  let domTag = document.querySelector("#dim");
-  domTag.innerHTML = `${canvas_width} X ${canvas_height}`;
+  if (debug) {
+    document.querySelector(
+      "#dcanvas"
+    ).innerHTML = ` Window: ${canvas_width} X ${canvas_height}`;
+  }
+
+  document.querySelector("#page-number").value = page;
 
   //LAB
   const bookBoxes = getBoxes();
@@ -150,6 +158,8 @@ Init
       render();
       // ============== TODO ================= //
 
+      let domImg = document.querySelector("#dimg");
+      domImg.innerHTML = `Image : ${img.width} X ${img.height}`;
       console.log(`image ${img.width} X ${img.height}`);
     };
 
@@ -188,12 +198,14 @@ function loadEngine(canvas, ctx) {
   canvasEngine(canvas, ctx);
 }
 
-function dimensions(canvas) {
+function dimensions(canvas, ctx, process) {
   let dimensions = canvas.getBoundingClientRect();
   console.log(
     `Canvas dimensions => ${dimensions.width} x ${dimensions.height}`
   );
-}
+  // =====================  //
+  //
+} // Dimensions
 
 function oloop(data) {
   for (const key in data) {
@@ -979,4 +991,25 @@ function initControlKeyboard(config = {}, bookResponse = {}) {
   }
 }
 
-export { initMsj, initBooks };
+// Draggable element
+function draggable(el) {
+  el.addEventListener("mousedown", function (e) {
+    var offsetX = e.clientX - parseInt(window.getComputedStyle(this).left);
+    var offsetY = e.clientY - parseInt(window.getComputedStyle(this).top);
+
+    function mouseMoveHandler(e) {
+      el.style.top = e.clientY - offsetY + "px";
+      el.style.left = e.clientX - offsetX + "px";
+    }
+
+    function reset() {
+      window.removeEventListener("mousemove", mouseMoveHandler);
+      window.removeEventListener("mouseup", reset);
+    }
+
+    window.addEventListener("mousemove", mouseMoveHandler);
+    window.addEventListener("mouseup", reset);
+  });
+}
+
+export { initMsj, initBooks, draggable };
