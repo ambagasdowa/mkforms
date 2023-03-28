@@ -113,9 +113,6 @@ Setup
 Cover Image
 --------------------*/
     const coverImg = (img, type = "cover") => {
-      img_width = img.width;
-      img_heigth = img.height;
-
       const imgRatio = img.height / img.width;
       const winRatio = window.innerHeight / window.innerWidth;
       if (
@@ -163,6 +160,8 @@ Init
       resize();
       render();
       // ============== TODO ================= //
+      img_width = img.width;
+      img_heigth = img.height;
 
       let domImg = document.querySelector("#dimg");
       domImg.innerHTML = `Image : ${img.width} X ${img.height}`;
