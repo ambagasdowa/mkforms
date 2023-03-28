@@ -160,6 +160,7 @@ Init
       resize();
       render();
       // ============== TODO ================= //
+      // SET img dimensions
       img_width = img.width;
       img_heigth = img.height;
 
