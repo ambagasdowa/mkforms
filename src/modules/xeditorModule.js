@@ -91,9 +91,6 @@ Setup
   canvas_width = win.w;
   canvas_height = win.h;
 
-  img_width = img.width;
-  img_heigth = img.height;
-
   cleanPageCanvasStrokes(canvas, ctx);
 
   if (debug) {
@@ -116,6 +113,9 @@ Setup
 Cover Image
 --------------------*/
     const coverImg = (img, type = "cover") => {
+      img_width = img.width;
+      img_heigth = img.height;
+
       const imgRatio = img.height / img.width;
       const winRatio = window.innerHeight / window.innerWidth;
       if (
