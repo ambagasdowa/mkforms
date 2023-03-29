@@ -32,7 +32,7 @@ Html Forms Maker
 ## Admin Section
 
 - Admininstrator
-  - ◐ Draw BookPage directly to canvas object against draw img as div background
+  - ✓ Draw BookPage directly to canvas object against draw img as div background
   - ✓ Add grid builder Option->Canvas : draw poligon and split in multiple poligons inside take a int as parameter [crucigramas , sopa de letras ...]
   - Draw properties window over a poligon for add options to box
     1. ✓ Add positions of the item
@@ -82,7 +82,7 @@ Html Forms Maker
   - ▢ Build as package for npm installation (webpack,...)
   - ▢ Build a configuration system with a config.ini file
 
-- FixIt
+- ✓ ~~FixIt~~ [Fixed]
 
   - Editor:
 
