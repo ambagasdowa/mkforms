@@ -4,6 +4,7 @@ import { zoom } from "./zoom.js";
 
 let conf = configuration.config;
 let config = conf.xeditor;
+let debug = conf.debug;
 let page = 1;
 let pages = {};
 let bookid;
@@ -28,7 +29,7 @@ let canvas_height;
 let img_src_width;
 let img_src_height;
 let scaled_img_width;
-let scaled_img_heigth;
+let scaled_img_height;
 let image_ratio;
 let window_ratio;
 
@@ -97,10 +98,12 @@ Setup
 
   cleanPageCanvasStrokes(canvas, ctx);
 
+  console.log(`DEBUG: ${debug}`);
   if (debug) {
+    console.log(` Window: ${canvas_width} X ${canvas_height}`);
     document.querySelector(
       "#dcanvas"
-    ).innerHTML = ` Window: ${canvas_width} X ${canvas_height}`;
+    ).innerText = `Window: ${canvas_width} X ${canvas_height}`;
   }
 
   document.querySelector("#page-number").value = page;
@@ -147,7 +150,7 @@ Cover Image
         const w = (window.innerWidth * winRatio) / imgRatio;
 
         scaled_img_width = w;
-        scaled_img_heigth = window.innerHeight;
+        scaled_img_height = window.innerHeight;
 
         ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
 
@@ -192,7 +195,7 @@ Init
         // img,
         boxes,
         scaled_img_width,
-        scaled_img_heigth,
+        scaled_img_height,
         image_ratio,
         window_ratio,
         false
@@ -239,7 +242,7 @@ function dimensionsTranslate(
   // img, //?
   boxes,
   scaled_img_width, //current scaled image width state
-  scaled_img_heigth, // current height statue
+  scaled_img_height, // current height statue
   image_ratio, // current image ratio
   window_ratio, // general window inner ratio
   save = false
@@ -253,7 +256,7 @@ function dimensionsTranslate(
     `DIMENSIONS RATIOS IMG:  ${image_ratio}  WINDOW :${window_ratio}`
   );
   console.log(
-    `DIMENSIONS SCALED IMG ${scaled_img_width} X ${scaled_img_heigth}`
+    `DIMENSIONS SCALED IMG ${scaled_img_width} X ${scaled_img_height}`
   );
   //    BOX SCHEMA
   //      top          ○
@@ -269,11 +272,20 @@ function dimensionsTranslate(
     console.log(JSON.stringify(jsonElement));
 
     // emulates the img
+    let boxWidth = jsonElement.x2 - jsonElement.x1;
+    let boxHeight = jsonElement.y2 - jsonElement.y1;
+
+    let sourceBoxRatio = jsonElement.default_height / jsonElement.default_width;
     let boxRatio =
       (jsonElement.y2 - jsonElement.y1) / (jsonElement.x2 - jsonElement.x1);
-
-    let hb = window.innerWidth * imgRatio;
-    let wb = (window.innerWidth * winRatio) / imgRatio;
+    // xfactor
+    // let h = window.innerWidth * imgRatio;
+    let hb = jsonElement.default_width * boxRatio;
+    // let w = (window.innerWidth * winRatio) / imgRatio;
+    let wb =
+      (jsonElement.default_width *
+        (jsonElement.default_height / jsonElement.default_width)) /
+      boxRatio;
 
     // -->
 

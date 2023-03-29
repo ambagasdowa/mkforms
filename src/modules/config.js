@@ -1,10 +1,10 @@
 let config = {
   author: "Jesus Baizabal",
+  debug: true,
   xeditor: {
     module: "xeditor",
     default_width: 1275,
     default_height: 1650,
-    debug: true,
     srv_json: "baizabal.xyz",
     port_json: "8000",
     protocol_json: "https://",
