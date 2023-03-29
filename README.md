@@ -29,7 +29,7 @@ Html Forms Maker
 
 # Todo
 
-## Admin Section
+## Sections
 
 - Admininstrator
   - ✓ Draw BookPage directly to canvas object against draw img as div background
