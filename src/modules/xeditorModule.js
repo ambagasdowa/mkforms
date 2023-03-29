@@ -65,9 +65,13 @@ function initBooks(paramsUrl = {}) {
         console.log(element);
       }
     }
+    // NOTE Set Global Vars from Response
     pages = bookPages;
+
     if (debug) {
-      document.querySelector("#number-pages").innerText = bookPages["pages"];
+      document.querySelector(
+        "#number-pages"
+      ).innerText = `/ ${bookResponse.pages}`;
     }
     // loadBoxes();
     // RUN APP
@@ -158,7 +162,9 @@ Cover Image
         // console.log(`CONTAIN`);
       }
 
-      loadEngine(canvas, ctx, img);
+      //NOTE TODO Select Editor or Viewer module
+      loadEngine(canvas, ctx, img); // Editor module
+      // loadView() //Viewer Module
     };
 
     /*--------------------
@@ -234,6 +240,7 @@ function loadEngine(canvas, ctx, img) {
   // console.log(`loadEngine`);
   redraw(ctx);
   canvasEngine(canvas, ctx);
+  //  cssEngine(canvas, ctx);
 }
 
 function dimensionsTranslate(
