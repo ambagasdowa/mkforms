@@ -25,8 +25,12 @@ let input_type = "text";
 let canvas_width;
 let canvas_height;
 
-let img_width = 0;
-let img_heigth = 0;
+let img_src_width;
+let img_src_height;
+let scaled_img_width;
+let scaled_img_heigth;
+let image_ratio;
+let window_ratio;
 
 const message = "Initializing module";
 
@@ -115,11 +119,18 @@ Cover Image
     const coverImg = (img, type = "cover") => {
       const imgRatio = img.height / img.width;
       const winRatio = window.innerHeight / window.innerWidth;
+      image_ratio = imgRatio;
+      window_ratio = winRatio;
+
       if (
         (imgRatio < winRatio && type === "contain") ||
         (imgRatio > winRatio && type === "cover")
       ) {
         const h = window.innerWidth * imgRatio;
+
+        scaled_img_width = window.innerWidth;
+        scaled_img_heigth = h;
+
         ctx.drawImage(
           img,
           0,
@@ -134,7 +145,13 @@ Cover Image
         (imgRatio < winRatio && type === "cover")
       ) {
         const w = (window.innerWidth * winRatio) / imgRatio;
+
+        scaled_img_width = w;
+        scaled_img_heigth = window.innerHeight;
+
         ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
+
+        // dimensionsTranslate(canvas, ctx, img, boxes, scaleImbox)
         // console.log(`CONTAIN`);
       }
 
@@ -161,12 +178,25 @@ Init
       render();
       // ============== TODO ================= //
       // SET img dimensions
-      img_width = img.width;
-      img_heigth = img.height;
+
+      img_src_width = img.width;
+      img_src_height = img.height;
 
       let domImg = document.querySelector("#dimg");
       domImg.innerHTML = `Image : ${img.width} X ${img.height}`;
       console.log(`image ${img.width} X ${img.height}`);
+
+      dimensionsTranslate(
+        // canvas,
+        // ctx,
+        // img,
+        boxes,
+        scaled_img_width,
+        scaled_img_heigth,
+        image_ratio,
+        window_ratio,
+        false
+      );
     };
 
     /*--------------------
@@ -199,59 +229,84 @@ Resize
 //=========================================//
 function loadEngine(canvas, ctx, img) {
   // console.log(`loadEngine`);
-  dimensions(canvas, ctx, img, boxes, "contain");
   redraw(ctx);
   canvasEngine(canvas, ctx);
 }
 
-function dimensions(canvas, ctx, img, boxes, process) {
-  let dimensions = canvas.getBoundingClientRect();
+function dimensionsTranslate(
+  // canvas, //?
+  // ctx, //?
+  // img, //?
+  boxes,
+  scaled_img_width, //current scaled image width state
+  scaled_img_heigth, // current height statue
+  image_ratio, // current image ratio
+  window_ratio, // general window inner ratio
+  save = false
+) {
+  // console.log(
+  //   `DIMENSIONS IMAGE in box width ${box.x2 - box - x1} heigth ${
+  //     box.y2 - box.y1
+  //   }`
+  // );
   console.log(
-    `Canvas dimensions => ${dimensions.width} x ${dimensions.height}`
+    `DIMENSIONS RATIOS IMG:  ${image_ratio}  WINDOW :${window_ratio}`
   );
-  // =====================  //
-  // set ratios
-  console.log(`SET DIMENSIONS`);
-
-  // oloop(boxes);
-  // const boxRatio = h/w
-  const imgRatio = img.height / img.width;
-  const winRatio = window.innerHeight / window.innerWidth;
-
-  const h = window.innerWidth * imgRatio;
-  const w = (window.innerWidth * winRatio) / imgRatio;
-
-  console.log(`DIMENSIONS IMAGE ${img.width} X ${img.height}`);
+  console.log(
+    `DIMENSIONS SCALED IMG ${scaled_img_width} X ${scaled_img_heigth}`
+  );
+  //    BOX SCHEMA
+  //      top          ○
+  //        ▽          |
+  // left ▷ a---b---c  | ◁ height
+  //        |   +   |  |
+  //        d---e---f  -
+  // ○--------------| ▷ width
+  // x1=top, y1 = left , x2 = width , y2 = heigth
 
   for (const key in boxes) {
-    const jsonElement = boxes[key];
-    console.log(jsonElement);
+    let jsonElement = boxes[key];
+    console.log(JSON.stringify(jsonElement));
+
+    // emulates the img
+    let boxRatio =
+      (jsonElement.y2 - jsonElement.y1) / (jsonElement.x2 - jsonElement.x1);
+
+    let hb = window.innerWidth * imgRatio;
+    let wb = (window.innerWidth * winRatio) / imgRatio;
+
+    // -->
 
     // if (
     //   (imgRatio < winRatio && type === "contain") ||
     //   (imgRatio > winRatio && type === "cover")
     // ) {
-    //   // const h = window.innerWidth * imgRatio;
-    //   // ctx.drawImage(
-    //   //   img,
-    //   //   0,
-    //   //   (window.innerHeight - h) / 2,
-    //   //   window.innerWidth,
-    //   //   h
-    //   // );
-    //   // // console.log(`COVER`);
+    //   const h = window.innerWidth * imgRatio;
+
+    //   scaled_img_width = window.innerWidth;
+    //   scaled_img_heigth = h;
+
+    //   ctx.drawImage(img, 0, (window.innerHeight - h) / 2, window.innerWidth, h);
+    //   // console.log(`COVER`);
     // }
     // if (
     //   (imgRatio > winRatio && type === "contain") ||
     //   (imgRatio < winRatio && type === "cover")
     // ) {
-    //   // const w = (window.innerWidth * winRatio) / imgRatio;
-    //   // ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
+    //   const w = (window.innerWidth * winRatio) / imgRatio;
+
+    //   scaled_img_width = w;
+    //   scaled_img_heigth = window.innerHeight;
+
+    //   ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
+
+    //   // dimensions(canvas, ctx, img, boxes, scaleImbox)
     //   // console.log(`CONTAIN`);
     // }
-  }
 
-  //return new_boxes;
+    // -->
+  }
+  //return [scaleToOrigin,originToScale];
 } // Dimensions
 
 function oloop(data) {
@@ -677,8 +732,8 @@ function newBox(x1, y1, x2, y2) {
       inputType: input_type,
       source_width: canvas_width,
       source_height: canvas_height,
-      default_width: 0,
-      default_height: 0,
+      default_width: img_src_width,
+      default_height: img_src_height,
       bms_books_id: bookid,
       bms_bookpages_id: page,
       page: page,
