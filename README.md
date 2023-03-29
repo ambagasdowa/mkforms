@@ -113,7 +113,7 @@ detail "Something Happend Try again "
 ## Overall Progress
 
 ```bash
-██████████████░░░░░ 75%
+███████████████░░░░ 80%
 ```
 
 ### Sources
