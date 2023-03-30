@@ -20,6 +20,7 @@ let y1 = -1;
 let x2 = -1;
 let y2 = -1;
 let boxes = [];
+let postboxes = [];
 let tmpBox = null;
 let off_page = 0;
 let input_type = "text";
@@ -136,7 +137,7 @@ Cover Image
         const h = window.innerWidth * imgRatio;
 
         scaled_img_width = window.innerWidth;
-        scaled_img_heigth = h;
+        scaled_img_height = h;
 
         ctx.drawImage(
           img,
@@ -194,18 +195,6 @@ Init
       let domImg = document.querySelector("#dimg");
       domImg.innerHTML = `Image : ${img.width} X ${img.height}`;
       console.log(`image ${img.width} X ${img.height}`);
-
-      dimensionsTranslate(
-        // canvas,
-        // ctx,
-        // img,
-        boxes,
-        scaled_img_width,
-        scaled_img_height,
-        image_ratio,
-        window_ratio,
-        false
-      );
     };
 
     /*--------------------
@@ -243,28 +232,32 @@ function loadEngine(canvas, ctx, img) {
   //  cssEngine(canvas, ctx);
 }
 
-function dimensionsTranslate(
-  // canvas, //?
-  // ctx, //?
-  // img, //?
-  boxes,
-  scaled_img_width, //current scaled image width state
-  scaled_img_height, // current height statue
-  image_ratio, // current image ratio
-  window_ratio, // general window inner ratio
-  save = false
-) {
+function dimensionsTranslate(save = false, contain = false) {
   // console.log(
   //   `DIMENSIONS IMAGE in box width ${box.x2 - box - x1} heigth ${
   //     box.y2 - box.y1
   //   }`
   // );
+  postboxes = boxes;
+  // save = true;
+  let imgZeroLeftWidth, imgZeroTopHeight;
+  let sourceImgRatio = img_src_height / img_src_width;
+  let scaledImgRatio = scaled_img_height / scaled_img_width;
+
+  if (contain) {
+    imgZeroLeftWidth = (window.innerWidth - scaled_img_width) / 2;
+    imgZeroTopHeight =
+      window.innerHeight - scaled_img_height != 0
+        ? (window.innerHeight - scaled_img_height) / 2
+        : window.innerHeight - scaled_img_height;
+  }
   console.log(
-    `DIMENSIONS RATIOS IMG:  ${image_ratio}  WINDOW :${window_ratio}`
+    `DIMENSIONS RATIOS IMG ▶ ${image_ratio}  WINDOW ▶ ${window_ratio} SRCIMG ▶ ${sourceImgRatio} SCALEDIMG ▶ ${scaledImgRatio}`
   );
   console.log(
     `DIMENSIONS SCALED IMG ${scaled_img_width} X ${scaled_img_height}`
   );
+
   //    BOX SCHEMA
   //      top          ○
   //        ▽          |
@@ -274,25 +267,94 @@ function dimensionsTranslate(
   // ○--------------| ▷ width
   // x1=top, y1 = left , x2 = width , y2 = heigth
 
+  //Scale to origin
+
   for (const key in boxes) {
     let jsonElement = boxes[key];
+
+    console.log(`JSONELEMENTS:`);
     console.log(JSON.stringify(jsonElement));
 
     // emulates the img
     let boxWidth = jsonElement.x2 - jsonElement.x1;
     let boxHeight = jsonElement.y2 - jsonElement.y1;
 
-    let sourceBoxRatio = jsonElement.default_height / jsonElement.default_width;
+    // let sourceBoxRatio = jsonElement.default_height / jsonElement.default_width;
+
     let boxRatio =
       (jsonElement.y2 - jsonElement.y1) / (jsonElement.x2 - jsonElement.x1);
     // xfactor
-    // let h = window.innerWidth * imgRatio;
     let hb = jsonElement.default_width * boxRatio;
-    // let w = (window.innerWidth * winRatio) / imgRatio;
     let wb =
       (jsonElement.default_width *
         (jsonElement.default_height / jsonElement.default_width)) /
       boxRatio;
+    console.log(
+      `factors for ${key} w ${boxWidth} h ${boxHeight} ratio ${boxRatio}`
+    );
+
+    if (contain) {
+      // IN containt the window height  is equal to scaled image  height
+      console.log(
+        `NewSizes contain to Original keyname ▶▶ ${key} id ▶▶ ${jsonElement.id} offsetWidth ▶ ${imgZeroLeftWidth} and offsetHeight ▶ ${imgZeroTopHeight}`
+      );
+      let box_crop_x1 = jsonElement.x1 - imgZeroLeftWidth;
+      let box_crop_x2 = jsonElement.x2 - imgZeroLeftWidth;
+      let box_crop_y1 = jsonElement.y1 - imgZeroTopHeight;
+      let box_crop_y2 = jsonElement.y2 - imgZeroTopHeight;
+
+      console.log(
+        `NewPos for ${key} from crop x1 ▶ ${box_crop_x1} x2 ▶ ${box_crop_x2} ratio ${boxRatio}`
+      );
+
+      console.log(
+        `NewPos for ${key} from crop y1 ▶ ${box_crop_y1} y2 ▶ ${box_crop_y2} ratio ${boxRatio}`
+      );
+
+      // convert to original size
+      //if (boxRatio > scaledImgRatio) {
+      //  //the box supperseed the img-background
+      //  // scale to reduce
+      //} else {
+      // Normal contain behavior
+      // scale to cover
+      // scaledImg -> srcImg
+      // boxRatio -> [srcBoxRatio]srcImg
+      // Ѳ = Y/X //Relation between the catetos
+      // ѳ = y/x
+      // x = y/ѳ
+      // scaled_x = x۰Ѳ = (y/ѳ)۰(Y/X)
+      // can better this wit a map function maybe
+      let growXFactor = img_src_width / scaled_img_width;
+      let growYFactor = img_src_height / scaled_img_height;
+
+      let shrinkXFactor = scaled_img_width / img_src_width;
+      let shrinkYFactor = scaled_img_height / img_src_height;
+
+      let sw_x1 = box_crop_x1 * growXFactor;
+      let sw_x2 = box_crop_x2 * growXFactor;
+      let sw_y1 = box_crop_y1 * growYFactor;
+      let sw_y2 = box_crop_y2 * growYFactor;
+      if (save) {
+        jsonElement.x1 = Math.round(sw_x1);
+        jsonElement.x2 = Math.round(sw_x2);
+        jsonElement.y1 = Math.round(sw_y1);
+        jsonElement.y2 = Math.round(sw_y2);
+      }
+
+      console.log(
+        `SclPos for ${key} from crop x1 ▶ ${box_crop_x1} scaled-x1 ▶ ${sw_x1} width ▶ ${
+          box_crop_x2 - box_crop_x1
+        } scaled-width ▶ ${sw_x2 - sw_x1}
+        from crop y1 ▶ ${box_crop_y1} scaled-y1 ▶ ${sw_y1} width ▶ ${
+          box_crop_y2 - box_crop_y1
+        } scaled-width ▶ ${sw_y2 - sw_y1}`
+      );
+      // }
+      console.log(`OUTPUT XBOXES`);
+      console.log(JSON.stringify(boxes));
+      // return boxes;
+    } // END CONTAIN
 
     // -->
 
@@ -341,7 +403,9 @@ function oloop(data) {
     }
   }
 }
-
+function crop() {
+  return null;
+}
 function canvasEngine(canvas, ctx) {
   // // ===============================================================//
   // Canvas Engine
@@ -961,19 +1025,20 @@ function cleanPageCanvasStrokes(canvas, ctx) {
 function saveBox() {
   console.log(`BOXES in X`);
   console.log(boxes);
+  dimensionsTranslate(true, true);
 
   let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method[1]}/${bookid}/${page}`;
 
   //TODO make boxes conversion then save
 
   let response_json = connect.postData(url, boxes);
+
   response_json.then((data) => {
     console.log(
       `url: ${url} and request : ${JSON.stringify(
         boxes
       )} and response ${JSON.stringify(data)}`
     );
-
     attachPage();
     document.querySelector("#msj").innerText = "ok";
   });
