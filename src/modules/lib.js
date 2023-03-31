@@ -394,9 +394,6 @@ function img2Viewport(bs, page, databook) {
 
 // set dimensions
 function dimensionsTranslate(bs = {}, win = {}) {
-  // console.log(JSON.stringify(bs));
-  // console.log(JSON.stringify(win));
-
   // Calculate img dimensions against inner window sizes
   const h = win.w * (bs.h / bs.w);
   const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
