@@ -269,13 +269,17 @@ function buildDivBook(object = {}) {
     }
     // NOTE this maps must come from an api json bridge
     // asking for a system_users.user_id
-
-    if (obj.book_pages_maps[index]) {
-      //NOTE add positions via css
-      console.log(`Found something in book_pages_maps`);
-      setMappings(obj, index);
-    }
-
+    //
+    //============ NOTE CODE uncomment if needed ===========//
+    //
+    //if (obj.book_pages_maps[index]) {
+    //  //NOTE add positions via css
+    //  console.log(`Found something in book_pages_maps`);
+    //  setMappings(obj, index);
+    //}
+    //============ NOTE CODE uncomment if needed ===========//
+    //
+    //
     book_section.appendChild(page_book);
     console.log(document.querySelector(".pages_last"));
   } //NOTE end for loop to json
@@ -361,7 +365,7 @@ function onlyOne(checkbox, tag) {
 window.onlyOne = onlyOne;
 
 // set dimensions image
-function img2Viewport(bs) {
+function img2Viewport(bs, page, databook) {
   let viewport;
   const win = {
     w: window.innerWidth,
@@ -369,6 +373,20 @@ function img2Viewport(bs) {
   };
 
   console.log(`BookSpecs inside lib:img2Viewport`);
+  // console.log(JSON.stringify(databook[0].sourcePositions));
+  let positions = {};
+  for (const pos in databook[0].sourcePositions) {
+    if (Object.hasOwnProperty.call(databook[0].sourcePositions, pos)) {
+      const element = databook[0].sourcePositions[pos];
+      if (element.bms_bookpages_id == page) {
+        console.log(element);
+        // call to setMappings(obj, index)
+        positions[pos] = element;
+      }
+    }
+  }
+  console.log(`POSITIONS`);
+  console.log(positions);
   viewport = dimensionsTranslate(bs, win);
 
   return viewport;
@@ -376,10 +394,31 @@ function img2Viewport(bs) {
 
 // set dimensions
 function dimensionsTranslate(bs = {}, win = {}) {
-  console.log(JSON.stringify(bs));
-  console.log(JSON.stringify(win));
+  // console.log(JSON.stringify(bs));
+  // console.log(JSON.stringify(win));
 
-  return { w: 765, h: 900 };
+  // Calculate img dimensions against inner window sizes
+  const h = win.w * (bs.h / bs.w);
+  const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
+
+  let css =
+    ".pages_1 > form > #input4851{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
+  inlineCss(css);
+
+  console.log(`resize image => ${w} x ${h}`);
+
+  return { w: w, h: win.h };
 }
+
+function inlineCss(cssAdd = "") {
+  /* create the style element */
+  document.getElementsByTagName("head")[0].removeAttribute("style");
+
+  let styleMapsElement = document.createElement("style");
+  /* add style rules to the style element */
+  styleMapsElement.appendChild(document.createTextNode(cssAdd));
+  /* attach the style element to the document head */
+  document.getElementsByTagName("head")[0].appendChild(styleMapsElement);
+} // NOTE End
 
 export { img2Viewport, dimensionsTranslate };

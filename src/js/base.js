@@ -59,7 +59,7 @@ let currentUser = {
 };
 
 let cp = 1;
-
+let databook = {};
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -140,6 +140,7 @@ console.log(`the url is --> ${book_url}`);
 const response = connect.getData(book_url, config, true);
 response.then((data) => {
   console.log(`response of getData`);
+  databook = data;
   slideModule.buildDivBook(JSON.parse(data));
 });
 
@@ -167,17 +168,20 @@ currentPage ▶ ${cp}`
 
 $("#magazine").bind("turning", function (event, page, view) {
   alert(JSON.stringify(slideModule.book_specs[page]));
-  console.log(slideModule.img2Viewport(slideModule.book_specs[page]));
+  // console.log(
+  //   slideModule.img2Viewport(slideModule.book_specs[page]),
+  //   page,
+  //   databook
+  // );
 
-  // $("#magazine").width("765");
-  // $("#magazine").height("900");
+  let rescale = slideModule.img2Viewport(
+    slideModule.book_specs[page],
+    page,
+    JSON.parse(databook)
+  );
 
-  $("#magazine").width(
-    slideModule.img2Viewport(slideModule.book_specs[page]).w
-  );
-  $("#magazine").height(
-    slideModule.img2Viewport(slideModule.book_specs[page]).h
-  );
+  $("#magazine").width(rescale.w);
+  $("#magazine").height(rescale.h);
 });
 
 $(function () {
