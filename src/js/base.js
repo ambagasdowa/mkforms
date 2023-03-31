@@ -58,6 +58,8 @@ let currentUser = {
   },
 };
 
+let cp = 1;
+
 let greet_scaler = slideModule.greet("Slider.js");
 console.log(greet_scaler); // Initialize module -> Slider.js
 console.log(slideModule.message); // Init all libs and modules ...
@@ -156,6 +158,27 @@ const save = document.querySelector("#submit");
 // let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
 console.log(`WinDimensions: ${window.innerWidth}X${window.innerHeight}`);
 //NOTE logic for turn lib-->
+console.log(JSON.stringify(slideModule.book_specs));
+let specs = slideModule.book_specs;
+console.log(
+  `SPECS W ▶ ${specs[currentPage.pag].w} H ▶ ${specs[currentPage.pag].h}
+currentPage ▶ ${cp}`
+);
+
+$("#magazine").bind("turning", function (event, page, view) {
+  alert(JSON.stringify(slideModule.book_specs[page]));
+  console.log(slideModule.img2Viewport(slideModule.book_specs[page]));
+
+  // $("#magazine").width("765");
+  // $("#magazine").height("900");
+
+  $("#magazine").width(
+    slideModule.img2Viewport(slideModule.book_specs[page]).w
+  );
+  $("#magazine").height(
+    slideModule.img2Viewport(slideModule.book_specs[page]).h
+  );
+});
 
 $(function () {
   $(window).ready(function () {
@@ -163,12 +186,13 @@ $(function () {
       display: "single",
       acceleration: true,
       gradients: !$.isTouch,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: specs[currentPage.pag].w,
+      height: specs[currentPage.pag].h,
       elevation: 50,
       when: {
         turned: function (e, page) {
           currentPage.pag = $(this).turn("view");
+          cp = $(this).turn("view");
           console.log(currentPage.pag.toString());
           console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
           let send_data = new send.eventOnDom(

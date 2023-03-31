@@ -1,3 +1,6 @@
+const book_specs = {};
+export { book_specs };
+
 const message = "Initializing all libs and  modules for slider";
 function greet(name) {
   return `Starting module =>, ${name} by Ambagasdowa`;
@@ -247,9 +250,14 @@ function buildDivBook(object = {}) {
 
     const img = new Image();
     img.onload = () => {
-      console.log(`IMG SIZES : ${img.width} X ${img.height}`);
+      console.log(`IMG SIZES : ${img.width} X ${img.height} on page ${index}`);
+      // update the img dimensions
     };
     img.src = element;
+
+    book_specs[index] = { w: img.width, h: img.height };
+    // set positions passthrought
+    //
 
     page_book.setAttributeNode(book_attr);
 
@@ -351,3 +359,27 @@ function onlyOne(checkbox, tag) {
   });
 }
 window.onlyOne = onlyOne;
+
+// set dimensions image
+function img2Viewport(bs) {
+  let viewport;
+  const win = {
+    w: window.innerWidth,
+    h: window.innerHeight,
+  };
+
+  console.log(`BookSpecs inside lib:img2Viewport`);
+  viewport = dimensionsTranslate(bs, win);
+
+  return viewport;
+}
+
+// set dimensions
+function dimensionsTranslate(bs = {}, win = {}) {
+  console.log(JSON.stringify(bs));
+  console.log(JSON.stringify(win));
+
+  return { w: 765, h: 900 };
+}
+
+export { img2Viewport, dimensionsTranslate };
