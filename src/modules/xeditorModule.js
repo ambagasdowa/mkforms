@@ -20,7 +20,7 @@ let y1 = -1;
 let x2 = -1;
 let y2 = -1;
 let boxes = [];
-let postboxes = [];
+let xboxes = [];
 let tmpBox = null;
 let off_page = 0;
 let input_type = "text";
@@ -104,6 +104,7 @@ Setup
   cleanPageCanvasStrokes(canvas, ctx);
 
   console.log(`DEBUG: ${debug}`);
+
   if (debug) {
     console.log(` Window: ${canvas_width} X ${canvas_height}`);
     document.querySelector(
@@ -118,7 +119,7 @@ Setup
   bookBoxes.then((data) => {
     // console.log(JSON.stringify(data));
 
-    boxes = data;
+    boxes = xboxes = data;
 
     const img = new Image();
     /*--------------------
@@ -129,6 +130,13 @@ Cover Image
       const winRatio = window.innerHeight / window.innerWidth;
       image_ratio = imgRatio;
       window_ratio = winRatio;
+      img_src_width = img.width;
+      img_src_height = img.height;
+
+      console.log(`image ${img.width} X ${img.height}`);
+
+      let domImg = document.querySelector("#dimg");
+      domImg.innerText = `Image : ${img.width} X ${img.height}`;
 
       if (
         (imgRatio < winRatio && type === "contain") ||
@@ -159,11 +167,11 @@ Cover Image
 
         ctx.drawImage(img, (win.w - w) / 2, 0, w, window.innerHeight);
 
-        // dimensionsTranslate(canvas, ctx, img, boxes, scaleImbox)
         // console.log(`CONTAIN`);
       }
 
       //NOTE TODO Select Editor or Viewer module
+
       loadEngine(canvas, ctx, img); // Editor module
       // loadView() //Viewer Module
     };
@@ -188,13 +196,7 @@ Init
       render();
       // ============== TODO ================= //
       // SET img dimensions
-
-      img_src_width = img.width;
-      img_src_height = img.height;
-
-      let domImg = document.querySelector("#dimg");
-      domImg.innerHTML = `Image : ${img.width} X ${img.height}`;
-      console.log(`image ${img.width} X ${img.height}`);
+      dimensionsTranslate(true, false);
     };
 
     /*--------------------
@@ -227,32 +229,28 @@ Resize
 //=========================================//
 function loadEngine(canvas, ctx, img) {
   // console.log(`loadEngine`);
+  // takes the boxes reference and convert
+
   redraw(ctx);
   canvasEngine(canvas, ctx);
   //  cssEngine(canvas, ctx);
 }
 
 function dimensionsTranslate(save = false, contain = false) {
-  // console.log(
-  //   `DIMENSIONS IMAGE in box width ${box.x2 - box - x1} heigth ${
-  //     box.y2 - box.y1
-  //   }`
-  // );
-  postboxes = boxes;
-  // save = true;
   let imgZeroLeftWidth, imgZeroTopHeight;
   let sourceImgRatio = img_src_height / img_src_width;
   let scaledImgRatio = scaled_img_height / scaled_img_width;
 
-  if (contain) {
-    imgZeroLeftWidth = (window.innerWidth - scaled_img_width) / 2;
-    imgZeroTopHeight =
-      window.innerHeight - scaled_img_height != 0
-        ? (window.innerHeight - scaled_img_height) / 2
-        : window.innerHeight - scaled_img_height;
-  }
+  let percentRatio = scaled_img_width / img_src_width;
+
+  imgZeroLeftWidth = (window.innerWidth - scaled_img_width) / 2;
+  imgZeroTopHeight =
+    window.innerHeight - scaled_img_height != 0
+      ? (window.innerHeight - scaled_img_height) / 2
+      : window.innerHeight - scaled_img_height;
+
   console.log(
-    `DIMENSIONS RATIOS IMG ▶ ${image_ratio}  WINDOW ▶ ${window_ratio} SRCIMG ▶ ${sourceImgRatio} SCALEDIMG ▶ ${scaledImgRatio}`
+    `DIMENSIONS RATIOS IMG ▶ ${image_ratio}  WINDOW ▶ ${window_ratio} SRCIMG ▶ ${sourceImgRatio} SCALEDIMG ▶ ${scaledImgRatio} percentRatio ▶ ${percentRatio}`
   );
   console.log(
     `DIMENSIONS SCALED IMG ${scaled_img_width} X ${scaled_img_height}`
@@ -267,6 +265,10 @@ function dimensionsTranslate(save = false, contain = false) {
   // ○--------------| ▷ width
   // x1=top, y1 = left , x2 = width , y2 = heigth
 
+  // boxes = contain ? boxes : xboxes;
+
+  console.log(`CHECK FOR BOXES>:`);
+  console.log(JSON.stringify(boxes));
   //Scale to origin
 
   for (const key in boxes) {
@@ -284,77 +286,82 @@ function dimensionsTranslate(save = false, contain = false) {
     let boxRatio =
       (jsonElement.y2 - jsonElement.y1) / (jsonElement.x2 - jsonElement.x1);
     // xfactor
-    let hb = jsonElement.default_width * boxRatio;
-    let wb =
-      (jsonElement.default_width *
-        (jsonElement.default_height / jsonElement.default_width)) /
-      boxRatio;
+    // IN containt the window height  is equal to scaled image  height
     console.log(
-      `factors for ${key} w ${boxWidth} h ${boxHeight} ratio ${boxRatio}`
+      `NewSizes contain to Original keyname ▶▶ ${key} id ▶▶ ${jsonElement.id} offsetWidth ▶ ${imgZeroLeftWidth} and offsetHeight ▶ ${imgZeroTopHeight} boxWidth ${boxWidth} boxHeight ${boxHeight}`
     );
 
-    if (contain) {
-      // IN containt the window height  is equal to scaled image  height
-      console.log(
-        `NewSizes contain to Original keyname ▶▶ ${key} id ▶▶ ${jsonElement.id} offsetWidth ▶ ${imgZeroLeftWidth} and offsetHeight ▶ ${imgZeroTopHeight}`
-      );
-      let box_crop_x1 = jsonElement.x1 - imgZeroLeftWidth;
-      let box_crop_x2 = jsonElement.x2 - imgZeroLeftWidth;
-      let box_crop_y1 = jsonElement.y1 - imgZeroTopHeight;
-      let box_crop_y2 = jsonElement.y2 - imgZeroTopHeight;
+    let box_crop_x1 = contain
+      ? jsonElement.x1 - imgZeroLeftWidth
+      : jsonElement.x1; /*1 + imgZeroLeftWidth*/
+    let box_crop_x2 = contain
+      ? jsonElement.x2 - imgZeroLeftWidth
+      : jsonElement.x2; /* + imgZeroLeftWidth*/
+    let box_crop_y1 = contain
+      ? jsonElement.y1 - imgZeroTopHeight
+      : jsonElement.y1; /* + imgZeroTopHeight*/
+    let box_crop_y2 = contain
+      ? jsonElement.y2 - imgZeroTopHeight
+      : jsonElement.y2; /* + imgZeroTopHeight*/
 
-      console.log(
-        `NewPos for ${key} from crop x1 ▶ ${box_crop_x1} x2 ▶ ${box_crop_x2} ratio ${boxRatio}`
-      );
+    console.log(
+      `NewPos for ${key} from crop x1 ▶ ${box_crop_x1} x2 ▶ ${box_crop_x2} ratio ${boxRatio}`
+    );
 
-      console.log(
-        `NewPos for ${key} from crop y1 ▶ ${box_crop_y1} y2 ▶ ${box_crop_y2} ratio ${boxRatio}`
-      );
+    console.log(
+      `NewPos for ${key} from crop y1 ▶ ${box_crop_y1} y2 ▶ ${box_crop_y2} ratio ${boxRatio}`
+    );
 
-      // convert to original size
-      //if (boxRatio > scaledImgRatio) {
-      //  //the box supperseed the img-background
-      //  // scale to reduce
-      //} else {
-      // Normal contain behavior
-      // scale to cover
-      // scaledImg -> srcImg
-      // boxRatio -> [srcBoxRatio]srcImg
-      // Ѳ = Y/X //Relation between the catetos
-      // ѳ = y/x
-      // x = y/ѳ
-      // scaled_x = x۰Ѳ = (y/ѳ)۰(Y/X)
-      // can better this wit a map function maybe
-      let growXFactor = img_src_width / scaled_img_width;
-      let growYFactor = img_src_height / scaled_img_height;
+    // convert to original size
+    // Ѳ = Y/X //Relation between the catetos
+    // ѳ = y/x
+    // x = y/ѳ
+    // scaled_x = x۰Ѳ = (y/ѳ)۰(Y/X)
+    // can better this wit a map function maybe
+    //
+    let growXFactor = scaled_img_width / img_src_width;
+    let growYFactor = scaled_img_height / img_src_height;
 
-      let shrinkXFactor = scaled_img_width / img_src_width;
-      let shrinkYFactor = scaled_img_height / img_src_height;
+    console.log(`resizeFactors ${growXFactor} : ${growYFactor}`);
 
-      let sw_x1 = box_crop_x1 * growXFactor;
-      let sw_x2 = box_crop_x2 * growXFactor;
-      let sw_y1 = box_crop_y1 * growYFactor;
-      let sw_y2 = box_crop_y2 * growYFactor;
-      if (save) {
-        jsonElement.x1 = Math.round(sw_x1);
-        jsonElement.x2 = Math.round(sw_x2);
-        jsonElement.y1 = Math.round(sw_y1);
-        jsonElement.y2 = Math.round(sw_y2);
-      }
+    let sw_x1 = contain ? box_crop_x1 / growXFactor : box_crop_x1 * growXFactor;
+    let sw_x2 = contain ? box_crop_x2 / growXFactor : box_crop_x2 * growXFactor;
+    let sw_y1 = contain ? box_crop_y1 / growYFactor : box_crop_y1 * growXFactor;
+    let sw_y2 = contain ? box_crop_y2 / growYFactor : box_crop_y2 * growXFactor;
 
-      console.log(
-        `SclPos for ${key} from crop x1 ▶ ${box_crop_x1} scaled-x1 ▶ ${sw_x1} width ▶ ${
-          box_crop_x2 - box_crop_x1
-        } scaled-width ▶ ${sw_x2 - sw_x1}
+    console.log(
+      `containd x1 ==> ${sw_x1} + ${imgZeroLeftWidth} = ${
+        sw_x1 + imgZeroLeftWidth
+      } `
+    );
+    console.log(
+      `containd x2 ==> ${sw_x2} + ${imgZeroLeftWidth} = ${
+        sw_x2 + imgZeroLeftWidth
+      }`
+    );
+    if (save) {
+      jsonElement.x1 = contain
+        ? Math.round(sw_x1)
+        : Math.round(sw_x1 + imgZeroLeftWidth);
+      jsonElement.x2 = contain
+        ? Math.round(sw_x2)
+        : Math.round(sw_x2 + imgZeroLeftWidth);
+      jsonElement.y1 = contain ? Math.round(sw_y1) : Math.round(sw_y1);
+      jsonElement.y2 = contain ? Math.round(sw_y2) : Math.round(sw_y2);
+    }
+
+    console.log(
+      `SclPos for ${key} from crop x1 ▶ ${box_crop_x1} scaled-x1 ▶ ${sw_x1} width ▶ ${
+        box_crop_x2 - box_crop_x1
+      } scaled-width ▶ ${sw_x2 - sw_x1}
         from crop y1 ▶ ${box_crop_y1} scaled-y1 ▶ ${sw_y1} width ▶ ${
-          box_crop_y2 - box_crop_y1
-        } scaled-width ▶ ${sw_y2 - sw_y1}`
-      );
-      // }
-      console.log(`OUTPUT XBOXES`);
-      console.log(JSON.stringify(boxes));
-      // return boxes;
-    } // END CONTAIN
+        box_crop_y2 - box_crop_y1
+      } scaled-width ▶ ${sw_y2 - sw_y1}`
+    );
+    // }
+    console.log(`OUTPUT XBOXES`);
+    // return boxes;
+    // } // END CONTAIN
 
     // -->
 
@@ -384,7 +391,12 @@ function dimensionsTranslate(save = false, contain = false) {
     //   // dimensions(canvas, ctx, img, boxes, scaleImbox)
     //   // console.log(`CONTAIN`);
     // }
+    if (contain == false) {
+      boxes = xboxes;
+    }
 
+    console.log(JSON.stringify(boxes));
+    // exit;
     // -->
   }
   //return [scaleToOrigin,originToScale];
@@ -1024,13 +1036,12 @@ function cleanPageCanvasStrokes(canvas, ctx) {
 
 function saveBox() {
   console.log(`BOXES in X`);
-  console.log(boxes);
+  // console.log(boxes);
+
   dimensionsTranslate(true, true);
 
   let url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method[1]}/${bookid}/${page}`;
-
   //TODO make boxes conversion then save
-
   let response_json = connect.postData(url, boxes);
 
   response_json.then((data) => {

@@ -154,7 +154,7 @@ console.log("PAGE:L");
 console.log(`SETTER : ${currentPage.pag}`);
 const save = document.querySelector("#submit");
 // let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
-
+console.log(`WinDimensions: ${window.innerWidth}X${window.innerHeight}`);
 //NOTE logic for turn lib-->
 
 $(function () {
@@ -163,8 +163,8 @@ $(function () {
       display: "single",
       acceleration: true,
       gradients: !$.isTouch,
-      width: config.default_width,
-      height: config.default_height,
+      width: window.innerWidth,
+      height: window.innerHeight,
       elevation: 50,
       when: {
         turned: function (e, page) {

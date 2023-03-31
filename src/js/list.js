@@ -22,7 +22,7 @@ const config_list = {
       },
     },
     Edit: {
-      src: "editor",
+      src: "xeditor",
       params: {
         User: "1702",
         param1: "book_id",

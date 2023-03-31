@@ -244,6 +244,13 @@ function buildDivBook(object = {}) {
     // NOTE add background image to div
     const book_attr = document.createAttribute("style");
     book_attr.value = "background-image: url(" + element + ") ";
+
+    const img = new Image();
+    img.onload = () => {
+      console.log(`IMG SIZES : ${img.width} X ${img.height}`);
+    };
+    img.src = element;
+
     page_book.setAttributeNode(book_attr);
 
     // Add form hir
