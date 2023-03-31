@@ -412,7 +412,7 @@ function dimensionsTranslate(bs = {}, win = {}) {
 
 function inlineCss(cssAdd = "") {
   /* create the style element */
-  document.getElementsByTagName("head")[0].removeAttribute("style");
+  // document.getElementsByTagName("head")[0].removeAttribute("style");
 
   let styleMapsElement = document.createElement("style");
   /* add style rules to the style element */
