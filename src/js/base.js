@@ -142,8 +142,9 @@ console.log(`the url is --> ${book_url}`);
 const response = connect.getData(book_url, config, true);
 response.then((data) => {
   console.log(`response of getData`);
-  databook = data;
-  slideModule.buildDivBook(JSON.parse(databook));
+  databook = JSON.parse(data);
+  console.log(JSON.stringify(databook));
+  slideModule.buildDivBook(databook);
 
   // const elm = await slideModule.waitForElm(".pages_last");
 
@@ -178,7 +179,7 @@ currentPage ▶ ${cp}`
     let rescale = slideModule.img2Viewport(
       slideModule.book_specs[page],
       page,
-      JSON.parse(databook)
+      databook
     );
 
     $("#magazine").width(rescale.w);
