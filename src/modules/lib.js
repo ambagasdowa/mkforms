@@ -261,6 +261,7 @@ function buildDivBook(object = {}) {
 
     let el = element.replace('http://[^/]*"', ".");
 
+    console.log(el);
     book_attr.value == "background-image: url(" + el + ") ";
 
     const img = new Image();
