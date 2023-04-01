@@ -384,18 +384,33 @@ function img2Viewport(page, databook) {
   };
 
   console.log(`BookSpecs inside lib:img2Viewport`);
-  console.log(JSON.stringify(databook.sourcePositions));
+  let inps = databook.inputs;
+  let inputs = [];
+
+  for (let id in inps) {
+    // console.log(`ID:${JSON.stringify(inputs[id])}`);
+    if (inps[id].bms_bookpages_id == page) {
+      // console.log(id);
+      inputs.push(inps[id].id);
+    }
+  }
+
+  // console.log(JSON.stringify(databook.sourcePositions));
   let positions = {};
+  let count = 0;
   for (const pos in databook.sourcePositions) {
     if (Object.hasOwnProperty.call(databook.sourcePositions, pos)) {
       const element = databook.sourcePositions[pos];
       if (element.bms_bookpages_id == page) {
-        console.log(element);
-        // call to setMappings(obj, index)
         positions[pos] = element;
+        positions[pos]["input"] = inputs[count];
+        count = count + 1;
       }
     }
   }
+
+  // console.log(inputs);
+  // console.log(positions);
 
   let pg = databook.book_pages_maps[page];
 
@@ -403,40 +418,61 @@ function img2Viewport(page, databook) {
     databook.book_pages_sizes[page],
     pg,
     win,
-    positions
+    positions,
+    page
   );
 
   return viewport;
 }
 
 // set dimensions
-function dimensionsTranslate(bs, pg, win = {}, positions) {
+function dimensionsTranslate(bs, pg, win = {}, positions, page) {
   // Calculate img dimensions against inner window sizes
 
   console.log(`POSITIONS`);
 
-  console.log(JSON.stringify(positions));
+  // console.log(JSON.stringify(positions));
+  // console.log(positions);
 
-  console.log(JSON.stringify(pg));
+  // console.log(JSON.stringify(pg));
 
   const h = win.w * (bs.h / bs.w);
+
   const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
+  console.log(`width img ${w}`);
+  let dimensionFactor = win.h / w;
+  console.log(`dimensionFactor ${dimensionFactor}`);
 
-  let css =
-    ".pages_1 > form > #input4889{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
+  let css = "";
+  let top, left, width;
 
-  css = pg;
+  for (let size in positions) {
+    // console.log(size);
+    // console.log(positions[size].default_width);
+    top = 120;
+    left = 75;
+    width = 130;
+    css =
+      css +
+      `.pages_${page} > form > #input${positions[size].input}{top:${top}px;left:${left}px;width:${width}px;border:2px solid blue !important;}`;
+  }
+
+  console.log(css);
+
+  // css =
+  //   ".pages_1 > form > #input4889{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
+
+  // css = pg;
 
   inlineCss(css);
 
-  console.log(`resize image => ${w} x ${h}`);
+  console.log(`resize image => ${w} x ${win.h}`);
 
   return { w: w, h: win.h };
 }
 
 function inlineCss(cssAdd = "") {
   /* create the style element */
-  // document.getElementsByTagName("head")[0].removeAttribute("style");
 
   let styleMapsElement = document.createElement("style");
   /* add style rules to the style element */

@@ -176,11 +176,7 @@ currentPage ▶ ${cp}`
     //   databook
     // );
 
-    let rescale = slideModule.img2Viewport(
-      // slideModule.book_specs[page],
-      page,
-      databook
-    );
+    let rescale = slideModule.img2Viewport(page, databook);
 
     $("#magazine").width(rescale.w);
     $("#magazine").height(rescale.h);
