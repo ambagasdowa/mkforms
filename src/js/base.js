@@ -130,11 +130,14 @@ console.log(`prop : ${book_id} and ${user_id}`);
 //let protocol_json = "https://";
 // console.log(window.location.hostname);
 // if (window.location.hostname == config.srv_json) {
-//   config.srv_json = "127.0.0.1";
+//   // config.srv_json = "127.0.0.1";
 // }
 let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.get_method}/${book_id}/${user_id}`;
 
 console.log(`the url is --> ${book_url}`);
+// console.log(config.srv_json);
+console.log(window.location.hostname);
+
 //initializing the first page
 
 const response = connect.getData(book_url, config, true);
