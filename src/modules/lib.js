@@ -226,7 +226,8 @@ function buildDivBook(object = {}) {
     obj = object[0];
   }
   const book_section = document.querySelector(".book");
-  const num_pages = cpages(obj.book_pages);
+  // const num_pages = cpages(obj.book_pages);
+  const num_pages = obj.pages;
   //const num_pages = obj.pages;
   console.log(`Num of pages -> ${num_pages}`);
 
