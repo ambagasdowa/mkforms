@@ -399,7 +399,12 @@ function img2Viewport(bs, page, databook) {
 
   let pg = databook[0].book_pages[page];
 
-  viewport = dimensionsTranslate(bs, pg, win, positions);
+  viewport = dimensionsTranslate(
+    databook[0].book_pages_sizes[page],
+    pg,
+    win,
+    positions
+  );
 
   return viewport;
 }
@@ -407,22 +412,22 @@ function img2Viewport(bs, page, databook) {
 // set dimensions
 function dimensionsTranslate(bs, pg, win = {}, positions) {
   // Calculate img dimensions against inner window sizes
-  const im = new Image();
-  im.onload = () => {
-    console.log(JSON.stringify(im));
-  };
-  im.source = bs;
+  // const im = new Image();
+  // im.onload = () => {
+  //   console.log(JSON.stringify(im));
+  // };
+  // im.source = bs;
 
   console.log(`POSITIONS`);
-  let bsx = { w: positions[0].default_width, h: positions[0].default_height };
+  // let bsx = { w: positions[0].default_width, h: positions[0].default_height };
 
-  console.log(JSON.stringify(bsx));
+  console.log(JSON.stringify(bs));
 
   const h = win.w * (bs.h / bs.w);
   const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
 
   let css =
-    ".pages_1 > form > #input4851{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
+    ".pages_1 > form > #input4889{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
   inlineCss(css);
 
   console.log(`resize image => ${w} x ${h}`);
