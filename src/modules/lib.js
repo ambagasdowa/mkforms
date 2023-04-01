@@ -440,21 +440,27 @@ function dimensionsTranslate(bs, pg, win = {}, positions, page) {
 
   const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
   console.log(`width img ${w}`);
-  let dimensionFactor = win.h / w;
+  let dimensionFactor = w / bs.w;
   console.log(`dimensionFactor ${dimensionFactor}`);
 
   let css = "";
-  let top, left, width;
+  let top, left, width, height;
 
   for (let size in positions) {
     // console.log(size);
     // console.log(positions[size].default_width);
-    top = 120;
-    left = 75;
-    width = 130;
+    console.log(`X1 ${positions[size].x1}`);
+    top = positions[size].y1 * dimensionFactor;
+    left = positions[size].x1 * dimensionFactor;
+    width = (positions[size].x2 - positions[size].x1) * dimensionFactor;
+    height = (positions[size].y2 - positions[size].y1) * dimensionFactor;
     css =
       css +
-      `.pages_${page} > form > #input${positions[size].input}{top:${top}px;left:${left}px;width:${width}px;border:2px solid blue !important;}`;
+      `.pages_${page} > form > #input${positions[size].input}{top:${Math.round(
+        top
+      )}px;left:${Math.round(left)}px;width:${Math.round(
+        width
+      )}px;border:1px solid teal !important;}`;
   }
 
   console.log(css);
