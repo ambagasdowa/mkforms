@@ -376,7 +376,7 @@ function onlyOne(checkbox, tag) {
 window.onlyOne = onlyOne;
 
 // set dimensions image
-function img2Viewport(bs, page, databook) {
+function img2Viewport(page, databook) {
   let viewport;
   const win = {
     w: window.innerWidth,
@@ -384,11 +384,11 @@ function img2Viewport(bs, page, databook) {
   };
 
   console.log(`BookSpecs inside lib:img2Viewport`);
-  // console.log(JSON.stringify(databook[0].sourcePositions));
+  console.log(JSON.stringify(databook.sourcePositions));
   let positions = {};
-  for (const pos in databook[0].sourcePositions) {
-    if (Object.hasOwnProperty.call(databook[0].sourcePositions, pos)) {
-      const element = databook[0].sourcePositions[pos];
+  for (const pos in databook.sourcePositions) {
+    if (Object.hasOwnProperty.call(databook.sourcePositions, pos)) {
+      const element = databook.sourcePositions[pos];
       if (element.bms_bookpages_id == page) {
         console.log(element);
         // call to setMappings(obj, index)
@@ -397,10 +397,10 @@ function img2Viewport(bs, page, databook) {
     }
   }
 
-  let pg = databook[0].book_pages[page];
+  let pg = databook.book_pages_maps[page];
 
   viewport = dimensionsTranslate(
-    databook[0].book_pages_sizes[page],
+    databook.book_pages_sizes[page],
     pg,
     win,
     positions
@@ -412,22 +412,21 @@ function img2Viewport(bs, page, databook) {
 // set dimensions
 function dimensionsTranslate(bs, pg, win = {}, positions) {
   // Calculate img dimensions against inner window sizes
-  // const im = new Image();
-  // im.onload = () => {
-  //   console.log(JSON.stringify(im));
-  // };
-  // im.source = bs;
 
   console.log(`POSITIONS`);
-  // let bsx = { w: positions[0].default_width, h: positions[0].default_height };
 
-  console.log(JSON.stringify(bs));
+  console.log(JSON.stringify(positions));
+
+  console.log(JSON.stringify(pg));
 
   const h = win.w * (bs.h / bs.w);
   const w = (win.w * (win.h / win.w)) / (bs.h / bs.w);
 
   let css =
     ".pages_1 > form > #input4889{top:120px;left:75px;width:130px;border:2px solid blue !important;}";
+
+  css = pg;
+
   inlineCss(css);
 
   console.log(`resize image => ${w} x ${h}`);

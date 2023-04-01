@@ -142,7 +142,7 @@ console.log(`the url is --> ${book_url}`);
 const response = connect.getData(book_url, config, true);
 response.then((data) => {
   console.log(`response of getData`);
-  databook = JSON.parse(data);
+  databook = JSON.parse(data)[0];
   console.log(JSON.stringify(databook));
   slideModule.buildDivBook(databook);
 
@@ -169,7 +169,7 @@ currentPage ▶ ${cp}`
   );
 
   $("#magazine").bind("turning", function (event, page, view) {
-    alert(JSON.stringify(slideModule.book_specs[page]));
+    // alert(JSON.stringify(slideModule.book_specs[page]));
     // console.log(
     //   slideModule.img2Viewport(slideModule.book_specs[page]),
     //   page,
@@ -177,7 +177,7 @@ currentPage ▶ ${cp}`
     // );
 
     let rescale = slideModule.img2Viewport(
-      slideModule.book_specs[page],
+      // slideModule.book_specs[page],
       page,
       databook
     );
