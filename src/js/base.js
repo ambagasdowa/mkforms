@@ -136,7 +136,7 @@ let book_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${
 
 console.log(`the url is --> ${book_url}`);
 // console.log(config.srv_json);
-console.log(window.location.hostname);
+console.log(JSON.stringify(window.location.hostname));
 
 //initializing the first page
 
