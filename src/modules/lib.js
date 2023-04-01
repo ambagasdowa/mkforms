@@ -238,11 +238,11 @@ function buildDivBook(object = {}) {
     let element;
     console.log(window.location.hostname);
 
-    if (`${window.location.hostname}` != "baizabal.xyz") {
-      element = obj.book_pages[index];
-    } else {
-      element = obj.book_pages_ext[index];
-    }
+    // if (`${window.location.hostname}` != "baizabal.xyz") {
+    element = obj.book_pages[index];
+    // } else {
+    //   element = obj.book_pages_ext[index];
+    // }
 
     //console.log(`element => ${element}`);
 
