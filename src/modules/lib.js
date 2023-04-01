@@ -258,8 +258,10 @@ function buildDivBook(object = {}) {
     // NOTE add background image to div
     const book_attr = document.createAttribute("style");
     // const re = new RegExp("http://[^/]*");
-    let el = replace(element, 'http://[^/]*"', "");
-    book_attr.value = "background-image: url(" + el + ") ";
+
+    let el = element.replace('http://[^/]*"', "");
+
+    book_attr.value == "background-image: url(" + el + ") ";
 
     const img = new Image();
     img.onload = () => {
