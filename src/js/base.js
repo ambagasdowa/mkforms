@@ -143,7 +143,7 @@ const response = connect.getData(book_url, config, true);
 response.then((data) => {
   console.log(`response of getData`);
   databook = data;
-  slideModule.buildDivBook(JSON.parse(data));
+  slideModule.buildDivBook(JSON.parse(databook));
 });
 
 const elm = await slideModule.waitForElm(".pages_last");
