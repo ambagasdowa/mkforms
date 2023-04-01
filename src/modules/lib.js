@@ -232,7 +232,15 @@ function buildDivBook(object = {}) {
 
   //NOTE First load div#pages_$x->div#controls_$x->form.form_$x
   for (let index = 1; index <= num_pages; index++) {
-    const element = obj.book_pages[index];
+    let element;
+    console.log(window.location.hostname);
+
+    if (`${window.location.hostname}` != "baizabal.xyz") {
+      element = obj.book_pages[index];
+    } else {
+      element = obj.book_pages_ext[index];
+    }
+
     //console.log(`element => ${element}`);
 
     //NOTE start buiding of div an attach the img background
