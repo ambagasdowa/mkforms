@@ -144,87 +144,87 @@ response.then((data) => {
   console.log(`response of getData`);
   databook = data;
   slideModule.buildDivBook(JSON.parse(databook));
-});
 
-const elm = await slideModule.waitForElm(".pages_last");
+  // const elm = await slideModule.waitForElm(".pages_last");
 
-// Working from hir ofr update user response
+  // Working from hir ofr update user response
 
-let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${user_id}`;
+  let save_url = `${config.protocol_json}${config.srv_json}:${config.port_json}/${config.api_method}/${user_id}`;
 
-// let send_data = new send.eventOnDom(save, "save", xurl);
-//
-currentUser.user = `${user_id}`;
-console.log("PAGE:L");
-console.log(`SETTER : ${currentPage.pag}`);
-const save = document.querySelector("#submit");
-// let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
-console.log(`WinDimensions: ${window.innerWidth}X${window.innerHeight}`);
-//NOTE logic for turn lib-->
-console.log(JSON.stringify(slideModule.book_specs));
-let specs = slideModule.book_specs;
-console.log(
-  `SPECS W ▶ ${specs[currentPage.pag].w} H ▶ ${specs[currentPage.pag].h}
+  // let send_data = new send.eventOnDom(save, "save", xurl);
+  //
+  currentUser.user = `${user_id}`;
+  console.log("PAGE:L");
+  console.log(`SETTER : ${currentPage.pag}`);
+  const save = document.querySelector("#submit");
+  // let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
+  console.log(`WinDimensions: ${window.innerWidth}X${window.innerHeight}`);
+  //NOTE logic for turn lib-->
+  console.log(JSON.stringify(slideModule.book_specs));
+  let specs = slideModule.book_specs;
+  console.log(
+    `SPECS W ▶ ${specs[currentPage.pag].w} H ▶ ${specs[currentPage.pag].h}
 currentPage ▶ ${cp}`
-);
-
-$("#magazine").bind("turning", function (event, page, view) {
-  alert(JSON.stringify(slideModule.book_specs[page]));
-  // console.log(
-  //   slideModule.img2Viewport(slideModule.book_specs[page]),
-  //   page,
-  //   databook
-  // );
-
-  let rescale = slideModule.img2Viewport(
-    slideModule.book_specs[page],
-    page,
-    JSON.parse(databook)
   );
 
-  $("#magazine").width(rescale.w);
-  $("#magazine").height(rescale.h);
-});
+  $("#magazine").bind("turning", function (event, page, view) {
+    alert(JSON.stringify(slideModule.book_specs[page]));
+    // console.log(
+    //   slideModule.img2Viewport(slideModule.book_specs[page]),
+    //   page,
+    //   databook
+    // );
 
-$(function () {
-  $(window).ready(function () {
-    $("#magazine").turn({
-      display: "single",
-      acceleration: true,
-      gradients: !$.isTouch,
-      width: specs[currentPage.pag].w,
-      height: specs[currentPage.pag].h,
-      elevation: 50,
-      when: {
-        turned: function (e, page) {
-          currentPage.pag = $(this).turn("view");
-          cp = $(this).turn("view");
-          console.log(currentPage.pag.toString());
-          console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
-          let send_data = new send.eventOnDom(
-            save,
-            "save",
-            save_url,
-            `${currentUser.user}`,
-            `${currentPage.pag}`
-          );
-          console.log(
-            `[send data] user ${
-              currentUser.user
-            } book_id : ${book_id}, page_id : ${$(this).turn("view")}`
-          );
-        },
-      },
-    });
+    let rescale = slideModule.img2Viewport(
+      slideModule.book_specs[page],
+      page,
+      JSON.parse(databook)
+    );
+
+    $("#magazine").width(rescale.w);
+    $("#magazine").height(rescale.h);
   });
 
-  $(window).bind("keydown", function (e) {
-    if (e.keyCode == 37) {
-      $("#magazine").turn("previous");
-      console.log(`base:80 keycode ==> 37`);
-    } else if (e.keyCode == 39) {
-      $("#magazine").turn("next");
-      console.log(`base:84 keycode ==> 39`);
-    }
+  $(function () {
+    $(window).ready(function () {
+      $("#magazine").turn({
+        display: "single",
+        acceleration: true,
+        gradients: !$.isTouch,
+        width: specs[currentPage.pag].w,
+        height: specs[currentPage.pag].h,
+        elevation: 50,
+        when: {
+          turned: function (e, page) {
+            currentPage.pag = $(this).turn("view");
+            cp = $(this).turn("view");
+            console.log(currentPage.pag.toString());
+            console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
+            let send_data = new send.eventOnDom(
+              save,
+              "save",
+              save_url,
+              `${currentUser.user}`,
+              `${currentPage.pag}`
+            );
+            console.log(
+              `[send data] user ${
+                currentUser.user
+              } book_id : ${book_id}, page_id : ${$(this).turn("view")}`
+            );
+          },
+        },
+      });
+    });
+
+    $(window).bind("keydown", function (e) {
+      if (e.keyCode == 37) {
+        $("#magazine").turn("previous");
+        console.log(`base:80 keycode ==> 37`);
+      } else if (e.keyCode == 39) {
+        $("#magazine").turn("next");
+        console.log(`base:84 keycode ==> 39`);
+      }
+    });
   });
 });
