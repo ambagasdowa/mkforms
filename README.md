@@ -46,30 +46,38 @@ Html Forms Maker
     1. ▢ Add Text[Correct Answer]
     1. ▢ ~~Add color option~~[optional]
     1. ▢ Add Attributes [placeholder,data1.x, etc]
-  * ▢ Import an Answer module [Optional]
+  * ✓ Import an Answer module [Optional]
   * ▢ ~~Add a colorpicker~~[optional]
   * ▢ ~~Add a datepicker~~[optional]
   * ▢ Group checkboxes and options in control ribbon[initial set of boxes : n options -> create || select checkboxes and set a group]
   * ✓ Build the control panel ribbon
 - View
-  - ◐ Evaluator module : set a visual and textual[report] check for rigth answer
+
+  - ✓ Evaluator module : set a visual and textual[report] check for rigth answer
   - Internal
     1. ▢ Build an option for get the images from local or server source
     1. ✓ DragBar that's containt the control panel
   - UIX:
     1. ✓ Save Method by user
+    1. ✓ Fix input redimension
+    1. ▢ Add a zoom Engine
+
 - Canvas
+
   - ✓ Build Canvas Engine initial
   - ✓ Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
   - ✓ link to a database and build the mechanism to get() and post() data of items
-  - ▢ Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
-  - ◐ Convert to css dimensions
+  - ✓ Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
+  - ✓ Convert to css dimensions
   - ✓ Convert from box positions to inputs elements
   - ▢ Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
   - ▢ Grouping poligons [arcs grouping, set as initial parameter or select n poligons]
+
+  - ▢ ReLink control inputs
+
 - Validator
 
-  - ▢ Create a validator engine[ Map inputs id's with a unique answer table]
+  - ✓ Create a validator engine[ Map inputs id's with a unique answer table]
 
 - Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
 
@@ -113,7 +121,7 @@ detail "Something Happend Try again "
 ## Overall Progress
 
 ```bash
-██████████████████░░ 89%
+███████████████████░ 92%
 ```
 
 ### Sources
