@@ -60,7 +60,9 @@ Html Forms Maker
   - UIX:
     1. ✓ Save Method by user
     1. ✓ Fix input redimension
-    1. ▢ Add a zoom Engine
+    1. ✓ Add a zoom Engine
+    1. ✓ Fix WebFonts on Webkit based Browsers
+    1. ▢ Add a realtime reload response when save form in fusion
 
 - Canvas
 
