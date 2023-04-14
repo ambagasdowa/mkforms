@@ -98,6 +98,7 @@ Inside into zip file
 - Validator
 
   - ✓ Create a validator engine[ Map inputs id's with a unique answer table]
+  - ▢ Create a validator manual or automatic switch or on,off option
 
 - Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
 
