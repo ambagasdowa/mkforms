@@ -31,127 +31,41 @@ Inside into zip file
 
 ![14](./images/pages_002.png "Inside Zip file")
 
-# Collaborate to this repo
+# Install
 
-- clone repo git clone repo
-- create a new branch git checkout -b newFeature
-- send a pull request
+### Viewer
 
-# Todo
+la instalacion del modulo visor se realiza mediante la configuracion de las librerias lib.js y base.js
+y se pueden importar desde un simple archivo por ejemplo viewer.html
 
-## Sections
+![25](./images/viewer_html.png "Librerias")
 
-- Admininstrator
-  - ✓ Draw BookPage directly to canvas object against draw img as div background
-  - ✓ Add grid builder Option->Canvas : draw poligon and split in multiple poligons inside take a int as parameter [crucigramas , sopa de letras ...]
-  - Draw properties window over a poligon for add options to box
-    1. ✓ Add positions of the item
-    1. ✓ send dpr and coeficent of dimension display for each item box[poligon]
-    1. ✓ Detect when the mouse is over a poligon
-    1. ✓ Delete poligon
-    1. ✓ Clone poligon
-    1. ✓ Clean canvas
-    1. ✓ Set a page turn compatible for the admin module
-    1. ✓ Build a reload method of canvas and get() data if exists for change to a new page
-    1. ✓ Add Text Insert[Correct Answer and Notes insert ]
-    1. ▢ ~~Add color option~~[optional]
-    1. ▢ ~~Add Attributes~~ [placeholder,data1.x, etc]
-  * ✓ Import an Answer module [Optional]
-  * ▢ ~~Add a colorpicker~~[optional]
-  * ▢ ~~Add a datepicker~~[optional]
-  * ✓ Group checkboxes and options in control ribbon[initial set of boxes : n options -> create || select checkboxes and set a group]
-  * ✓ Build the control panel ribbon
-- View
+Los parametro que puede recibir esta configuracion son user_id y book_id , sus valores se pueden validar mediante la api
 
-  - ✓ Evaluator module : set a visual and textual[report] check for rigth answer
-  - ✓ Fix in visual representation of a correct ,incorrect or empty answer
-  - Internal
-    1. ▢ Build an option for get the images from local or server source
-    1. ✓ DragBar that's containt the control panel
-  - UIX:
-    1. ✓ Save Method by user
-    1. ✓ Fix input redimension
-    1. ✓ Add a zoom Engine
-    1. ✓ Fix WebFonts on Webkit based Browsers
-    1. ✓ Add a realtime reload response when save form in fusion
-    1. ▢ Add keyboard controls
-    1. ▢ Add digraps menu
-    1. ▢ Add a relation option [drag and drop divs for set a value in input]
-    1. ✓ Add a contextMenu Engine
+viewer.html?book_id=34&user_id=1702
 
-- Canvas
+### base.js
 
-  - ✓ Build Canvas Engine initial
-  - ✓ Build events module and drawer[mouse events and draw in canvas the inputs and checkboxes items]
-  - ✓ link to a database and build the mechanism to get() and post() data of items
-  - ✓ Set perspective engine for display in multiple dimensions windows[dpr,perspectiveRatioConversion]
-  - ✓ Convert to css dimensions
-  - ▢ Add zoom function or cover
-  - ✓ Convert from box positions to inputs elements
-  - ✓ Build logic for convert poligon box to split by parameter [draw a box and split in a grid box]
-  - ▢ Grouping poligons by colors [radio buttons group] [arcs grouping, set as initial parameter or select n poligons]
-  - ▢ Add guides and ruled background
-  - ✓ Add grid builder input spliter function
-  - ▢ Add Text option and set to manual validation
-  - ▢ Add notes tooltips in keyboard controls
-  - ✓ ReLink control inputs
+EL archivo base.js contiene los parametros de conexion a la api
 
-- Validator
+![15]](./images/viewer_base.png "lib base")
 
-  - ✓ Create a validator engine[ Map inputs id's with a unique answer table]
-  - ▢ Create a validator manual or automatic switch or on,off option
+Los parametros a definir son :
 
-- Api [Server](https://github.com/ambagasdowa/bms_connector.git) Development
+- dev : si es verdadero agrega una marca de tiempo al final del documento
+- srv_json : el servidor donde esta publicada la api
+- port_json : el puerto de acceso
+- get_method: el metodo books es el reemplazo de items
+- app: [ ediq - extrae los parametros desde la url de la forma <https://server/book_id>,y el user_id lo extrae de la session
+  se puede definir un tag no visible con el id ~dom-target~ o cualquier otro metodo
+  ![12](./images/viewer_book_id.png "bookk")
+  cualquier otro valor toma los parametros del tipo user_id=x&book_id=y
 
-  - ✓ Reorder Items method for release mysql work
-  - ✓ Add singleton to [items module] logic for serve [one] OR [many-to-many] responses
-  - ▢ Add server or local parameter to img-paths[bookpages:{}] responses
+### turn.js
 
-- App
+La libreria turn.js que es la encargada de renderizar las paginas de los libros funciona tal cual sin modificaciones
+solo parametrizaciones que estan documentadas en su pagina
 
-  - ▢ Build as package for npm installation (webpack,...)
-  - ▢ Build a configuration system with a config.ini file
+### lib.js
 
-- ✓ ~~FixIt~~ [Fixed]
-
-  - Editor:
-
-    1. When Reload the page with boxes from json , send data via POST retrieves (needs async logic) :
-
-    ```bash
-      XHRPOST
-      https://baizabal.xyz:8000/srcpositions/38/7
-      [HTTP/1.1 404 Not Found 519ms]
-    ```
-
-detail "Something Happend Try again "
-
-| symbol | Description |
-| ------ | ----------- |
-| ✓      | done        |
-| ◐      | Working on  |
-| ▢      | TODO        |
-
-# Database source
-
-> [database](https://gitlab.com/ambagasdowa/sql/-/raw/master/mariadb/panamericano/bms.sql)
-
-> [dataSample](https://gitlab.com/ambagasdowa/sql/-/raw/master/mariadb/panamericano/bms_bulk_data.sql)
-
-> JsonResponseSample : samples/source.json
-
-## Overall Progress
-
-```bash
-███████████████████░ 96%
-```
-
-### Sources
-
-[Canvas Spec](https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element)
-
-```math
-SE = \frac{\sigma}{\sqrt{n}}
-```
-
-$`\sqrt{2}`$
+contiene el funcionamiento del visor
