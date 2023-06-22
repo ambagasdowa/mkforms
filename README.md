@@ -31,6 +31,12 @@ Inside into zip file
 
 ![14](./images/pages_002.png "Inside Zip file")
 
+# Download
+
+```bash
+git clone -b release https://github.com/ambagasdowa/mkforms.git
+```
+
 # Install
 
 ### Viewer
@@ -69,3 +75,13 @@ solo parametrizaciones que estan documentadas en su pagina
 ### lib.js
 
 contiene el funcionamiento del visor
+
+### upload.html
+
+Modulo para subir libros empaquetados como archivos zip
+
+### index.html
+
+La applicacion se puede ejecutar de manera independiente desde index.html
+
+![dashboard](./images/viewer_dash.png "dashboard")
