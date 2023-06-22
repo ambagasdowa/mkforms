@@ -1,0 +1,86 @@
+#columns,
+#rows,
+#spw,
+#sph {
+  width: 3%;
+}
+#page-number {
+  width: 1.5%;
+}
+
+fieldset {
+  background: rgba(0, 77, 110, 0.9);
+  /*  position: fixed;*/
+  z-index: 1;
+  top: 11px;
+  left: 10px;
+  padding: 8px 10px 8px 6px;
+  box-shadow: 0 10px 10px -8px rgba(0, 0, 0, 0.2);
+  mix-blend-mode: hard-light;
+  border-radius: 0.3em;
+}
+
+label {
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+label:not(:last-child) {
+  margin-right: 10px;
+}
+label input[type="radio"] {
+  opacity: 0.01;
+  width: 20px;
+}
+label input[type="radio"]:checked + span:before {
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+label span {
+  display: inline-block;
+}
+label span:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 1px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: inset 0 0 0 6px #fff;
+  transition: box-shadow 0.2s ease-out;
+}
+
+/* The only required styling is position: absolute */
+#detach {
+  position: absolute;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+label {
+  /* display: grid; */
+  /* gap: 1rem; */
+  /* grid-template-columns: repeat(4, minmax(0, 1fr)); */
+  /* 
+  if we did this instead of the template it would be a problem:
+  grid-auto-flow: column;
+  */
+  /* font: 120% system-ui; */
+  text-align: center;
+  /* padding: 2rem 1rem; */
+}
+i {
+  text-decoration: none;
+  color: black;
+}
+.pushed,
+#icon:hover,
+#xicon:hover {
+  /* font: 16px; */
+  border: solid 2px white;
+  padding: 3px;
+}

@@ -15,56 +15,6 @@
         text-transform: uppercase;
         background: #313640;
       }
-      fieldset {
-        background: rgba(0, 77, 110, 0.6);
-        position: fixed;
-        z-index: 1;
-        top: 11px;
-        left: 10px;
-        padding: 8px 10px 8px 6px;
-        border-radius: 4px;
-        box-shadow: 0 10px 10px -8px rgba(0, 0, 0, 0.2);
-      }
-
-      label {
-        position: relative;
-        z-index: 1;
-        cursor: pointer;
-      }
-      label:not(:last-child) {
-        margin-right: 10px;
-      }
-      label input[type="radio"] {
-        opacity: 0.01;
-        width: 20px;
-      }
-      label input[type="radio"]:checked + span:before {
-        box-shadow: inset 0 0 0 3px #fff;
-      }
-      label span {
-        display: inline-block;
-      }
-      label span:before {
-        content: "";
-        position: absolute;
-        z-index: 1;
-        top: 1px;
-        left: 5px;
-        width: 10px;
-        height: 10px;
-        border: 1px solid #333;
-        border-radius: 50%;
-        background: #000;
-        box-shadow: inset 0 0 0 6px #fff;
-        transition: box-shadow 0.2s ease-out;
-      }
-
-      /* The only required styling is position: absolute */
-      #detach {
-        position: absolute;
-        border: 1px solid black;
-        overflow: hidden;
-      }
     </style>
     <script defer src="./js/xeditor.js" charset="utf-8" type="module"></script>
   </head>
@@ -81,74 +31,198 @@ Codepen: https://codepen.io/supah/
 -->
     <div id="msj"></div>
     <canvas id="canvas" style="border: 1px solid darkgreen"></canvas>
-    <fieldset id="detach" class="noselect">
-      <label>
-        <input type="radio" name="type" value="contain" checked />
-        <span>contain</span>
-      </label>
-      <label>
-        <input type="radio" name="type" value="cover" />
-        <span>cover</span>
-      </label>
 
-      <input type="button" name="preview" value="prev" id="prev" />
-      <input type="button" name="next" value="next" id="next" />
+    <fieldset id="detach">
+      <label id="prev">
+        <i id="icon" class="fa-solid fa-play fa-rotate-180"></i>
+      </label>
+      <input type="text" id="page-number" name="page-number" />
+      <label id="number-pages"></label>
+      <label id="next">
+        <i id="icon" class="fa-solid fa-play"></i>
+      </label>
 
       <label id="dcanvas"></label>
       <label id="dimg"></label>
 
-      <label for="text">
-        <!-- <i class="fa-regular fa-square"></i> -->
-        ▢
+      <label for="text" class="fa-layers fa-fw">
+        <i id="icon" class="fa-solid fa-vector-square pushed">
+          <i class="fa-solid fa-slash fa-rotate-270"></i>
+          <i
+            class="fa-solid fa-up-down-left-right fa-2xs fa-layers-bottom-right"
+          ></i>
+        </i>
+        <input
+          type="radio"
+          id="text"
+          name="inpsel"
+          value="text"
+          checked="checked"
+          data-is-default="1"
+        />
       </label>
-      <input
-        type="radio"
-        id="text"
-        name="inpsel"
-        value="text"
-        checked="checked"
-      />
 
-      <label for="option"><i class="fa-regular fa-list-ul"></i></label>
-      <input type="radio" id="option" name="inpsel" value="option" />
-      <label for="crossword"><i class="fa-regular fa-table-cells"></i></label>
-      <input type="radio" id="crossword" name="inpsel" value="crossword" />
+      <label for="textarea">
+        <i id="icon" class="fa-solid fa-text-height"></i>
+        <input
+          type="radio"
+          value="textarea"
+          name="inpsel"
+          id="textarea"
+          data-is-default="0"
+        />
+      </label>
+
+      <label for="optStroke"
+        ><i id="icon" class="fa-solid fa-list-ul"></i>
+
+        <input
+          type="radio"
+          id="optStroke"
+          name="inpsel"
+          value="radio"
+          data-is-default="0"
+        />
+      </label>
+
+      <label for="splStroke"
+        ><i id="icon" class="fa-solid fa-table-cells"></i>
+
+        <input
+          type="radio"
+          id="splStroke"
+          name="inpsel"
+          value="soupword"
+          data-is-default="0"
+        />
+      </label>
+
+      <label for="slcStroke">
+        <i id="icon" class="fa-solid fa-grip-vertical"></i>
+        <input
+          type="radio"
+          id="slcStroke"
+          name="inpsel"
+          value="crossword"
+          data-is-default="0"
+        />
+      </label>
+
       <label for="delStroke">
-        <!-- <i class="fa-regular fa-trash"></i> -->
-        ✗
+        <!-- <i id="xicon" class="fa-regular fa-trash-can"></i> -->
+        <i id="xicon" class="fa-solid fa-xmark"></i>
+        <input
+          type="radio"
+          value="delStr"
+          name="uix"
+          id="delStroke"
+          data-is-default="0"
+        />
       </label>
-      <input type="radio" value="delStr" name="uix" id="delStroke" />
       <label for="cpStroke">
-        <i class="fa-regular fa-copy">✓</i>
+        <i id="xicon" class="fa-solid fa-clone"></i>
+        <input
+          type="radio"
+          value="cpStr"
+          name="uix"
+          id="cpStroke"
+          title="Clonar"
+          data-is-default="0"
+        />
       </label>
-      <input type="radio" value="cpStr" name="uix" id="cpStroke" />
       <label for="mvStroke"
-        ><i class="fa-regular fa-up-down-left-right"></i
-      ></label>
-      <input
-        type="radio"
-        value="mvStr"
-        name="uix"
-        id="mvStroke"
-        checked="checked"
-      />
-      <!-- <label for="prev"><i class="fa-regular fa-caret-left"></i></label> -->
-      <!-- <input type="button" name="prev" id="prev" /> -->
-      <label class="none" for="page-number">&nbsp;</label>
-      <input type="text" id="page-number" name="page-number" />
-      <label id="number-pages"></label>
-      <!-- </div> -->
+        ><i id="xicon" class="fa-solid fa-border-none pushed"></i>
+        <input
+          type="radio"
+          value="mvStr"
+          name="uix"
+          id="mvStroke"
+          data-is-default="1"
+          title="Dividir"
+          checked="checked"
+        />
+      </label>
+      &nbsp;
+      <label id="cleanCanvas">
+        <i id="icon" class="fa-solid fa-ban"></i>
+      </label>
+      &nbsp;
 
-      <!-- <label for="next"><i class="fa-regular fa-caret-right"></i></label> -->
-      <!-- <input type="button" name="next" id="next" /> -->
+      <label for="color-picker"></label>
+      <input type="color" id="color-picker" value="#00bfff" />
 
-      <input type="button" id="cleanCanvas" name="cleanCanvas" value="clean" />
-      <input type="text" id="option" name="inpsel" value="option" />
-      <input type="button" id="option" name="inpsel" value="option" />
+      &nbsp;
+      <label for="columns">
+        <i id="icon" class="fa-solid fa-bars fa-rotate-90"></i>
+      </label>
+      <input type="text" id="columns" name="inpsel" placeholder="Columns" />
 
-      <input type="button" id="save_page" value="send" />
+      <label for="rows">
+        <i id="icon" class="fa-solid fa-bars"></i>
+      </label>
+      <input type="text" id="rows" name="inpsel" placeholder="Rows" />
+
+      <label for="spw">
+        <i id="icon" class="fa-solid fa-arrows-left-right-to-line"></i>
+      </label>
+      <input type="text" id="spw" name="inpsel" placeholder="lineWidth" />
+      <label for="sph">
+        <i
+          id="icon"
+          class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"
+        ></i>
+      </label>
+      <input type="text" id="sph" name="inpsel" placeholder="lineHeight" />
+
+      &nbsp; &nbsp;
+      <label id="save_page">
+        <i id="icon" class="fa-solid fa-floppy-disk"></i>
+      </label>
     </fieldset>
-
     <div id="debug"></div>
+
+    <fieldset id="context-menu">
+      <form id="updBox" action="" method="post">
+        <label for="response" class="labelContextMenu" data-value="response">
+          Respuesta:
+          <input
+            id="response"
+            type="text"
+            data-response-type="response"
+            data-box="0"
+            placeholder="response"
+          />
+        </label>
+        <br />
+        <label for="notes" class="labelContextMenu" data-value="notes">
+          Notas:<br />
+          <textarea
+            id="notes"
+            type="textarea"
+            rows="5"
+            cols="33"
+            data-response-type="response"
+            data-box="0"
+            placeholder="notes"
+          ></textarea>
+        </label>
+
+        <div class="row uploadFile">
+          <label id="msj" for="upl"> </label>
+          <button
+            id="upl"
+            class="submit-btn contextItemMenu"
+            title="Upload Files"
+            type="submit"
+          >
+            <i class="fa-solid fa-upload fa-lg btn_sub"></i>
+          </button>
+        </div>
+
+        <!-- <div id="name" class="contextItemMenu">Option 2</div> -->
+        <!-- <div id="name" class="contextItemMenu">Option 3</div> -->
+        <!-- <div id="name" class="contextItemMenu">Option 4</div> -->
+      </form>
+    </fieldset>
   </body>
 </html>

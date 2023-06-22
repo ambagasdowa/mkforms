@@ -105,3 +105,22 @@ input[type="submit"]:hover {
     margin-top: 0;
   }
 }
+
+.uploadFile {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 5px;
+}
+#msj {
+  border: none;
+  margin: 0px;
+  padding: 0px 0.5em;
+}
+.submit-btn {
+  cursor: pointer;
+  /* border: solid 1px; */
+  margin: 0px;
+  padding: 1px 0.5em;
+  /* background-color: green; */
+}

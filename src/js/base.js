@@ -9,6 +9,8 @@ const config = {
   css_files: {
     layers: "./css/layers.css",
     uix: "./css/uix.css",
+    label: "./css/labels.css",
+    checkbox: "./css/checkbox.css",
   },
   dev: false, //css developer-mode [true|false] , default:false
   srv_json: "baizabal.xyz",
@@ -34,6 +36,7 @@ const config = {
 };
 
 // TODO build the provisional slider mechanism
+import { zoom } from "../modules/zoom.js";
 import * as connect from "../modules/uploadModule.js";
 import * as slideModule from "../modules/lib.js";
 import * as send from "../modules/postModule.js";
@@ -157,29 +160,107 @@ response.then((data) => {
   currentUser.user = `${user_id}`;
   console.log("PAGE:L");
   console.log(`SETTER : ${currentPage.pag}`);
-  const save = document.querySelector("#submit");
   // let send_data = new send.eventOnDom(save, "save", save_url, currentPage.pag);
   console.log(`WinDimensions: ${window.innerWidth}X${window.innerHeight}`);
   //NOTE logic for turn lib-->
-  console.log(JSON.stringify(slideModule.book_specs));
+  // console.log(JSON.stringify(slideModule.book_specs));
+
   let specs = slideModule.book_specs;
-  console.log(
-    `SPECS W ▶ ${specs[currentPage.pag].w} H ▶ ${specs[currentPage.pag].h}
-currentPage ▶ ${cp}`
-  );
+  // console.log(
+  //   `SPECS W ▶ ${specs[currentPage.pag].w} H ▶ ${specs[currentPage.pag].h}
+  // currentPage ▶ ${cp}`
+  // );
+
+  // document
+  //   .querySelector(".magazine-viewport")
+  //   .addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     alert(JSON.stringify(event.target));
+  //     zoom.to({ element: event.target });
+  //   });
+
+  // $("#magazine").bind("#submit", function (event, page, view) {
+  //   // $("#magazine").turn("page", 5);
+  //   console.log(event);
+  // });
 
   $("#magazine").bind("turning", function (event, page, view) {
-    // alert(JSON.stringify(slideModule.book_specs[page]));
-    // console.log(
-    //   slideModule.img2Viewport(slideModule.book_specs[page]),
-    //   page,
-    //   databook
-    // );
-
     let rescale = slideModule.img2Viewport(page, databook);
 
     $("#magazine").width(rescale.w);
     $("#magazine").height(rescale.h);
+
+    const save = document.querySelector("#submit");
+    let sdata;
+    save.addEventListener("click", (event) => {
+      event.stopPropagation();
+      console.log(event);
+      // alert(
+      //   `page in event ${page} user ${currentPage.user} inPage ${currentPage.pag}`
+      // );
+      if (page == currentPage.pag) {
+        sdata = send.sendData(save_url, `${currentUser.user}`, page);
+
+        const post_data = connect.postDataForm(save_url, sdata);
+        post_data.then((data) => {
+          // console.log(data);
+          // alert(`${JSON.stringify(data.ok)}`);
+
+          if (data.ok == true) {
+            localStorage.setItem("bookpage", page);
+            // alert(localStorage.getItem("bookpage"));
+            window.location.reload();
+          }
+        });
+      }
+    });
+    // let send_data = new send.eventOnDom(
+    //   save,
+    //   "save",
+    //   save_url,
+    //   `${currentUser.user}`,
+    //   page
+    // );
+
+    // const post_data = connect.postDataForm(save_url, send_data);
+    // post_data.then((data) => {
+    //   console.log(data);
+    //   alert("go to refresh");
+    // });
+
+    // console.log(
+    //   `[send data] user ${
+    //     currentUser.user
+    //   } book_id : ${book_id}, page_id : ${$(this).turn("view")}`
+    // );
+
+    // $("#magazine").turn("page", $(this).turn("view"));
+  });
+
+  $("#magazine").bind("start", function (event) {
+    // alert(`local storage => ${localStorage.getItem("bookpage")}`);
+    // alert(`initial currentPage ${currentPage.pag}`);
+    // if (localStorage.getItem("bookpage") != "undefined") {
+    // $("#magazine").turn("page", localStorage.getItem("bookpage"));
+    // }
+  });
+
+  $("#magazine").bind("dblclick", function (event) {
+    console.log(`Mouse Coordinates : ${event.offsetX} , ${event.offsetY}`);
+
+    zoom.to({
+      x: event.offsetX,
+      y: event.offsetY,
+      scale: 3,
+      // Amount of empty space around zoomed element
+      padding: 20,
+
+      // Function to call once zooming completes
+      callback: function () {
+        /* ... */
+        console.log(`Call to pannig Engine `);
+      },
+    });
   });
 
   $(function () {
@@ -190,25 +271,19 @@ currentPage ▶ ${cp}`
         gradients: !$.isTouch,
         width: specs[currentPage.pag].w,
         height: specs[currentPage.pag].h,
+        page: localStorage.getItem("bookpage")
+          ? localStorage.getItem("bookpage")
+          : 1,
         elevation: 50,
         when: {
           turned: function (e, page) {
             currentPage.pag = $(this).turn("view");
+            if (page != 1) {
+              localStorage.setItem("bookpage", 1);
+            }
             cp = $(this).turn("view");
             console.log(currentPage.pag.toString());
             console.log(`INSIDE TURN SETTER is : ${currentPage.pag}`);
-            let send_data = new send.eventOnDom(
-              save,
-              "save",
-              save_url,
-              `${currentUser.user}`,
-              `${currentPage.pag}`
-            );
-            console.log(
-              `[send data] user ${
-                currentUser.user
-              } book_id : ${book_id}, page_id : ${$(this).turn("view")}`
-            );
           },
         },
       });

@@ -311,14 +311,41 @@ function setForms(obj, index, div) {
   formx.id = `form_${index}`;
   for (const input of inputs) {
     let input_x = document.createElement("input");
-    //  console.log(input);
+    let label = document.createElement("label");
+    let span = document.createElement("span");
+    // label.innerHTML = "✓";
+
     for (const key in input) {
       if (Object.hasOwnProperty.call(input, key)) {
+        if (key == "id") {
+          label.setAttribute("for", input[key]);
+          label.setAttribute("id", input[key].replace("input", "label"));
+          // label.setAttribute("id", input[key]);
+        }
+        if (key == "data-answer" || key == "data-evaluation") {
+          if (input["data-answer"] != "") {
+            label.setAttribute(key, input[key]);
+            input_x.setAttribute("title", input["data-answer"]);
+            if (input["data-evaluation"] == false && input["value"] != "") {
+              // the json response evals the empty or none as false
+              span.innerHTML = "✗";
+              span.style.color = "red";
+            } else if (input["data-evaluation"] == true) {
+              span.innerHTML = "✓";
+              span.style = "color:#00ff00;text-shadow:3px 3px 5px #009f00;";
+            }
+          }
+        }
         input_x[key] = input[key];
-        //      console.log(`${key} : ${input[key]}`);
+        console.log(`INPUT in LIB: ${key} : ${input[key]}`);
       }
     }
+
+    label.appendChild(span);
     formx.appendChild(input_x);
+    // if (input.type != "checkbox") {
+    formx.appendChild(label);
+    // }
   } // NOTE end of main for
 
   // const createButton = document.createElement("button");
@@ -444,7 +471,8 @@ function dimensionsTranslate(bs, pg, win = {}, positions, page) {
   console.log(`dimensionFactor ${dimensionFactor}`);
 
   let css = "";
-  let top, left, width, height;
+  let label_css = "";
+  let top, left, width, height, right;
 
   for (let size in positions) {
     // console.log(size);
@@ -454,13 +482,25 @@ function dimensionsTranslate(bs, pg, win = {}, positions, page) {
     left = positions[size].x1 * dimensionFactor;
     width = (positions[size].x2 - positions[size].x1) * dimensionFactor;
     height = (positions[size].y2 - positions[size].y1) * dimensionFactor;
+    right = positions[size].x2 * dimensionFactor;
+
     css =
       css +
       `.pages_${page} > form > #input${positions[size].input}{top:${Math.round(
         top
-      )}px;left:${Math.round(left)}px;width:${Math.round(
-        width
-      )}px;border:1px solid teal !important;}`;
+      )}px;left:${Math.round(left)}px;width:${Math.round(width)}px;
+    line-height:${Math.round(height)}px ;
+    height:${Math.round(height)}px !important;
+    border: solid 1px teal !important;
+    }`;
+    label_css =
+      label_css +
+      `.pages_${page} > form > #label${positions[size].input}{top:${Math.round(
+        top
+      )}px;left:${Math.round(right + 6)}px;width:${Math.round(10)}px;
+    height:${Math.round(height)}px !important;
+    line-height:${Math.round(height)}px;
+  } `;
   }
 
   console.log(css);
@@ -471,6 +511,7 @@ function dimensionsTranslate(bs, pg, win = {}, positions, page) {
   // css = pg;
 
   inlineCss(css);
+  inlineCss(label_css);
 
   console.log(`resize image => ${w} x ${win.h}`);
 
@@ -488,3 +529,28 @@ function inlineCss(cssAdd = "") {
 } // NOTE End
 
 export { img2Viewport, dimensionsTranslate };
+
+// function tooltip() {
+//   // https://codepen.io/niallains/pen/gNdPWg
+//   Array.from(document.querySelectorAll("[data-answer]")).forEach((el) => {
+//     let tip = document.createElement("div");
+//     tip.classList.add("tooltip");
+//     tip.innerText = el.getAttribute("data-answer");
+//     let delay = el.getAttribute("tip-delay");
+//     if (delay) {
+//       tip.style.transitionDelay = delay + "s";
+//     }
+//     tip.style.transform =
+//       "translate(" +
+//       (el.hasAttribute("tip-left") ? "calc(-100% - 5px)" : "15px") +
+//       ", " +
+//       (el.hasAttribute("tip-top") ? "-100%" : "0") +
+//       ")";
+//     el.appendChild(tip);
+//     el.onmousemove = (e) => {
+//       tip.style.left = e.clientX + "px";
+//       tip.style.top = e.clientY + "px";
+//     };
+//   });
+// }
+// window.tooltip = tooltip;

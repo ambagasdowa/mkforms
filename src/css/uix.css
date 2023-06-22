@@ -3,7 +3,7 @@
 input {
   background-color: transparent !important;
   position: absolute;
-  border: none !important;
+  /* border: none !important; */
   color: teal !important;
   /* font-size: 10px; */
 }

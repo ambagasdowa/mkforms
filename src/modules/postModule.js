@@ -67,6 +67,7 @@ function eventOnDom(element, typeEvent, url, user_id, page) {
   };
 
   // Note that the listeners in this case are |this|, not this.handleEvent
+  element.addEventListener("submit", this, false);
   element.addEventListener("click", this, false);
   element.addEventListener("dblclick", this, false);
 }
@@ -104,12 +105,13 @@ function sendData(url = "", user_id, page, event) {
   }
 
   console.log(JSON.stringify(datamx));
+  return datamx.data;
 
-  const send = requestData.postDataForm(url, datamx.data);
-  send.then((data) => console.log(data));
+  // const send = requestData.postDataForm(url, datamx.data);
+  // send.then((data) => console.log(data));
 
   // }; //End HandleSubmit
 
   // form.addEventListener("submit", sendSubmit);
 }
-// export { sendData };
+export { sendData };

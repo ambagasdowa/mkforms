@@ -1,0 +1,47 @@
+#context-menu {
+  position: fixed;
+  z-index: 10000;
+  width: 150px;
+  background: #1b1a1a;
+  border-radius: 5px;
+  transform: scale(0);
+  transform-origin: top left;
+}
+
+#context-menu.visible {
+  transform: scale(1);
+  transition: transform 200ms ease-in-out;
+}
+
+#context-menu,
+/* .contextItemMenu, */
+.labelContextMenu {
+  padding: 8px 10px !important;
+  font-size: 15px !important;
+  color: #aaa;
+  cursor: pointer !important;
+  border-radius: inherit !important;
+}
+
+#context-menu,
+.contextItemMenu:hover {
+  background: #343434;
+}
+
+.uploadFile {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 5px;
+}
+#msj {
+  border: none;
+  margin: 0px;
+  padding: 0px 0.5em;
+}
+.btn_sub {
+  color: #343434 !important;
+}
+.btn_sub:hover {
+  color: #aaa !important;
+}

@@ -31,25 +31,39 @@ function createTable(objectArray, config_list = {}) {
   let tbdy = document.createElement("tbody");
   let tr = document.createElement("tr");
   let tag;
-  let setValue;
+  let setValue, selector;
   objectArray.forEach((object) => {
     let tr = document.createElement("tr");
     fields.forEach((field) => {
       var td = document.createElement("td");
 
+      // CHECKING
+
+      // console.log(field);
+
       if (config.column_options[field]) {
         const fieldTag = config.column_options[field];
         Object.keys(fieldTag).forEach((keytag) => {
           tag = document.createElement(`${keytag}`);
+
           Object.keys(fieldTag[keytag]).forEach((attr) => {
             // attribute:value
+
             if (attr == "id" || attr == "class" || attr == "data-open-modal") {
               setValue = `${fieldTag[keytag][attr]}${
                 object[config.idIdentifier]
               }`;
+            } else if (attr == "href") {
+              // console.log(`${alink(config_list, fieldTag[keytag])}`);
+              setValue = alink(
+                config_list,
+                fieldTag[keytag],
+                object[config.idIdentifier]
+              );
             } else {
               setValue = `${fieldTag[keytag][attr]}`;
             }
+            // console.log(`attr ${attr} setValue ${setValue}`);
             tag.setAttribute(`${attr}`, setValue);
           });
         });
@@ -66,14 +80,35 @@ function createTable(objectArray, config_list = {}) {
   tbl.appendChild(tbdy);
   body.appendChild(tbl);
 
-  attach(config_list);
+  // Active modal behaviour uncomment line below
+  // attach(config_list, true);
+  attach(config_list, false);
+
+  //Open link in new tab
+  //attRoute()
+
   // return tbl;
   let tf = new TableFilter(tbl, config_list.tableFilterConfig);
   tf.init();
 }
 
-function attach(config_list = {}) {
-  let setModalWindow = modal(config_list);
+function attach(config_list = {}, setModal = false) {
+  if (setModal) {
+    modal(config_list);
+    // } else {
+    //   alink(config_list)
+  }
+}
+function alink(config_list = {}, selector, dataId) {
+  // selector can be an array
+  // console.log(`INSIDE ALINK`);
+  // console.log(selector);
+  // console.log(selector["data-frame"]);
+  let confSel = config_list.frame_source[selector["data-frame"]];
+  // data-frame = View||Edit
+  // data-open-modal = book_id
+  let linkSrc = `./${confSel.src}.html?${confSel.params.param1}=${dataId}&${confSel.params.param2}=${confSel.testValues.User}`;
+  return linkSrc;
 }
 
 function modal(config_list = {}) {
@@ -102,8 +137,8 @@ function modal(config_list = {}) {
 
       ////add attributes
       openFrame.setAttribute("type", "text/html");
-      openFrame.width = "1680px";
-      openFrame.height = "980px";
+      openFrame.width = window.innerWidth;
+      openFrame.height = window.innerHeight;
       console.log(openFrame);
 
       document.getElementById(modalId).classList.add(isVisible);
@@ -133,3 +168,7 @@ function modal(config_list = {}) {
 }
 
 export { init };
+
+function attachLink() {
+  return null;
+}

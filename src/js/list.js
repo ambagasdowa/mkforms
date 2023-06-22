@@ -71,6 +71,7 @@ const config_list = {
           [paramId]: "editId_",
           ["data-open-modal"]: "",
           ["data-frame"]: "Edit",
+          ["target"]: "_blank",
         },
       },
       book_name: {
@@ -80,6 +81,7 @@ const config_list = {
           [paramId]: "modal_",
           ["data-open-modal"]: "",
           ["data-frame"]: "View",
+          ["target"]: "_blank",
         },
       },
     },

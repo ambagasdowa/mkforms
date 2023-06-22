@@ -4,7 +4,16 @@ const config_upload = {
   [`copy${param.charAt(0).toUpperCase()}${param.slice(1)}`]: 8,
   default_width: 1275,
   default_height: 1650,
-  css_files: { main: "./css/upload.css" },
+  css_files: {
+    main: "./css/upload.css",
+    font_hack: "./fonts/css/fa.css",
+    awesomeFonts: "./fonts/css/fontawesome.min.css",
+    all: "./fonts/css/all.min.css",
+    regular: "./fonts/css/regular.min.css",
+    brands: "./fonts/css/brands.min.css",
+    solid: "./fonts/css/solid.min.css",
+    icons: "./css/icons.css",
+  },
   srv_json: "baizabal.xyz",
   port_json: "8000",
   protocol_json: "https://",
@@ -28,6 +37,7 @@ const config_upload = {
   headers: {},
 };
 
+import { spinner } from "../modules/loadingModule.js";
 import { setStyles } from "../modules/lib.js";
 
 setStyles(config_upload.css_files, config_upload.dev);
@@ -44,6 +54,9 @@ console.log(requestData.initial);
 console.log(`Loading uploadInit module `);
 console.log(config_upload);
 
+let msj = document.querySelector("#msj");
+
+// spinner(msj, true);
 const form = document.getElementById("form");
 const inputFile = document.getElementById("file");
 
@@ -55,12 +68,16 @@ const handleSubmit = (event) => {
   // Get the form data from the event object
 
   //  console.log(form);
+  //
+  console.log(`Progress ...spinner on `);
+  spinner(msj, true);
   console.log(event.target);
 
   for (const [key, value] of Object.entries(event.target)) {
     //FD.append(name, value);
     console.log(`key : ${key} name -> ${value.name} value -> ${value.value}`);
     console.log(value.name);
+
     if (value.name == "token") {
       config_upload.headers["token"] = value.value;
     }
@@ -82,7 +99,14 @@ const handleSubmit = (event) => {
   const send = requestData.postFileData(url_upload, config_upload, formData);
   // const xboxes = getData(get_url);
   // xboxes.then((data) => ((boxes = data), redraw()));
-  send.then((data) => console.log(data));
+  send.then((data) => {
+    console.log(JSON.stringify(data));
+    console.log(`Progress ...spinner off `);
+    spinner(msj, false);
+    alert(`${JSON.stringify(data)}`);
+  });
 };
+// let submitData = document.querySelector(".submit-btn");
+// submitData.addEventListener("click", handleSubmit);
 form.addEventListener("submit", handleSubmit);
 //});

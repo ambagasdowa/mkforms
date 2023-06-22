@@ -3,17 +3,17 @@ body {
   background: #222;
 }
 
-.book {
-  /* opacity: 0.5; */
-}
+/* .book { */
+/*   opacity: 0.4; */
+/* } */
 
 /* NOTE : build more efficent viewport */
 
 /* #magazine, */
-#form {
-  width: 1152px;
-  height: 1552px;
-}
+/* #form { */
+/*   width: 1152px; */
+/*   height: 1552px; */
+/* } */
 #magazine .turn-page {
   background-color: #ccc;
   background-size: 100% 100%;
