@@ -35,7 +35,12 @@ Inside into zip file
 
 ```bash
 git clone -b release https://github.com/ambagasdowa/mkforms.git
+
 ```
+
+Descargas
+
+<https://github.com/ambagasdowa/mkforms/archive/refs/heads/release.zip>
 
 # Install
 
