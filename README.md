@@ -59,7 +59,7 @@ viewer.html?book_id=34&user_id=1702
 
 EL archivo base.js contiene los parametros de conexion a la api
 
-![15]](./images/viewer_base.png "lib base")
+![25](./images/viewer_base.png "lib base")
 
 Los parametros a definir son :
 
